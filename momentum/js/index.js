@@ -1,8 +1,6 @@
 import playList from './playList.js';
+import { showTime } from './time.js';
 
-const time = document.querySelector('.time');
-const date = document.querySelector('.date');
-const greeting = document.querySelector('.greeting');
 const nameElement = document.querySelector('.name');
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
@@ -15,41 +13,7 @@ const quote = document.querySelector('.quote');
 const author = document.querySelector('.author');
 const changeQuote = document.querySelector('.change-quote');
 
-// 1
-
-function showTime() {
-  const d = new Date();
-  const currentTime = d.toLocaleTimeString();
-  time.textContent = currentTime;
-  setTimeout(showTime, 1000);
-  showDate();
-  showGreeting();
-}
 showTime();
-
-function showDate() {
-  const d = new Date();
-  const options = { weekday: 'long', month: 'long', day: 'numeric' };
-  const currentDate = d.toLocaleDateString('en-US', options);
-  date.textContent = currentDate;
-}
-
-// 2
-
-function getTimeOfDay() {
-  const timesOfDay = ['night', 'morning', 'afternoon', 'evening'];
-  const d = new Date();
-  const hours = d.getHours();
-  const index = Math.floor(hours / 6);
-  const timeOfDay = timesOfDay[index];
-  return timeOfDay;
-}
-
-function showGreeting() {
-  const timeOfDay = getTimeOfDay();
-  const greetingText = `Good ${timeOfDay}`;
-  greeting.textContent = greetingText;
-}
 
 function setLocalStorage() {
   localStorage.setItem('name', nameElement.value);
