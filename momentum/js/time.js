@@ -1,4 +1,4 @@
-import { translation} from './translation.js';
+import { translation } from './translation.js';
 import { settings } from './settings.js';
 
 const time = document.querySelector('.time');
@@ -25,4 +25,3 @@ function plugTime() {
 
 export default plugTime;
 export { showDate };
-

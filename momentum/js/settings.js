@@ -70,7 +70,6 @@ function setInputListeners() {
   });
 }
 
-
 function setLocalStorage() {
   localStorage.setItem('lang', settings.lang);
   localStorage.setItem('api', settings.api);
@@ -125,8 +124,6 @@ function getSettings() {
   getChecks(settings.lang);
   getChecks(settings.api);
 }
-
-
 
 function plugSettings() {
   settingsElement.addEventListener('click', displayCallout);
