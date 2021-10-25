@@ -1,4 +1,5 @@
-import { showGreeting } from './greeting.js';
+import { translation} from './translation.js';
+import { settings } from './settings.js';
 
 const time = document.querySelector('.time');
 const dateElement = document.querySelector('.date');
@@ -10,13 +11,18 @@ function showTime() {
   time.textContent = currentTime;
   setTimeout(showTime, 1000);
   showDate();
-  showGreeting();
 }
 
 function showDate() {
   const date = new Date();
-  const currentDate = date.toLocaleDateString('en-US', options);
+  const currentDate = date.toLocaleDateString(translation[settings.lang].date.locale, options);
   dateElement.textContent = currentDate;
 }
 
-export { showTime, showDate };
+function plugTime() {
+  window.addEventListener('load', showTime);
+}
+
+export default plugTime;
+export { showDate };
+
