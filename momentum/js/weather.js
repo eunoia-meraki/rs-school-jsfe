@@ -10,9 +10,7 @@ const weatherError = document.querySelector('.weather-error');
 const city = document.querySelector('.city');
 
 async function getWeather() {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=${
-    translation[settings.lang].weather.locale
-  }&appid=0f4d8e76185a8fbdaf53b247b8c48fd1&units=metric`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=${translation[settings.lang].weather.locale}&appid=0f4d8e76185a8fbdaf53b247b8c48fd1&units=metric`;
   try {
     const res = await fetch(url);
     const data = await res.json();
@@ -47,13 +45,13 @@ function getLocalStorage() {
 
 function setPlaceholderAfterLoad() {
   if (!localStorage.getItem('city')) {
-    city.setAttribute('placeholder', translation[settings.lang].weather.placeholder);
+    setCityPlaceholder();
   }
 }
 
 function setPlaceholderAfterChange() {
-  if (city.value === 'city') {
-    city.setAttribute('placeholder', translation[settings.lang].weather.placeholder);
+  if (city.value === '') {
+    setCityPlaceholder();
   }
 }
 

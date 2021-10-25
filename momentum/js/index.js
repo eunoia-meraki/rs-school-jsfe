@@ -6,6 +6,8 @@ import plugQoute from './quote.js';
 import plugPlayer from './player.js';
 import plugSettings from './settings.js';
 
+plugSettings();
+
 plugTime();
 
 plugGreeting();
@@ -17,9 +19,3 @@ plugWeather();
 plugQoute();
 
 plugPlayer();
-
-plugSettings();
-
-// 3
-
-
