@@ -1,0 +1,77 @@
+.home-header {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 30vh;
+  min-height: 220px;
+  padding: 56px 56px 0 0;
+}
+
+.settings-button {
+  width: 32px;
+  height: 32px;
+  background-size: 32px 32px;
+  background-image: url('../../assets/svg/settings.svg');
+  cursor: pointer;
+}
+
+.settings-button:hover {
+  opacity: 0.7;
+}
+
+.home-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 40vh;
+  min-height: 380px;
+}
+
+.app-name {
+  font-size: 80px;
+  font-family: 'Gilroy-Bold';
+}
+
+.start-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  min-width: 700px;
+}
+
+.start-button {
+  width: 300px;
+  height: 72px;
+  background-size: 300px 72px;
+  background-color: #ffbca2;
+  cursor: pointer;
+  border-radius: 40px;
+  font-size: 20px;
+  line-height: 68px;
+  text-align: center;
+  border: 0;
+  color: black;
+}
+
+.start-button:hover {
+  opacity: 0.7;
+}
+
+.home-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  height: 30vh;
+  min-height: 220px;
+  padding: 0 28px 28px;
+}
+
+.school-logo {
+  margin-bottom: -28px;
+  width: 100px;
+  height: 100px;
+  background-size: 100px 100px;
+  background-image: url('../../assets/svg/school-logo.svg');
+}

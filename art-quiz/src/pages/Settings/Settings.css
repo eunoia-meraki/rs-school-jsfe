@@ -1,0 +1,202 @@
+.settings-header {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  height: 25vh;
+  min-height: 200px;
+  padding: 56px 0 0 56px;
+}
+
+.arrow-back-button {
+  width: 32px;
+  height: 32px;
+  background-size: 32px 32px;
+  background-image: url('../../assets/img/arrow-back.png');
+  cursor: pointer;
+}
+
+.arrow-back-button:hover {
+  opacity: 0.7;
+}
+
+.page-header {
+  margin: 3px 0 0 10px;
+}
+
+.settings-main {
+  width: 100%;
+  height: 45vh;
+  min-height: 400px;
+}
+
+.settings-container {
+  padding-left: 56px;
+  margin-top: -56px;
+}
+
+.setting-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 56px;
+}
+
+.setting-header {
+  font-family: 'Gilroy-Bold';
+  font-size: 24px;
+  color: white;
+}
+
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  overflow: hidden;
+  width: 500px;
+  height: 8px;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 20px;
+  margin-top: 40px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 8px;
+  height: 8px;
+  background-color: #ffbca2;
+  box-shadow: -500px 0 0 500px #ffbca2;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.toggle-value-container {
+  width: 24px;
+}
+
+.toggle-value {
+  font-size: 16px;
+}
+
+/* The switch - the box around the slider */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-left: 5px;
+}
+
+/* Hide default HTML checkbox */
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+input:checked + .slider {
+  background-color: #ffbca2;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #ffbca2;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.circles-container {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.curcle-button {
+  width: 24px;
+  height: 24px;
+  background-size: 32px 32px;
+  background-color: white;
+  background-position: center center;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.plus {
+  background-image: url('../../assets/img/plus.png');
+}
+
+.minus {
+  margin-left: 15px;
+  background-image: url('../../assets/img/minus.png');
+}
+
+.plus:active,
+.minus:active {
+  transform: scale(1.2);
+}
+
+.number {
+  margin-left: 15px;
+}
+
+.settings-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  height: 30vh;
+  min-height: 220px;
+  padding: 0 28px 28px;
+}
+
+.school-logo {
+  margin-bottom: -28px;
+  width: 100px;
+  height: 100px;
+  background-size: 100px 100px;
+  background-image: url('../../assets/svg/school-logo.svg');
+}
+
+
+
