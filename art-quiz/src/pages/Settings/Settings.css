@@ -11,7 +11,7 @@
   width: 32px;
   height: 32px;
   background-size: 32px 32px;
-  background-image: url('../../assets/img/arrow-back.png');
+  background-image: url('@/assets/img/arrow-back.png');
   cursor: pointer;
 }
 
@@ -163,12 +163,12 @@ input:checked + .slider:before {
 }
 
 .plus {
-  background-image: url('../../assets/img/plus.png');
+  background-image: url('@/assets/img/plus.png');
 }
 
 .minus {
   margin-left: 15px;
-  background-image: url('../../assets/img/minus.png');
+  background-image: url('@/assets/img/minus.png');
 }
 
 .plus:active,
@@ -178,24 +178,6 @@ input:checked + .slider:before {
 
 .number {
   margin-left: 15px;
-}
-
-.settings-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  width: 100%;
-  height: 30vh;
-  min-height: 220px;
-  padding: 0 28px 28px;
-}
-
-.school-logo {
-  margin-bottom: -28px;
-  width: 100px;
-  height: 100px;
-  background-size: 100px 100px;
-  background-image: url('../../assets/svg/school-logo.svg');
 }
 
 

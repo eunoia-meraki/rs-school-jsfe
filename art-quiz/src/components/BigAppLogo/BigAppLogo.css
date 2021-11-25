@@ -1,0 +1,34 @@
+.big-app-logo {
+  display: flex;
+  align-items: center;
+  margin-left: 180px;
+}
+
+.big-app-logo .icon {
+  display: flex;
+  margin-left: -180px;
+  margin-right: 60px;
+}
+
+.big-app-logo .icon div {
+  width: 130px;
+  height: 130px;
+  border: 1px solid white;
+  border-radius: 100px;
+  margin-right: -60px;
+}
+
+.big-app-logo .text {
+  display: flex;
+  margin-left: -180px;
+}
+
+.big-app-logo .text span {
+  font-size: 100px;
+  font-family: 'Gilroy-Bold';
+}
+
+.big-app-logo .text span:first-child {
+  margin-right: 20px;
+  color: #ffbca2;
+}

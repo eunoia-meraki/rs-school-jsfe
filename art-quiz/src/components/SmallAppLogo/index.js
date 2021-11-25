@@ -1,0 +1,1 @@
+export { SmallAppLogo } from './SmallAppLogo';

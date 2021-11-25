@@ -13,6 +13,11 @@ module.exports = {
   devServer: {
     port: 9000,
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
