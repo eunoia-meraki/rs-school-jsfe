@@ -1,34 +1,33 @@
 <header class="settings-header">
-  <a class="arrow-back-button" href="/"></a>
-  <span class="page-header">Settings</span>
+  <div class="aligning-container">
+    <div class="empty-back-button"></div>
+    <div class="empty-app-logo"></div>
+  </div>
 </header>
 <main class="settings-main">
-  <div class="settings-container">
-    <div class="setting-container">
-      <span class="setting-header">Volume</span>
-      <input type="range" min="0" max="100" value="50" step="1" class="volume-slider">
-    </div>
-    <div class="setting-container">
-      <span class="setting-header">Time game</span>
-      <div class="toggle-container">
-        <div class="toggle-value-container">
-          <span class="toggle-value">Off</span>
-        </div>  
-        <label class="toggle-switch">
-          <input type="checkbox">
-          <span class="slider round"></span>
-        </label>
+  <div class="setting">
+    <span class="header">Volume</span>
+    <input type="range" min="0" max="100" value="50" step="1" class="volume-slider">
+  </div>
+  <div class="setting">
+    <span class="header">Game time</span>
+    <div class="toggle">
+      <div class="value-container">
+        <span class="value">Off</span>
       </div>
+      <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+      </label>
     </div>
-    <div class="setting-container">
-      <span class="setting-header">Time to answer</span>
-      <div class="circles-container">
-        <div class="curcle-button plus"></div>
-        <span class="number">20</span>
-        <div class="curcle-button minus"></div>
-      </div>
+  </div>
+  <div class="setting">
+    <span class="header">Time to answer</span>
+    <div class="round-buttons-container">
+      <div class="round-button plus"></div>
+      <span class="counter">20</span>
+      <div class="round-button minus"></div>
     </div>
   </div>
 </main>
-
 <footer class="empty-footer" />

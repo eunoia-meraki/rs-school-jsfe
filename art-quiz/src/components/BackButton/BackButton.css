@@ -1,0 +1,17 @@
+.back-button {
+  display: flex;
+  align-items: center;
+}
+
+.back-button a {
+  margin-right: 5px;
+  width: 32px;
+  height: 32px;
+  background-size: 32px 32px;
+  background-image: url('@/assets/img/arrow-back.png');
+  cursor: pointer;
+}
+
+.back-button a:hover {
+  opacity: 0.7;
+}

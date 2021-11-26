@@ -1,1 +1,0 @@
-export { BigAppLogo } from './BigAppLogo';

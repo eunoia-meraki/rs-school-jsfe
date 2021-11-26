@@ -1,1 +1,0 @@
-export { SmallAppLogo } from './SmallAppLogo';
