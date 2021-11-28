@@ -1,12 +1,17 @@
-import FooterHtml from './Footer.html';
 import './Footer.css';
 
 export class Footer {
   constructor() {}
 
-  async render () {
-    return FooterHtml;
+  async render() {
+    return `
+      <footer class="footer">
+        <div class="school-logo"></div>
+        <span class="release-year">2021</span>
+        <a class="school-reference" href="https://rs.school/js">CURSE</a>
+      </footer>
+    `;
   }
 
-  async after_render() {};
+  async after_render() {}
 }

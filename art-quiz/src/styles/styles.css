@@ -21,4 +21,24 @@ body {
   min-width: 480px;
   min-height: 100vh;
   background-color: black;
+  overflow: hidden;
 }
+
+.transition-1 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: black;
+  pointer-events: none;
+  opacity: 0;
+  transition: 500ms ease-out;
+}
+
+.transition-1.is-active {
+  pointer-events: all;
+  opacity: 1;
+}
+

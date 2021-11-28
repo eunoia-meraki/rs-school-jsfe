@@ -1,24 +1,24 @@
-/* .settings-header {
+.categories-header {
   display: flex;
-  justify-content: flex-start;
+  align-items: flex-start;
   width: 100%;
-  height: 25vh;
-  min-height: 200px;
-  padding: 56px 0 0 56px;
+  height: 20vh;
+  min-height: 180px;
+  padding: 56px;
 }
 
-.arrow-back-button {
-  width: 32px;
-  height: 32px;
-  background-size: 32px 32px;
-  background-image: url('@/assets/img/arrow-back.png');
-  cursor: pointer;
+.aligning-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.arrow-back-button:hover {
-  opacity: 0.7;
+.categories-main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 60vh;
+  min-height: 440px;
+  padding-left: 56px;
 }
-
-.page-header {
-  margin: 3px 0 0 10px;
-} */

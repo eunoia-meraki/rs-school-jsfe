@@ -3,33 +3,34 @@
 import './styles/styles.css';
 
 import { Home } from './pages/Home';
-import { Settings } from './pages/Settings';
-import { Categories } from './pages/Categories';
+// import { Settings } from './pages/Settings';
+// import { Categories } from './pages/Categories';
 import { Error404 } from './pages/Error404';
 import { Utils } from './utils/Utils';
 
 const home = new Home();
-const settings = new Settings();
-const categories = new Categories();
+// const settings = new Settings();
+// const categories = new Categories();
 const error404 = new Error404();
 
-const routes = {
-  '/': home,
-  '/settings': settings,
-  '/categories': categories,
-};
+// const routes = {
+//   '/': home,
+// };
 
 const router = async () => {
-  const body = null || document.querySelector('body');
+  const body = document.querySelector('body');
 
   const request = Utils.parseRequestUrl();
 
   const parsedUrl = (request.resource ? `/${request.resource}` : '/') + (request.id ? '/:id' : '') + (request.verb ? `/${request.verb}` : '');
 
-  const page = routes[parsedUrl] ? routes[parsedUrl] : error404;
-
-  body.innerHTML = await page.render();
-  await page.after_render();
+  if (parsedUrl === '/') {
+    body.innerHTML = await home.render();
+    await home.after_render();
+  } else {
+    body.innerHTML = await error404.render();
+    await error404.after_render();
+  }
 };
 
 window.addEventListener('hashchange', router);
