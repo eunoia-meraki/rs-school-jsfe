@@ -1,7 +1,6 @@
 import './Settings.css';
 import { Footer } from '@/components/Footer';
 import { BackButton } from '@/components/BackButton';
-import { AppLogo } from '@/components/AppLogo';
 
 export class Settings {
   constructor() {}
@@ -13,14 +12,10 @@ export class Settings {
     const backButton = new BackButton('Settings');
     const backButtonHtml = await backButton.render();
 
-    const appLogo = new AppLogo();
-    const appLogoHtml = await appLogo.render();
-
     return `
       <header class="settings-header">
         <div class="aligning-container">
           ${backButtonHtml}
-          ${appLogoHtml}
         </div>
       </header>
       <main class="settings-main">
@@ -36,7 +31,7 @@ export class Settings {
             </div>
             <label class="switch">
               <input type="checkbox">
-              <span class="slider round"></span>
+              <span class="slide-block round"></span>
             </label>
           </div>
         </div>
@@ -56,13 +51,11 @@ export class Settings {
   async after_render() {
     const backButtonEl = document.querySelector('.back-button .icon');
 
-    const pages = document.querySelector('.pages-container');
+    const sliderEl = document.querySelector('.slider');
 
     backButtonEl.addEventListener('click', e => {
       e.preventDefault();
-      
-      pages.classList.remove('settings-is-active');
-      pages.classList.add('home-is-active');
+      sliderEl.classList.toggle('moved');
     });
   }
 }

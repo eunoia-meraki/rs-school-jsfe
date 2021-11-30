@@ -14,11 +14,26 @@
   width: 100%;
 }
 
+.page-header {
+  position: relative;
+  top: 20px;
+  font-size: 26px;
+  font-family: 'Gilroy-Bold';
+  margin-left: 100px;
+  color: #ffbca2;
+}
+
+.navigation {
+  display: flex;
+  align-items: flex-start;
+}
+
+
 .categories-main {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
   width: 100%;
   height: 60vh;
   min-height: 440px;
-  padding-left: 56px;
+  padding: 0 56px;
 }

@@ -24,7 +24,7 @@ body {
   overflow: hidden;
 }
 
-.transition-1 {
+/* .transition-1 {
   position: fixed;
   top: 0;
   right: 0;
@@ -40,5 +40,4 @@ body {
 .transition-1.is-active {
   pointer-events: all;
   opacity: 1;
-}
-
+} */

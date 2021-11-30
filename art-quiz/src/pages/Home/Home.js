@@ -1,6 +1,7 @@
 import './Home.css';
 import { Footer } from '@/components/Footer';
 import { Settings } from '@/pages/Settings';
+import { Categories } from '../Categories';
 
 export class Home {
   constructor() {}
@@ -10,10 +11,13 @@ export class Home {
     const footerHtml = await footer.render();
 
     return `
-      <div class="pages-container home-is-active">
-        <div class="home page">
+      <div class="slider">
+        <div class="home slide">
           <header class="home-header">
-            <a class="settings-button" href="/"></a>
+            <div class="aligning-container">
+              <div></div>
+              <a class="settings-button" href="/"></a>
+            </div>
           </header>
           <main class="home-main">
             <div class="big-app-logo">
@@ -27,8 +31,8 @@ export class Home {
               </div>
             </div>
             <div class="start-buttons-container">
-              <a class="start-button" href="/#/categories">Artists</a>
-              <a class="start-button" href="/#/categories">Pictures</a>
+              <a class="start-button" href="/">Artists</a>
+              <a class="start-button" href="/">Pictures</a>
             </div>
           </main>
           ${footerHtml}
@@ -38,24 +42,38 @@ export class Home {
   }
 
   async after_render() {
-    const pages = document.querySelector('.pages-container');
+    const sliderEl = document.querySelector('.slider');
 
-    const settingsEl = document.createElement('div');
-    settingsEl.className = 'settings';
-    settingsEl.classList.add('page');
+    const slideEl = document.createElement('div');
+    slideEl.className = 'settings';
+    slideEl.classList.add('slide');
 
-    pages.append(settingsEl);
+    sliderEl.append(slideEl);
 
     const settings = new Settings();
-    settingsEl.innerHTML = await settings.render();
+    slideEl.innerHTML = await settings.render();
     await settings.after_render();
 
     const settingsButtonEl = document.querySelector('.settings-button');
 
-    settingsButtonEl.addEventListener('click', async e => {
+    settingsButtonEl.addEventListener('click', e => {
       e.preventDefault();
-      pages.classList.remove('home-is-active');
-      pages.classList.add('settings-is-active');
+      sliderEl.classList.toggle('moved');
+    });
+
+    const startButtonEls = document.querySelectorAll('.start-button');
+
+    startButtonEls.forEach(startButtonEl => {
+      startButtonEl.addEventListener('click', async e => {
+        e.preventDefault();
+
+        const body = document.querySelector('body');
+
+        const categories = new Categories();
+
+        body.innerHTML = await categories.render();
+        await categories.after_render();
+      });
     });
   }
 }
