@@ -14,10 +14,7 @@ export class Home {
       <div class="slider">
         <div class="home slide">
           <header class="home-header">
-            <div class="aligning-container">
-              <div></div>
-              <a class="settings-button" href="/"></a>
-            </div>
+            <a class="settings-button" href="/"></a>
           </header>
           <main class="home-main">
             <div class="big-app-logo">

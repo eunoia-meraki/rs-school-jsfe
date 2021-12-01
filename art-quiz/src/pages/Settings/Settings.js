@@ -14,9 +14,7 @@ export class Settings {
 
     return `
       <header class="settings-header">
-        <div class="aligning-container">
-          ${backButtonHtml}
-        </div>
+        ${backButtonHtml}
       </header>
       <main class="settings-main">
         <div class="setting">

@@ -5,7 +5,7 @@
   width: 100%;
   height: 20vh;
   min-height: 180px;
-  padding: 28px;
+  padding: 0 24px 24px;
 }
 
 .school-logo {
@@ -13,5 +13,5 @@
   height: 80px;
   background-size: 80px 80px;
   background-image: url('@/assets/svg/school-logo.svg');
-  margin-bottom: -22px;
+  margin-bottom: -24px;
 }

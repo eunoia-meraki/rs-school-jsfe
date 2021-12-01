@@ -16,23 +16,42 @@ export class Categories {
     const footer = new Footer();
     const footerHtml = await footer.render();
 
-    const category = new Category();
-    const categoryHtml = await category.render();
+    let categoriesHtml = '';
+
+    const categoryNames = [
+      'Portrait',
+      'Landscape',
+      'Still-life',
+      'Impressionism',
+      'Expressionism',
+      'Avant-garde',
+      'Renaissance',
+      'Surrealism',
+      'Kitsch',
+      'Minimalism',
+      'Interior',
+      'Nude',
+    ];
+
+    for (let i = 0; i < 12; i++) {
+      const category = new Category(categoryNames[i], i);
+      const categoryHtml = await category.render();
+      await category.after_render();
+      categoriesHtml += categoryHtml;
+    }
 
     return `
       <div class="slider">
         <div class="categories slide">
           <header class="categories-header">
-            <div class="aligning-container">
-              <div class="navigation">
-                ${appLogoHtml}
-                <span class="page-header">Categories</span>
-              </div>
-              <a class="settings-button" href="/"></a>
+            <div class="navigation">
+              ${appLogoHtml}
+              <span class="page-header">Categories</span>
             </div>
+            <a class="settings-button" href="/"></a>
           </header>
           <main class="categories-main">
-            ${categoryHtml}
+            ${categoriesHtml}
           </main>
           ${footerHtml}
         </div>
@@ -60,7 +79,7 @@ export class Categories {
     });
 
     const appLogoEl = document.querySelector('.app-logo');
-    appLogoEl.style.cursor = 'pointer'
+    appLogoEl.style.cursor = 'pointer';
     appLogoEl.addEventListener('click', () => {
       window.location = '/';
     });

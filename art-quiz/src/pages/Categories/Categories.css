@@ -1,17 +1,11 @@
 .categories-header {
   display: flex;
-  align-items: flex-start;
-  width: 100%;
-  height: 20vh;
-  min-height: 180px;
-  padding: 56px;
-}
-
-.aligning-container {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  height: 20vh;
+  min-height: 180px;
+  padding: 0 72px 72px;
 }
 
 .page-header {
@@ -32,8 +26,9 @@
 .categories-main {
   display: flex;
   align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
   width: 100%;
   height: 60vh;
   min-height: 440px;
-  padding: 0 56px;
 }
