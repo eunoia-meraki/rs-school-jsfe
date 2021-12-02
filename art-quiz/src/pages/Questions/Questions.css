@@ -1,0 +1,34 @@
+.questions-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 20vh;
+  min-height: 180px;
+  padding: 0 72px 72px;
+}
+
+.questions-main {
+  width: 100%;
+  height: 60vh;
+  min-height: 440px;
+}
+
+.questions-progress {
+  -webkit-appearance: none;
+  appearance: none;
+  overflow: hidden;
+  width: 800px;
+  height: 5px;
+  background-color: white;
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+.questions-progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 5px;
+  box-shadow: -500px 0 0 500px #ffbca2;
+}

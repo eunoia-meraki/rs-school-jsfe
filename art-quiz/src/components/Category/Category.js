@@ -7,7 +7,7 @@ export class Category {
 
   async render() {
     return `
-      <div class="category" id="${this.name.toLowerCase()}">
+      <div class="${this.name.toLowerCase()} category">
         <div class="header">
           <span class="name">${this.name}</span>
           <span class="score">10/10</span>
@@ -18,13 +18,13 @@ export class Category {
   }
 
   async after_render() {
-    const img = new Image();
-    img.src = require(`@/data/img/${this.imageNumber}.jpg`);
-    img.onload = () => {
+    const image = new Image();
+    image.src = require(`@/data/img/${this.imageNumber}.jpg`);
+    image.onload = () => {
       const imageEl = document.querySelector(
-        `.category#${this.name.toLowerCase()} .image`,
+        `.${this.name.toLowerCase()}.category .image`,
       );
-      imageEl.style.backgroundImage = `url('${img.src}')`;
+      imageEl.style.backgroundImage = `url('${image.src}')`;
     };
   }
 }
