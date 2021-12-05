@@ -1,6 +1,5 @@
-let a: number = 1;
+import App from './components/app/app';
+import './global.css';
 
-const f: (x: number, y: number) => number = (x, y) => {
-  const a = 0;
-  return x;
-}
+const app: App = new App();
+app.start();

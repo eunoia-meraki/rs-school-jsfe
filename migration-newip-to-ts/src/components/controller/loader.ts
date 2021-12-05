@@ -1,8 +1,16 @@
+
+interface IOptions {
+  apiKey: string;
+}
+
 class Loader {
-    constructor(baseLink, options) {
-        this.baseLink = baseLink;
-        this.options = options;
-    }
+  baseLink: string;
+  options: IOptions;
+
+  constructor(baseLink: string, options: IOptions) {
+    this.baseLink = baseLink;
+    this.options = options;
+  }
 
     getResp(
         { endpoint, options = {} },
