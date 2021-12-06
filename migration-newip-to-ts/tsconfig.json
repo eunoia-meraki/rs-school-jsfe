@@ -3,6 +3,11 @@
     "outDir": "./dist",
     "module": "es6",
     "target": "es6",
+    "moduleResolution": "node",
+    "baseUrl": "src",
+    "paths": {
+      "interfaces": ["./components/interfaces/interfaces"]
+    },
     "sourceMap": true,
     "skipLibCheck": true,
     "noImplicitAny": true,

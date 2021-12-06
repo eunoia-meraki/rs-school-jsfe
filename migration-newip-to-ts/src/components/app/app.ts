@@ -1,22 +1,6 @@
 import AppController from '../controller/controller';
 import { AppView } from '../view/appView';
 
-// import types
-import { NewsData } from '../view/appView';
-import { SourcesData } from '../view/appView';
-
-export interface IGetNewsCallback {
-  (data: NewsData): void;
-}
-
-export interface IGetSourcesCallback {
-  (data: SourcesData): void;
-}
-
-export interface GenericCallback<T> {
-  (data: T): void;
-}
-
 class App {
   controller: AppController;
   view: AppView;
@@ -29,26 +13,22 @@ class App {
   start(): void {
     const sourcesElement = document.querySelector('.sources');
 
-    const getNewsCallback: GenericCallback<NewsData> = data => this.view.drawNews(data);
-
-    // const getNewsCallback: (data: NewsData) => void = data => this.view.drawNews(data);
-    // const getNewsCallback: IGetNewsCallback = data => this.view.drawNews(data);
-
     if (sourcesElement) {
       sourcesElement.addEventListener('click', e =>
-        // this.controller.getNews(e, (data: NewsData): void => this.view.drawNews(data)),
-        this.controller.getNews(e, getNewsCallback),
+        this.controller.getNews(e, data => this.view.drawNews(data)),
       );
     }
 
-    const getSourcesCallback: GenericCallback<SourcesData> = data => this.view.drawSources(data);
+    this.controller.getSources(data => this.view.drawSources(data));
 
-    // const getSourcesCallback: (data: SourcesData) => void = data => this.view.drawSources(data);
+    const sourcesDivElement = document.querySelector<HTMLDivElement>('.sources');
 
-    // const getSourcesCallback: IGetSourcesCallback = data => this.view.drawSources(data);
-
-    // this.controller.getSources((data: SourcesData): void => this.view.drawSources(data));
-    this.controller.getSources(getSourcesCallback);
+    if (sourcesDivElement) {
+      sourcesDivElement.addEventListener('wheel', e => {
+        e.preventDefault();
+        sourcesDivElement.scrollBy({ left: e.deltaY < 0 ? -120 : 120 });
+      }); 
+    }
   }
 }
 

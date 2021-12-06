@@ -1,16 +1,4 @@
-//types
-import { GenericCallback } from '../app/app';
-
-interface IOptions {
-  [key: string]: string;
-}
-
-interface IResponse {
-  ok: boolean;
-  status: number;
-  statusText: string;
-  json: <T>() => Promise<T>;
-}
+import type { ICallback, IOptions, IResponse } from 'interfaces';
 
 class Loader {
   baseLink: string;
@@ -23,7 +11,7 @@ class Loader {
 
   getResp<T>(
     { endpoint, options = {} }: { endpoint: string; options?: IOptions },
-    callback: GenericCallback<T> = () => {
+    callback: ICallback<T> = () => {
       console.error('No callback for GET response');
     },
   ): void {
@@ -51,12 +39,12 @@ class Loader {
     return url.slice(0, -1);
   }
 
-  load<T>(method: string, endpoint: string, callback: GenericCallback<T>, options: IOptions = {}): void {
+  load<T>(method: string, endpoint: string, callback: ICallback<T>, options: IOptions = {}): void {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
       .then(res => res.json<T>())
       .then(data => callback(data))
-      .catch((err: Error) => console.error(err));
+      .catch((err: Error): void => console.error(err));
   }
 }
 

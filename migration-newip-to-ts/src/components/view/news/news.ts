@@ -1,16 +1,6 @@
 import './news.css';
-import { ISourceItem } from '../sources/sources';
 
-export interface INewsItem {
-  photo: string;
-  urlToImage: string;
-  author: string;
-  source: ISourceItem;
-  publishedAt: string;
-  title: string;
-  description: string;
-  url: string;
-}
+import type { INewsItem } from 'interfaces';
 
 class News {
   draw(data: INewsItem[]): void {
@@ -82,7 +72,6 @@ class News {
     if (newsElement) {
       newsElement.innerHTML = '';
       newsElement.append(fragment);
-      // newsElement.appendChild(fragment);
     }
   }
 }

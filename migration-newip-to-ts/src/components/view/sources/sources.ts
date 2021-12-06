@@ -1,9 +1,6 @@
 import './sources.css';
 
-export interface ISourceItem {
-  name: string;
-  id: string;
-}
+import type { ISourceItem } from 'interfaces';
 
 export class Sources {
   draw(data: ISourceItem[]): void {
