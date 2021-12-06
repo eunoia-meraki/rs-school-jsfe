@@ -14,9 +14,7 @@ class App {
     const sourcesElement = document.querySelector('.sources');
 
     if (sourcesElement) {
-      sourcesElement.addEventListener('click', e =>
-        this.controller.getNews(e, data => this.view.drawNews(data)),
-      );
+      sourcesElement.addEventListener('click', e => this.controller.getNews(e, data => this.view.drawNews(data)));
     }
 
     this.controller.getSources(data => this.view.drawSources(data));
@@ -27,7 +25,7 @@ class App {
       sourcesDivElement.addEventListener('wheel', e => {
         e.preventDefault();
         sourcesDivElement.scrollBy({ left: e.deltaY < 0 ? -120 : 120 });
-      }); 
+      });
     }
   }
 }
