@@ -1,7 +1,7 @@
 import './news.css';
 import { ISourceItem } from '../sources/sources';
 
-interface INewsItem {
+export interface INewsItem {
   photo: string;
   urlToImage: string;
   author: string;
