@@ -18,11 +18,11 @@ export class Settings {
       </header>
       <main class="settings-main">
         <div class="setting">
-          <span class="header">Volume</span>
+          <span class="header">Звук</span>
           <input type="range" min="0" max="100" value="50" step="1" class="volume-slider">
         </div>
         <div class="setting">
-          <span class="header">Game time</span>
+          <span class="header">Игра на время</span>
           <div class="toggle">
             <div class="value-container">
               <span class="value">Off</span>
@@ -34,7 +34,7 @@ export class Settings {
           </div>
         </div>
         <div class="setting">
-          <span class="header">Time to answer</span>
+          <span class="header">Секунды</span>
           <div class="round-buttons-container">
             <div class="round-button plus"></div>
             <span class="counter">20</span>

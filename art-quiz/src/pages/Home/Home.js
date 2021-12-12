@@ -29,8 +29,8 @@ export class Home {
               </div>
             </div>
             <div class="start-buttons-container">
-              <div class="start-button">Artists</div>
-              <div class="start-button">Pictures</div>
+              <div class="start-button">Художники</div>
+              <div class="start-button">Картины</div>
             </div>
           </main>
           ${footerHtml}

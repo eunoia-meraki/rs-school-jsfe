@@ -12,18 +12,18 @@ export class Categories {
   constructor(groupNumber) {
     this.groupNumber = groupNumber;
     this.names = [
-      'Portrait',
-      'Landscape',
-      'Still-life',
-      'Impressionism',
-      'Expressionism',
-      'Avant-garde',
-      'Renaissance',
-      'Surrealism',
-      'Kitsch',
-      'Minimalism',
-      'Interior',
-      'Nude',
+      'Портрет',
+      'Пейзаж',
+      'Натюрморт',
+      'Импрессионизм',
+      'Экспрессионизм',
+      'Авангард',
+      'Ренессанс',
+      'Сюрреализм',
+      'Китч',
+      'Минимализм',
+      'Интерьер',
+      'Нудизм',
     ];
   }
 
@@ -51,7 +51,7 @@ export class Categories {
           <header class="categories-header">
             <div class="navigation">
               ${appLogoHtml}
-              <span class="page-header">Categories</span>
+              <span class="page-header">Категории</span>
             </div>
             <a class="settings-button" href="/"></a>
           </header>
@@ -96,12 +96,13 @@ export class Categories {
 
     const categoryEls = document.querySelectorAll('.category');
 
-    categoryEls.forEach(categoryEl => {
+    categoryEls.forEach((categoryEl, index) => {
       categoryEl.addEventListener('click', () => {
         transitionEl.classList.toggle('active');
         setTimeout(async () => {
           const bodyEl = document.querySelector('body');
-          const questions = new Questions();
+          const questionNumber = 120 * this.groupNumber + 10 * index;
+          const questions = new Questions(questionNumber);
           bodyEl.innerHTML = await questions.render();
           await questions.after_render();
         }, 500);

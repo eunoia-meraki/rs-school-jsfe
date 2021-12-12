@@ -8,7 +8,7 @@ export class Footer {
       <footer class="footer">
         <div class="school-logo"></div>
         <span class="release-year">2021</span>
-        <a class="school-reference" href="https://rs.school/js">CURSE</a>
+        <a class="school-reference" href="https://rs.school/js">Курс</a>
       </footer>
     `;
   }
