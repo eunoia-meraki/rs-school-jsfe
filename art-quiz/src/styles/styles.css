@@ -42,16 +42,3 @@ body {
   opacity: 1;
 }
 
-
-.transition2 {
-  width: 100px;
-  height: 100px;
-  background-color: blue;
-  transition: 500ms;
-  transform: translateX(0);
-}
-
-.transition2.active {
-  transform: translateX(-100%);
-}
-
