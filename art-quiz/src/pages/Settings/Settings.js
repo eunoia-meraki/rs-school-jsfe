@@ -9,7 +9,7 @@ export class Settings {
     const footer = new Footer();
     const footerHtml = await footer.render();
 
-    const backButton = new BackButton('Settings');
+    const backButton = new BackButton('Настройки');
     const backButtonHtml = await backButton.render();
 
     return `
@@ -25,7 +25,7 @@ export class Settings {
           <span class="header">Игра на время</span>
           <div class="toggle">
             <div class="value-container">
-              <span class="value">Off</span>
+              <span class="value">Выкл</span>
             </div>
             <label class="switch">
               <input type="checkbox">
@@ -48,12 +48,42 @@ export class Settings {
 
   async after_render() {
     const backButtonEl = document.querySelector('.back-button .icon');
-
     const sliderEl = document.querySelector('.slider');
 
-    backButtonEl.addEventListener('click', e => {
-      e.preventDefault();
+    backButtonEl.addEventListener('click', () => {
       sliderEl.classList.toggle('moved');
+    });
+
+    const volumeSliderEl = document.querySelector('.volume-slider');
+
+    if (localStorage.getItem('volume')) {
+      volumeSliderEl.value = localStorage.getItem('volume');
+    }
+
+    volumeSliderEl.addEventListener('mouseup', () => {
+      localStorage.setItem('volume', volumeSliderEl.value);
+    });
+
+    const roundButtonPlusEl = document.querySelector('.round-button.plus');
+    const roundButtonMinusEl = document.querySelector('.round-button.minus');
+    const counter = document.querySelector('.counter');
+
+    if (localStorage.getItem('seconds')) {
+      counter.textContent = localStorage.getItem('seconds');
+    }
+
+    roundButtonPlusEl.addEventListener('mouseup', () => {
+      let counterNumber = parseInt(counter.textContent, 10);
+      counterNumber = counterNumber + 1;
+      counter.textContent = counterNumber;
+      localStorage.setItem('seconds', counterNumber);
+    });
+
+    roundButtonMinusEl.addEventListener('mouseup', () => {
+      let counterNumber = parseInt(counter.textContent, 10);
+      counterNumber = counterNumber - 1;
+      counter.textContent = counterNumber;
+      localStorage.setItem('seconds', counterNumber);
     });
   }
 }

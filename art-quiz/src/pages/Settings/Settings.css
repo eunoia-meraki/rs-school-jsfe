@@ -57,11 +57,7 @@
 }
 
 .toggle .value-container {
-  width: 24px;
-}
-
-.toggle .value {
-  font-size: 16px;
+  width: 58px;
 }
 
 .switch {
@@ -69,7 +65,6 @@
   display: inline-block;
   width: 50px;
   height: 24px;
-  margin-left: 5px;
 }
 
 .switch input {

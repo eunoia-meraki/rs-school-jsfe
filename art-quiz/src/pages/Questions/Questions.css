@@ -8,7 +8,7 @@
   padding: 0 70px;
 }
 
-.questions-progress {
+.progress {
   -webkit-appearance: none;
   appearance: none;
   overflow: hidden;
@@ -19,12 +19,24 @@
   pointer-events: none;
 }
 
-.questions-progress::-webkit-slider-thumb {
+.progress::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 0;
   height: 5px;
   box-shadow: -500px 0 0 500px #ffbca2;
+}
+
+.left-progress-number {
+  font-size: 24px;
+  margin-right: 20px;
+  font-family: 'Gilroy-Bold';
+}
+
+.right-progress-number {
+  font-size: 24px;
+  margin-left: 20px;
+  font-family: 'Gilroy-Bold';
 }
 
 .questions-main {

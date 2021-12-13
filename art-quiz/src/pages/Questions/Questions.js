@@ -9,8 +9,13 @@ export class Questions {
   }
 
   updateProgress() {
-    const questionProgressEl = document.querySelector('.questions-progress');
+    const questionProgressEl = document.querySelector('.progress');
     questionProgressEl.value++;
+
+    const leftProgressNumberEl = document.querySelector(
+      '.left-progress-number',
+    );
+    leftProgressNumberEl.textContent = questionProgressEl.value;
   }
 
   setQuestion() {
@@ -73,7 +78,9 @@ export class Questions {
     return `
       <div class="transition active"></div>
         <header class="questions-header">
-          <input type="range" min="0" max="10" value="0" step="1" class="questions-progress">
+          <span class="left-progress-number">0</span>
+          <input type="range" min="0" max="10" value="0" step="1" class="progress">
+          <span class="right-progress-number">10</span>
         </header>
       <main class="questions-main">
         <div class="questions-slider">
@@ -116,17 +123,17 @@ export class Questions {
     variantButtonEls.forEach((variantButtonEl, index) => {
       variantButtonEl.addEventListener('click', () => {
         this.setAnswer(index);
+        this.updateProgress();
         questionSliderEl.classList.toggle('moved');
         setTimeout(() => {
           this.setQuestion();
-        }, 500)
+        }, 500);
       });
     });
 
     const nextButtonEl = document.querySelector('.next-button');
     nextButtonEl.addEventListener('click', () => {
       questionSliderEl.classList.toggle('moved');
-      this.updateProgress();
     });
 
     const transitionEl = document.querySelector('.transition');

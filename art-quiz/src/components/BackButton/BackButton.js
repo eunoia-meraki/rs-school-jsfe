@@ -8,7 +8,7 @@ export class BackButton {
   async render() {
     return `
       <div class="back-button">
-        <a class="icon" href="/"></a>
+        <div class="icon"></div>
         <span class="text">${this.text}</span>
       </div>
     `;
