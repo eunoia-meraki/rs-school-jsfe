@@ -27,7 +27,7 @@ export class Settings {
             <div class="value-container">
               <span class="value">Выкл</span>
             </div>
-            <label class="switch">
+            <label>
               <input type="checkbox">
               <span class="slide-block round"></span>
             </label>
@@ -36,9 +36,11 @@ export class Settings {
         <div class="setting">
           <span class="header">Секунды</span>
           <div class="round-buttons-container">
-            <div class="round-button plus"></div>
-            <span class="counter">20</span>
-            <div class="round-button minus"></div>
+            <div class="round-button-plus"></div>
+            <div class="counter-container">
+              <span class="counter">20</span>
+            </div>
+            <div class="round-button-minus"></div>
           </div>
         </div>
       </main>
@@ -54,36 +56,57 @@ export class Settings {
       sliderEl.classList.toggle('moved');
     });
 
-    const volumeSliderEl = document.querySelector('.volume-slider');
+    const volumeEl = document.querySelector('.volume-slider');
 
     if (localStorage.getItem('volume')) {
-      volumeSliderEl.value = localStorage.getItem('volume');
+      volumeEl.value = localStorage.getItem('volume');
     }
 
-    volumeSliderEl.addEventListener('mouseup', () => {
-      localStorage.setItem('volume', volumeSliderEl.value);
+    volumeEl.addEventListener('mouseup', () => {
+      localStorage.setItem('volume', volumeEl.value);
     });
 
-    const roundButtonPlusEl = document.querySelector('.round-button.plus');
-    const roundButtonMinusEl = document.querySelector('.round-button.minus');
-    const counter = document.querySelector('.counter');
+    const buttonPlusEl = document.querySelector('.round-button-plus');
+    const buttonMinusEl = document.querySelector('.round-button-minus');
+    const counterEl = document.querySelector('.counter');
 
     if (localStorage.getItem('seconds')) {
-      counter.textContent = localStorage.getItem('seconds');
+      counterEl.textContent = localStorage.getItem('seconds');
     }
 
-    roundButtonPlusEl.addEventListener('mouseup', () => {
-      let counterNumber = parseInt(counter.textContent, 10);
-      counterNumber = counterNumber + 1;
-      counter.textContent = counterNumber;
-      localStorage.setItem('seconds', counterNumber);
+    buttonPlusEl.addEventListener('mouseup', () => {
+      counterEl.textContent = +counterEl.textContent + 1;
+      localStorage.setItem('seconds', counterEl.textContent);
     });
 
-    roundButtonMinusEl.addEventListener('mouseup', () => {
-      let counterNumber = parseInt(counter.textContent, 10);
-      counterNumber = counterNumber - 1;
-      counter.textContent = counterNumber;
-      localStorage.setItem('seconds', counterNumber);
+    buttonMinusEl.addEventListener('mouseup', () => {
+      counterEl.textContent = +counterEl.textContent - 1;
+      localStorage.setItem('seconds', counterEl.textContent);
     });
+
+    const toggleEl = document.querySelector('.toggle label');
+    const toggleInputEl = document.querySelector('.toggle input');
+    const toggleValueEl = document.querySelector('.toggle .value');
+
+    toggleInputEl.checked = false;
+
+    if (localStorage.getItem('time')) {
+      toggleValueEl.textContent = localStorage.getItem('time');
+      if (localStorage.getItem('time') === 'Вкл') {
+        toggleInputEl.checked = true;
+      } else {
+        toggleInputEl.checked = false;
+      }
+    }
+
+    toggleEl.addEventListener('mouseup', () => {
+      if (toggleInputEl.checked) {
+        toggleValueEl.textContent = 'Выкл'
+      } else {
+        toggleValueEl.textContent = 'Вкл'
+      }
+      localStorage.setItem('time', toggleValueEl.textContent);
+    })
+
   }
 }
