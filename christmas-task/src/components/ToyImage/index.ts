@@ -1,0 +1,1 @@
+export { ToyImage } from './ToyImage';
