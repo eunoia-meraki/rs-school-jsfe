@@ -1,8 +1,8 @@
-import '@/styles/index.scss';
+import './index.scss';
 
 import { CookiesProvider } from 'react-cookie';
 import { render } from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 import { StrictMode } from 'react';
 
@@ -10,11 +10,11 @@ import { App } from '@/App';
 
 render(
   <StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <CookiesProvider>
         <App />
       </CookiesProvider>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>,
   document.getElementById('app')
 );

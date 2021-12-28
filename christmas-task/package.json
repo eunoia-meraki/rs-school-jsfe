@@ -1,9 +1,10 @@
 {
   "name": "christmas-task",
+  "homepage": "https://rolling-scopes-school.github.io/ivan-kuricyn-JSFE2021Q3/christmas-task",
   "version": "0.1.0",
-  "description": "webpack-react-typescript christmas-task",
+  "description": "webpack react typescript task",
   "main": "src/index.tsx",
-  "author": "Kuricyn-Ivan",
+  "author": "Kuricyn Ivan & Alexey Koren",
   "license": "ISC",
   "scripts": {
     "dev": "webpack serve --open --color --hot --mode=development",
@@ -43,6 +44,7 @@
     "babel-loader": "^8.2.3",
     "babel-plugin-module-resolver": "^4.1.0",
     "classnames": "^2.3.1",
+    "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^9.0.1",
     "cross-env": "^7.0.2",
     "css-loader": "^6.5.1",
@@ -60,6 +62,7 @@
     "eslint-plugin-react-hooks": "^4.1.2",
     "file-loader": "^6.1.0",
     "glob-all": "^3.2.1",
+    "html-webpack-link-type-plugin": "^1.1.1",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
     "lint-staged": "^11.2.6",

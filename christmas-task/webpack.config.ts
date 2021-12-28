@@ -1,9 +1,9 @@
-import CopyWebpackPlugin from 'copy-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { Configuration } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 import { resolve } from 'path';
 
@@ -40,7 +40,6 @@ const config: Configuration = {
   entry: './src/index.tsx',
   output: {
     path: resolve(__dirname, 'build'),
-    publicPath: '/',
     filename: 'bundle.js',
   },
   module: {
@@ -101,35 +100,31 @@ const config: Configuration = {
             },
           },
         ],
-      }
+      },
     ],
   },
   resolve: {
     extensions: ['.wasm', '.js', '.json', '.mjs', '.cjs', '.jsx', '.d.ts', '.ts', '.tsx'],
     alias: {
-      '@': resolve(__dirname, 'src'),
+      '@': resolve(__dirname, './src'),
     },
   },
   devServer: {
-    static: {
-      directory: resolve(__dirname, 'static'),
-    },
+    port: 9000,
     historyApiFallback: true,
   },
   plugins: [
     new Dotenv(),
     new HtmlWebpackPlugin({
       template: './index.html',
-      favicon: "./src/assets/favicon.ico"
+      favicon: './src/assets/favicon.ico',
     }),
     new MiniCssExtractPlugin({
       chunkFilename: '[id].css',
       filename: '[name].css',
     }),
     isAnalyze ? new BundleAnalyzerPlugin() : nothing,
-    isProduction
-      ? new CopyWebpackPlugin({ patterns: [{ from: './src/static', to: '.' }] })
-      : nothing,
+    new CleanWebpackPlugin(),
   ],
 };
 

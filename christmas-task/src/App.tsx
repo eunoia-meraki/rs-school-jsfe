@@ -5,7 +5,9 @@ import { Route, Routes } from 'react-router-dom';
 
 import bg from '@/assets/bg.jpg';
 import Logo from '@/assets/svg/tree.svg';
+import Rss from '@/assets/svg/rss.svg';
 
+import { Home } from './view/Home';
 import { Tree } from '@/view/Tree';
 
 import styles from './App.scss';
@@ -16,7 +18,7 @@ export const App: FC = () => {
       <header className={styles['header']}>
         <nav className={styles['nav']}>
           <NavLink to="/">
-            <Logo viewBox="0 0 128 128" className={styles['logo']} />
+            <Logo viewBox="0 0 98 128" className={styles['tree']} />
           </NavLink>
           <NavLink
             to="/toys"
@@ -40,12 +42,16 @@ export const App: FC = () => {
       </header>
       <main className={styles['main']} style={{ backgroundImage: `url('${bg}')` }}>
         <Routes>
-          <Route path="/"></Route>
+          <Route path="/" element={<Home />}></Route>
           <Route path="/toys"></Route>
           <Route path="/tree" element={<Tree />}></Route>
         </Routes>
       </main>
-      <footer className={styles['footer']}></footer>
+      <footer className={styles['footer']}>
+        <Rss viewBox="0 0 242 90" className={styles['rss']} />
+        <span>2021</span>
+        <a href="https://rs.school/">Курс</a>
+      </footer>
     </>
   );
 };
