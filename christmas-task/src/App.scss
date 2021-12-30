@@ -5,6 +5,8 @@
   width: 100%;
   min-height: 90px;
   background-color: #121c1e;
+  position: relative;
+  z-index: 1;
 }
 
 .tree {
@@ -27,7 +29,7 @@
 .nav-item {
   margin: 0 20px 0 20px;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 26px;
   line-height: 2;
   text-transform: uppercase;
   cursor: pointer;
@@ -55,6 +57,8 @@
   min-height: 90px;
   padding: 10px;
   background-color: #121c1e;
+  position: relative;
+  z-index: 1;
 }
 
 .rss {

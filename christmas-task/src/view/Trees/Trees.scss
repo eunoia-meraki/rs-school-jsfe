@@ -1,0 +1,41 @@
+.settings-header {
+  margin-top: 15px;
+  font-size: 20px;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.settings-group {
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 0;
+  flex-direction: column;
+  padding: 15px;
+  max-width: 420px;
+}
+
+.buttons {
+  display: flex;
+}
+
+.settings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.background {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-grow: 1.4;
+  flex-basis: 0;
+  background-position: center center;
+  background-size: 100% 100%;
+  position: relative;
+}
+
+.tree {
+  position: relative;
+}

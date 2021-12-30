@@ -1,0 +1,1 @@
+export { Toy } from './Toy';

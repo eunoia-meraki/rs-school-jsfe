@@ -8,7 +8,7 @@ import Logo from '@/assets/svg/tree.svg';
 import Rss from '@/assets/svg/rss.svg';
 
 import { Home } from './view/Home';
-import { Tree } from '@/view/Tree';
+import { Trees } from '@/view/Trees';
 
 import styles from './App.scss';
 
@@ -30,13 +30,13 @@ export const App: FC = () => {
             Игрушки
           </NavLink>
           <NavLink
-            to="/tree"
+            to="/trees"
             className={styles['nav-item']}
             style={({ isActive }) => ({
               borderBottomColor: isActive ? '#278d9f' : 'transparent',
             })}
           >
-            Елка
+            Елки
           </NavLink>
         </nav>
       </header>
@@ -44,7 +44,7 @@ export const App: FC = () => {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/toys"></Route>
-          <Route path="/tree" element={<Tree />}></Route>
+          <Route path="/trees" element={<Trees />}></Route>
         </Routes>
       </main>
       <footer className={styles['footer']}>

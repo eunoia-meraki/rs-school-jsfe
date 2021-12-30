@@ -1,0 +1,82 @@
+.snowfall {
+  position: absolute;
+  width: 100%;
+  height: calc(890px - 10vw + 100%);
+  top: calc(-800px + 10vw);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.snowflake {
+  animation-name: snowfall;
+  animation-iteration-count: 100;
+  pointer-events: none;
+}
+
+.snowflake:nth-child(7n) {
+  animation-delay: 0s;
+  animation-timing-function: ease-in;
+}
+
+.snowflake:nth-child(7n + 1) {
+  animation-delay: 0.5s;
+  animation-timing-function: ease-out;
+}
+
+.snowflake:nth-child(7n + 2) {
+  animation-delay: 1s;
+  animation-timing-function: linear;
+}
+
+.snowflake:nth-child(7n + 3) {
+  animation-delay: 1.5s;
+  animation-timing-function: ease-in;
+}
+
+.snowflake:nth-child(7n + 4) {
+  animation-delay: 2s;
+  animation-timing-function: ease-out;
+}
+
+.snowflake:nth-child(7n + 5) {
+  animation-delay: 2.5s;
+  animation-timing-function: linear;
+}
+
+.snowflake:nth-child(7n + 6) {
+  animation-delay: 3s;
+  animation-timing-function: ease-in;
+}
+
+.snowflake:nth-child(3n) {
+  width: 60px;
+  height: 60px;
+  animation-duration: 4s;
+  transform-origin: right -3vw;
+}
+
+.snowflake:nth-child(3n + 1) {
+  width: 40px;
+  height: 40px;
+  animation-duration: 8s;
+  transform-origin: right -2vw;
+}
+
+.snowflake:nth-child(3n + 2) {
+  width: 20px;
+  height: 20px;
+  animation-duration: 12s;
+  transform-origin: right -1vw;
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.6);
+  }
+}
+
+@keyframes snowfall {
+  100% {
+    transform: translate3d(1vw, calc(890px - 10vw + 100vh), 0px) rotate(360deg) scale(0.6);
+  }
+}

@@ -3,7 +3,11 @@ import type { CSSProperties, FC } from 'react';
 
 import SnowSvg from '@/assets/svg/Snow.svg';
 
-export const Snow: FC = () => {
+interface ISnow {
+  onSnowClick?: () => void;
+}
+
+export const Snow: FC<ISnow> = ({ onSnowClick }) => {
   const [isActive, setIsActive] = useState(false);
 
   const onClick = (): void => {
@@ -12,6 +16,7 @@ export const Snow: FC = () => {
     } else {
       setIsActive(true);
     }
+    if (onSnowClick) onSnowClick();
   };
 
   const style: CSSProperties = {
