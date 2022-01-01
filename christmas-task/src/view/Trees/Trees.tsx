@@ -42,11 +42,10 @@ export const Trees: FC = () => {
   };
 
   return (
-    <>
+    <div className={styles['trees']}>
       <div className={styles['settings-group']}>
         <div className={styles['buttons']}>
           <Sound />
-          <div style={{ width: '30px' }}></div>
           <Snow onSnowClick={onSnowClick} />
         </div>
         <span className={styles['settings-header']}>Выберите елку</span>
@@ -84,6 +83,6 @@ export const Trees: FC = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };

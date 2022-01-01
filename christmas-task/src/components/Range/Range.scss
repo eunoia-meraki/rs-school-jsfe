@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.outter-band {
+  position: relative;
+  width: 360px;
+  height: 4px;
+  margin: 8px 0;
+  border-radius: 100px;
+  background-color: #fff;
+}
+
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -8px;
+  border-radius: 100px;
+  background-color: #278d9f;
+  cursor: pointer;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: 0;
+}
+
+.values {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,43 @@
+.container {
+  position: relative;
+}
+
+.search {
+  width: 360px;
+  height: 40px;
+  padding: 5px 50px;
+  border-radius: 100px;
+  border: 0;
+  outline: 0;
+  background-color: rgba(31, 112, 127, 0.3);
+  backdrop-filter: blur(6px);
+}
+
+.search::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+.search::-webkit-search-cancel-button {
+  display: none;
+}
+
+.loupe {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+}
+
+.cross {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 1;
+  width: 14px;
+  height: 14px;
+  fill: #fff;
+  cursor: pointer;
+}

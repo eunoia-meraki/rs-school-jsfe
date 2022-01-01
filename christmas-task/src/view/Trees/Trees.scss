@@ -1,28 +1,34 @@
+.trees {
+  display: flex;
+  min-height: calc(100vh - 180px);
+}
+
 .settings-header {
-  margin-top: 15px;
-  font-size: 20px;
+  margin-top: 20px;
+  font-size: 24px;
   text-transform: uppercase;
   pointer-events: none;
 }
 
 .settings-group {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
   flex-basis: 0;
-  flex-direction: column;
-  padding: 15px;
+  padding: 20px;
   max-width: 420px;
 }
 
 .buttons {
   display: flex;
+  gap: 30px;
 }
 
 .settings {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .background {
@@ -30,6 +36,7 @@
   align-items: flex-end;
   justify-content: center;
   flex-grow: 1.4;
+  flex-grow: 1;
   flex-basis: 0;
   background-position: center center;
   background-size: 100% 100%;

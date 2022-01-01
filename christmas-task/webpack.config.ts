@@ -56,28 +56,47 @@ const config: Configuration = {
       },
       {
         test: /\.(png|jpg|gif)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-              name: '[contenthash].[ext]',
-              outputPath: 'static/images',
-            },
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/images/[contenthash].[ext]',
+        }
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: 'static/fonts',
-            },
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/fonts',
+        }
       },
+      {
+        test: /\.mp3$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/audio',
+        }
+      },
+      // {
+      //   test: /\.(woff|woff2|eot|ttf|otf)$/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //       options: {
+      //         outputPath: 'static/fonts',
+      //       },
+      //     },
+      //   ],
+      // },
+      // {
+      //   test: /\.mp3$/,
+      //   use: [
+      //     {
+      //       loader: 'file-loader',
+      //       options: {
+      //         outputPath: 'static/audio',
+      //       },
+      //     },
+      //   ],
+      // },
       formStylesRule(false),
       formStylesRule(true),
       {
@@ -89,17 +108,6 @@ const config: Configuration = {
             floatPrecision: 2,
           },
         },
-      },
-      {
-        test: /\.mp3$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: 'static/audio',
-            },
-          },
-        ],
       },
     ],
   },

@@ -2,8 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  min-height: 90px;
+  height: 90px;
   background-color: #121c1e;
   position: relative;
   z-index: 1;
@@ -29,7 +28,7 @@
 .nav-item {
   margin: 0 20px 0 20px;
   text-decoration: none;
-  font-size: 26px;
+  font-size: 28px;
   line-height: 2;
   text-transform: uppercase;
   cursor: pointer;
@@ -42,19 +41,16 @@
 }
 
 .main {
-  display: flex;
-  width: 100%;
-  min-height: calc(100vh - 180px);
   background-size: 100% 100%;
   background-position: center center;
+  background-attachment: fixed;
 }
 
 .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  min-height: 90px;
+  height: 90px;
   padding: 10px;
   background-color: #121c1e;
   position: relative;
@@ -64,4 +60,8 @@
 .rss {
   height: 60px;
   width: 70px;
+}
+
+.year {
+  pointer-events: none;
 }

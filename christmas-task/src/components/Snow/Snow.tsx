@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { CSSProperties, FC } from 'react';
 
-import SnowSvg from '@/assets/svg/Snow.svg';
+import SnowSvg from '@/assets/svg/snow.svg';
 
 interface ISnow {
   onSnowClick?: () => void;
