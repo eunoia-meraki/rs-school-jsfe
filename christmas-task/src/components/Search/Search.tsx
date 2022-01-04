@@ -1,4 +1,5 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { ChangeEvent, FC } from 'react';
 
 import Loupe from '@/assets/svg/search.svg';
 import Cross from '@/assets/cross.svg';
@@ -26,6 +27,7 @@ export const Search: FC<ISearch> = ({ onChange }) => {
 
   const onCrossClick = (): void => {
     setValue('');
+    onChange('');
     search!.focus();
   };
 

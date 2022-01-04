@@ -1,10 +1,12 @@
-import { FC, useEffect, useState } from 'react';
+import { useState } from 'react';
+import type { FC } from 'react';
 
 import { Button } from '@/components/Button';
 import { Checkbox } from '@/components/Checkbox';
 import { Card } from '@/components/Card';
 import { Range } from '@/components/Range';
 import { Search } from '@/components/Search';
+import { Select, Sort } from '@/components/Select';
 
 import { data } from '@/data';
 
@@ -14,11 +16,26 @@ import cone from '@/assets/svg/cone.svg';
 import snowflake from '@/assets/svg/snowflake.svg';
 import toy from '@/assets/svg/toy.svg';
 
+import styles from './Toys.scss';
+
+type ItemData = {
+  num: string;
+  name: string;
+  count: string;
+  year: string;
+  shape: string;
+  color: string;
+  size: string;
+  favorite: boolean;
+};
+
+type SortedData = {
+  [key: string]: ItemData[];
+};
+
 const importToy = (number: number): string => {
   return require(`@/assets/toys/${number}.png`);
 };
-
-import styles from './Toys.scss';
 
 export const Toys: FC = () => {
   const [isSearchText, setIsSearchText] = useState<string>('');
@@ -27,8 +44,8 @@ export const Toys: FC = () => {
     setIsSearchText(value);
   };
 
-  const isSearch = (card: any): boolean => {
-    return card.name.toLowerCase().includes(isSearchText.toLowerCase());
+  const isSearch = (item: ItemData): boolean => {
+    return item.name.toLowerCase().includes(isSearchText.toLowerCase());
   };
 
   const minCount = 1;
@@ -44,8 +61,8 @@ export const Toys: FC = () => {
     setIsMaxCount(value);
   };
 
-  const isCount = (card: any): boolean => {
-    return card.count >= isMinCount && card.count <= isMaxCount;
+  const isCount = (item: ItemData): boolean => {
+    return Number(item.count) >= Number(isMinCount) && Number(item.count) <= Number(isMaxCount);
   };
 
   const minYear = 1940;
@@ -61,8 +78,8 @@ export const Toys: FC = () => {
     setIsMaxYear(value);
   };
 
-  const isYear = (card: any): boolean => {
-    return card.year >= isMinYear && card.year <= isMaxYear;
+  const isYear = (item: ItemData): boolean => {
+    return Number(item.year) >= Number(isMinYear) && Number(item.year) <= Number(isMaxYear);
   };
 
   const [isBall, setIsBall] = useState<boolean>(false);
@@ -87,13 +104,13 @@ export const Toys: FC = () => {
     isToy ? setIsToy(false) : setIsToy(true);
   };
 
-  const isShape = (card: any): boolean => {
+  const isShape = (item: ItemData): boolean => {
     return (
-      (isBall && card.shape === 'шар') ||
-      (isBell && card.shape === 'колокольчик') ||
-      (isCone && card.shape === 'шишка') ||
-      (isSnowflake && card.shape === 'снежинка') ||
-      (isToy && card.shape === 'фигурка')
+      (isBall && item.shape === 'шар') ||
+      (isBell && item.shape === 'колокольчик') ||
+      (isCone && item.shape === 'шишка') ||
+      (isSnowflake && item.shape === 'снежинка') ||
+      (isToy && item.shape === 'фигурка')
     );
   };
 
@@ -121,13 +138,13 @@ export const Toys: FC = () => {
     isGreen ? setIsGreen(false) : setIsGreen(true);
   };
 
-  const isColor = (card: any): boolean => {
+  const isColor = (item: ItemData): boolean => {
     return (
-      (isWhite && card.color === 'белый') ||
-      (isYellow && card.color === 'желтый') ||
-      (isRed && card.color === 'красный') ||
-      (isBlue && card.color === 'синий') ||
-      (isGreen && card.color === 'зелёный')
+      (isWhite && item.color === 'белый') ||
+      (isYellow && item.color === 'желтый') ||
+      (isRed && item.color === 'красный') ||
+      (isBlue && item.color === 'синий') ||
+      (isGreen && item.color === 'зелёный')
     );
   };
 
@@ -147,11 +164,11 @@ export const Toys: FC = () => {
     isSmall ? setIsSmall(false) : setIsSmall(true);
   };
 
-  const isSize = (card: any): boolean => {
+  const isSize = (item: ItemData): boolean => {
     return (
-      (isGreat && card.size === 'большой') ||
-      (isMedium && card.size === 'средний') ||
-      (isSmall && card.size === 'малый')
+      (isGreat && item.size === 'большой') ||
+      (isMedium && item.size === 'средний') ||
+      (isSmall && item.size === 'малый')
     );
   };
 
@@ -163,22 +180,55 @@ export const Toys: FC = () => {
     isFavouriteState ? setIsFavouriteState(false) : setIsFavouriteState(true);
   };
 
-  const isFavourite = (card: any): boolean => {
-    return isFavouriteState && card.favorite === true;
+  const isFavourite = (item: ItemData): boolean => {
+    return isFavouriteState && item.favorite === true;
   };
 
   const isFavouriteAll = !isFavouriteState;
 
-  const cardIsShown = (card: any): boolean => {
+  const cardIsShown = (item: ItemData): boolean => {
     return (
-      isSearch(card) &&
-      isCount(card) &&
-      isYear(card) &&
-      (isShape(card) || isShapeAll) &&
-      (isColor(card) || isColorAll) &&
-      (isSize(card) || isSizeAll) &&
-      (isFavourite(card) || isFavouriteAll)
+      isSearch(item) &&
+      isCount(item) &&
+      isYear(item) &&
+      (isShape(item) || isShapeAll) &&
+      (isColor(item) || isColorAll) &&
+      (isSize(item) || isSizeAll) &&
+      (isFavourite(item) || isFavouriteAll)
     );
+  };
+
+  const [isSelectText, setIsSelectText] = useState<string>(`${Sort.sortByNameInAscendingOrder}`);
+
+  const dataSortedByNameInAscendingOrder = Array.from(data).sort((a, b) => {
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return -1;
+    return 0;
+  });
+
+  const dataSortedByNameInDescendingOrder = Array.from(data).sort((a, b) => {
+    if (a.name < b.name) return 1;
+    if (a.name > b.name) return -1;
+    return 0;
+  });
+
+  const dataSortedByCountInAscendingOrder = Array.from(data).sort((a, b) => {
+    return Number(a.count) - Number(b.count);
+  });
+
+  const dataSortedByCountInDescendingOrder = Array.from(data).sort((a, b) => {
+    return Number(b.count) - Number(a.count);
+  });
+
+  const sortedData: SortedData = {
+    [`${Sort.sortByNameInAscendingOrder}`]: dataSortedByNameInAscendingOrder,
+    [`${Sort.sortByNameInDescendingOrder}`]: dataSortedByNameInDescendingOrder,
+    [`${Sort.sortByCountInAscendingOrder}`]: dataSortedByCountInAscendingOrder,
+    [`${Sort.sortByCountInDescendingOrder}`]: dataSortedByCountInDescendingOrder,
+  };
+
+  const onSelectChange = (value: string): void => {
+    setIsSelectText(value);
   };
 
   return (
@@ -234,9 +284,12 @@ export const Toys: FC = () => {
           <Checkbox label="Только любимые" onClick={onFavouriteClick} />
         </div>
         <span className={styles['header']}>Сортировка</span>
+        <div className={styles['filters']}>
+          <Select onChange={onSelectChange} />
+        </div>
       </div>
       <div className={styles['cards']}>
-        {data.map(
+        {sortedData[isSelectText].map(
           (item, index) =>
             cardIsShown(item) && (
               <Card
