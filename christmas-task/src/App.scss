@@ -1,32 +1,21 @@
 .header {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 90px;
   background-color: #121c1e;
-  position: relative;
-  z-index: 1;
-}
-
-.tree {
-  height: 60px;
-  width: 70px;
-  cursor: pointer;
-  transition: 0.3s fill;
-}
-
-.tree:hover {
-  fill: #278d9f;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  height: 100%;
+  gap: 30px;
+  margin-left: 30px;
 }
 
 .nav-item {
-  margin: 0 20px 0 20px;
   text-decoration: none;
   font-size: 28px;
   line-height: 2;
@@ -47,21 +36,17 @@
 }
 
 .footer {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 90px;
   padding: 10px;
   background-color: #121c1e;
-  position: relative;
-  z-index: 1;
 }
 
 .rss {
   height: 60px;
   width: 70px;
-}
-
-.year {
-  pointer-events: none;
 }

@@ -7,7 +7,6 @@
   margin-top: 20px;
   font-size: 24px;
   text-transform: uppercase;
-  pointer-events: none;
 }
 
 .settings-group {
@@ -16,7 +15,8 @@
   flex-grow: 1;
   flex-basis: 0;
   padding: 20px;
-  max-width: 420px;
+  max-width: 400px;
+  overflow: auto;
 }
 
 .buttons {
@@ -32,15 +32,14 @@
 }
 
 .background {
+  position: relative;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  flex-grow: 1.4;
   flex-grow: 1;
   flex-basis: 0;
   background-position: center center;
   background-size: 100% 100%;
-  position: relative;
 }
 
 .tree {

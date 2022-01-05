@@ -1,13 +1,18 @@
 .home {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 180px);
+  min-height: calc(100vh - 180px);
+}
+
+.home::-webkit-scrollbar {
+  display: none;
 }
 
 .ball1 {
   position: absolute;
-  top: 200px;
+  top: 100px;
   left: 1%;
   width: 360px;
   height: 360px;
@@ -18,17 +23,17 @@
 
 .ball1::before {
   position: absolute;
-  top: -110px;
+  top: -100px;
   left: 50%;
   width: 4px;
-  height: 114px;
+  height: 104px;
   content: '';
   background-color: #aaa;
 }
 
 .ball2 {
   position: absolute;
-  top: 200px;
+  top: 100px;
   right: 12%;
   width: 200px;
   height: 200px;
@@ -39,10 +44,10 @@
 
 .ball2::before {
   position: absolute;
-  top: -110px;
+  top: -100px;
   left: 50%;
   width: 2px;
-  height: 114px;
+  height: 104px;
   content: '';
   background-color: #aaa;
 }
@@ -78,6 +83,7 @@
   border-radius: 30px;
   background-color: rgba(31, 112, 127, 0.3);
   backdrop-filter: blur(6px);
+  text-decoration: none;
   font-weight: 300;
   font-size: 28px;
   text-align: center;

@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.checkbox:hover {
+  opacity: 0.8;
+}
+
+.check {
+  width: 18px;
+  height: 18px;
+}
+
+.label {
+  font-size: 16px;
+}

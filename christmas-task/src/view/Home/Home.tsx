@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import { NavLink } from 'react-router-dom';
+
 import ball1 from '@/assets/ball/1.png';
 import ball2 from '@/assets/ball/2.png';
 
@@ -12,7 +14,7 @@ export const Home: FC = () => {
       <div className={styles['ball2']} style={{ backgroundImage: `url('${ball2}')` }}></div>
       <div className={styles['container']}>
         <div className={styles['title']}>Новогодняя игра "Наряди елку"</div>
-        <div className={styles['button']}>Начать</div>
+        <NavLink to="/toys" className={styles['button']}>Начать</NavLink>
       </div>
     </div>
   );

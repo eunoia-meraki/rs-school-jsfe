@@ -1,5 +1,7 @@
 import type { FC, CSSProperties } from 'react';
 
+import styles from './Button.scss';
+
 interface IButton {
   svg: any;
   viewBox: string;
@@ -16,26 +18,13 @@ export const Button: FC<IButton> = ({ svg, viewBox, width, height, label, isPres
   const svgStyle: CSSProperties = {
     width: width ?? 40,
     height: height ?? 40,
-    opacity: isPressed ? 0.6 : 1,
-    cursor: 'pointer',
-  };
-
-  const buttonStyle: CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: 5,
-  };
-
-  const labelStyle: CSSProperties = {
-    fontSize: 16,
-    pointerEvents: 'none',
+    fill: isPressed ? '#278d9f' : '#fff',
   };
 
   return (
-    <div style={buttonStyle}>
-      <Svg viewBox={viewBox} style={svgStyle} onClick={onClick} />
-      <span style={labelStyle}>{label}</span>
+    <div className={styles['button']}>
+      <Svg viewBox={viewBox} className={styles['svg']} style={svgStyle} onClick={onClick} />
+      <span className={styles['label']}>{label}</span>
     </div>
   );
 };

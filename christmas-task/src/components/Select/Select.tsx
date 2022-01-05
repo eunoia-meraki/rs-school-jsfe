@@ -5,10 +5,10 @@ import Arrow from '@/assets/svg/arrow-down.svg';
 import styles from './Select.scss';
 
 export enum Sort {
-  sortByNameInAscendingOrder,
-  sortByNameInDescendingOrder,
-  sortByCountInAscendingOrder,
-  sortByCountInDescendingOrder,
+  ByNameInAscendingOrder,
+  ByNameInDescendingOrder,
+  ByCountInAscendingOrder,
+  ByCountInDescendingOrder,
 }
 
 interface ISelect {
@@ -24,16 +24,16 @@ export const Select: FC<ISelect> = ({ onChange, value }) => {
   return (
     <div className={styles['container']}>
       <select className={styles['select']} value={value} onChange={onSelectChange}>
-        <option className={styles['option']} value={`${Sort.sortByNameInAscendingOrder}`}>
+        <option className={styles['option']} value={`${Sort.ByNameInAscendingOrder}`}>
           По названию от А до Я
         </option>
-        <option className={styles['option']} value={`${Sort.sortByNameInDescendingOrder}`}>
+        <option className={styles['option']} value={`${Sort.ByNameInDescendingOrder}`}>
           По названию от Я до А
         </option>
-        <option className={styles['option']} value={`${Sort.sortByCountInAscendingOrder}`}>
+        <option className={styles['option']} value={`${Sort.ByCountInAscendingOrder}`}>
           По возрастанию количества
         </option>
-        <option className={styles['option']} value={`${Sort.sortByCountInDescendingOrder}`}>
+        <option className={styles['option']} value={`${Sort.ByCountInDescendingOrder}`}>
           По убыванию количества
         </option>
       </select>
