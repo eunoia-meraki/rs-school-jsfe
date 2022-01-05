@@ -12,17 +12,18 @@ export enum Sort {
 }
 
 interface ISelect {
+  value: string;
   onChange: (value: string) => void;
 }
 
-export const Select: FC<ISelect> = ({ onChange }) => {
+export const Select: FC<ISelect> = ({ onChange, value }) => {
   const onSelectChange = (e: ChangeEvent<HTMLSelectElement>): void => {
     onChange(e.target.value);
   };
 
   return (
     <div className={styles['container']}>
-      <select className={styles['select']} onChange={onSelectChange}>
+      <select className={styles['select']} value={value} onChange={onSelectChange}>
         <option className={styles['option']} value={`${Sort.sortByNameInAscendingOrder}`}>
           По названию от А до Я
         </option>

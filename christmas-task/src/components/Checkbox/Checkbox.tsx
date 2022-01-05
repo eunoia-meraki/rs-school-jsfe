@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { FC, CSSProperties } from 'react';
 
 import Check from '@/assets/check.svg';
@@ -7,12 +6,11 @@ interface ICheckbox {
   boxColor?: string;
   checkColor?: string;
   label?: string;
+  isChecked: boolean;
   onClick: () => void;
 }
 
-export const Checkbox: FC<ICheckbox> = ({ boxColor, checkColor, label, onClick }) => {
-  const [isPressed, setIsPressed] = useState(false);
-
+export const Checkbox: FC<ICheckbox> = ({ boxColor, checkColor, label, isChecked, onClick }) => {
   const containerStyle: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
@@ -32,11 +30,6 @@ export const Checkbox: FC<ICheckbox> = ({ boxColor, checkColor, label, onClick }
     cursor: 'pointer',
   };
 
-  const onCheckboxClick = (): void => {
-    isPressed ? setIsPressed(false) : setIsPressed(true);
-    onClick();
-  };
-
   const checkStyle: CSSProperties = {
     width: 18,
     height: 18,
@@ -50,8 +43,8 @@ export const Checkbox: FC<ICheckbox> = ({ boxColor, checkColor, label, onClick }
 
   return (
     <div style={containerStyle}>
-      <div style={checkboxStyle} onClick={onCheckboxClick}>
-        {isPressed && <Check viewBox="0 0 26 26" style={checkStyle} />}
+      <div style={checkboxStyle} onClick={onClick}>
+        {isChecked && <Check viewBox="0 0 26 26" style={checkStyle} />}
       </div>
       <span style={labelStyle}>{label}</span>
     </div>

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import type { FC, CSSProperties } from 'react';
 
 interface IButton {
@@ -7,12 +6,11 @@ interface IButton {
   width?: number;
   height?: number;
   label?: string;
+  isPressed: boolean;
   onClick: () => void;
 }
 
-export const Button: FC<IButton> = ({ svg, viewBox, width, height, label, onClick }) => {
-  const [isPressed, setIsPressed] = useState(false);
-
+export const Button: FC<IButton> = ({ svg, viewBox, width, height, label, isPressed, onClick }) => {
   const Svg = svg;
 
   const svgStyle: CSSProperties = {
@@ -20,11 +18,6 @@ export const Button: FC<IButton> = ({ svg, viewBox, width, height, label, onClic
     height: height ?? 40,
     opacity: isPressed ? 0.6 : 1,
     cursor: 'pointer',
-  };
-
-  const onSvgClick = (): void => {
-    isPressed ? setIsPressed(false) : setIsPressed(true);
-    onClick();
   };
 
   const buttonStyle: CSSProperties = {
@@ -41,7 +34,7 @@ export const Button: FC<IButton> = ({ svg, viewBox, width, height, label, onClic
 
   return (
     <div style={buttonStyle}>
-      <Svg viewBox={viewBox} style={svgStyle} onClick={onSvgClick} />
+      <Svg viewBox={viewBox} style={svgStyle} onClick={onClick} />
       <span style={labelStyle}>{label}</span>
     </div>
   );

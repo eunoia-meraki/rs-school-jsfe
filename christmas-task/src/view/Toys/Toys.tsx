@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { FC } from 'react';
 
 import { Button } from '@/components/Button';
@@ -17,6 +17,7 @@ import snowflake from '@/assets/svg/snowflake.svg';
 import toy from '@/assets/svg/toy.svg';
 
 import styles from './Toys.scss';
+import { OvalButton } from '@/components/OvalButton';
 
 type ItemData = {
   num: string;
@@ -33,7 +34,7 @@ type SortedData = {
   [key: string]: ItemData[];
 };
 
-const importToy = (number: number): string => {
+const importToy = (number: string): string => {
   return require(`@/assets/toys/${number}.png`);
 };
 
@@ -46,23 +47,6 @@ export const Toys: FC = () => {
 
   const isSearch = (item: ItemData): boolean => {
     return item.name.toLowerCase().includes(isSearchText.toLowerCase());
-  };
-
-  const minCount = 1;
-  const maxCount = 12;
-
-  const [isMinCount, setIsMinCount] = useState<number>(minCount);
-  const [isMaxCount, setIsMaxCount] = useState<number>(maxCount);
-
-  const onMinCountChange = (value: number): void => {
-    setIsMinCount(value);
-  };
-  const onMaxCountChange = (value: number): void => {
-    setIsMaxCount(value);
-  };
-
-  const isCount = (item: ItemData): boolean => {
-    return Number(item.count) >= Number(isMinCount) && Number(item.count) <= Number(isMaxCount);
   };
 
   const minYear = 1940;
@@ -80,6 +64,23 @@ export const Toys: FC = () => {
 
   const isYear = (item: ItemData): boolean => {
     return Number(item.year) >= Number(isMinYear) && Number(item.year) <= Number(isMaxYear);
+  };
+
+  const minCount = 1;
+  const maxCount = 12;
+
+  const [isMinCount, setIsMinCount] = useState<number>(minCount);
+  const [isMaxCount, setIsMaxCount] = useState<number>(maxCount);
+
+  const onMinCountChange = (value: number): void => {
+    setIsMinCount(value);
+  };
+  const onMaxCountChange = (value: number): void => {
+    setIsMaxCount(value);
+  };
+
+  const isCount = (item: ItemData): boolean => {
+    return Number(item.count) >= Number(isMinCount) && Number(item.count) <= Number(isMaxCount);
   };
 
   const [isBall, setIsBall] = useState<boolean>(false);
@@ -200,6 +201,10 @@ export const Toys: FC = () => {
 
   const [isSelectText, setIsSelectText] = useState<string>(`${Sort.sortByNameInAscendingOrder}`);
 
+  const onSelectChange = (value: string): void => {
+    setIsSelectText(value);
+  };
+
   const dataSortedByNameInAscendingOrder = Array.from(data).sort((a, b) => {
     if (a.name > b.name) return 1;
     if (a.name < b.name) return -1;
@@ -227,14 +232,78 @@ export const Toys: FC = () => {
     [`${Sort.sortByCountInDescendingOrder}`]: dataSortedByCountInDescendingOrder,
   };
 
-  const onSelectChange = (value: string): void => {
-    setIsSelectText(value);
+  const onResetClick = (): void => {
+    setIsSearchText('');
+    setIsMinYear(minYear);
+    setIsMaxYear(maxYear);
+    setIsMinCount(minCount);
+    setIsMaxCount(maxCount);
+    setIsBall(false);
+    setIsBell(false);
+    setIsCone(false);
+    setIsSnowflake(false);
+    setIsToy(false);
+    setIsWhite(false);
+    setIsYellow(false);
+    setIsRed(false);
+    setIsBlue(false);
+    setIsGreen(false);
+    setIsGreat(false);
+    setIsMedium(false);
+    setIsSmall(false);
+    setIsFavouriteState(false);
+    setIsSelectText(`${Sort.sortByNameInAscendingOrder}`);
   };
+
+  const onSaveClick = (): void => {
+    localStorage.setItem('is_search_text', isSearchText);
+    localStorage.setItem('min_year', String(isMinYear));
+    localStorage.setItem('max_year', String(isMaxYear));
+    localStorage.setItem('min_count', String(isMinCount));
+    localStorage.setItem('max_count', String(isMaxCount));
+    localStorage.setItem('is_ball', String(isBall));
+    localStorage.setItem('is_bell', String(isBell));
+    localStorage.setItem('is_cone', String(isCone));
+    localStorage.setItem('is_snowflake', String(isSnowflake));
+    localStorage.setItem('is_white', String(isWhite));
+    localStorage.setItem('is_yellow', String(isYellow));
+    localStorage.setItem('is_red', String(isRed));
+    localStorage.setItem('is_blue', String(isBlue));
+    localStorage.setItem('is_green', String(isGreen));
+    localStorage.setItem('is_great', String(isGreat));
+    localStorage.setItem('is_medium', String(isMedium));
+    localStorage.setItem('is_small', String(isSmall));
+    localStorage.setItem('is_favourite_state', String(isFavouriteState));
+    localStorage.setItem('is_select_text', isSelectText);
+  };
+
+  useEffect(() => {
+    setIsSearchText(localStorage.getItem('is_search_text') ?? '');
+    setIsMinYear(Number(localStorage.getItem('min_year') ?? minYear));
+    setIsMaxYear(Number(localStorage.getItem('max_year') ?? maxYear));
+    setIsMinCount(Number(localStorage.getItem('min_count') ?? minCount));
+    setIsMaxCount(Number(localStorage.getItem('max_count') ?? maxCount));
+    setIsBall(localStorage.getItem('is_bell') === 'true');
+    setIsBell(localStorage.getItem('is_bell') === 'true');
+    setIsCone(localStorage.getItem('is_cone') === 'true');
+    setIsSnowflake(localStorage.getItem('is_snowflake') === 'true');
+    setIsToy(localStorage.getItem('is_toy') === 'true');
+    setIsWhite(localStorage.getItem('is_white') === 'true');
+    setIsYellow(localStorage.getItem('is_yellow') === 'true');
+    setIsRed(localStorage.getItem('is_red') === 'true');
+    setIsBlue(localStorage.getItem('is_blue') === ' true');
+    setIsGreen(localStorage.getItem('is_green') === 'true');
+    setIsGreat(localStorage.getItem('is_great') === 'true');
+    setIsMedium(localStorage.getItem('is_medium') === 'true');
+    setIsSmall(localStorage.getItem('is_small') === 'true');
+    setIsFavouriteState(localStorage.getItem('is_favourite_state') === 'true');
+    setIsSelectText(localStorage.getItem('is_select_text') ?? `${Sort.sortByNameInAscendingOrder}`);
+  }, []);
 
   return (
     <div className={styles['toys']}>
       <div className={styles['settings']}>
-        <Search onChange={onSearchChange} />
+        <Search value={isSearchText} onChange={onSearchChange} />
         <span className={styles['header']}>Фильтры</span>
         <span className={styles['subheader']}>Год покупки</span>
         <div className={styles['filters']}>
@@ -260,32 +329,80 @@ export const Toys: FC = () => {
         </div>
         <span className={styles['subheader']}>Форма</span>
         <div className={styles['filters']}>
-          <Button svg={ball} viewBox="0 0 64 64" label="Шар" onClick={onBallClick} />
-          <Button svg={bell} viewBox="0 0 64 64" label="Колокол" onClick={onBellClick} />
-          <Button svg={cone} viewBox="0 0 64 64" label="Шишка" onClick={onConeClick} />
-          <Button svg={snowflake} viewBox="0 0 64 64" label="Снежинка" onClick={onSnowflakeClick} />
-          <Button svg={toy} viewBox="0 0 400 557" label="Фигурка" onClick={onToyClick} />
+          <Button
+            svg={ball}
+            viewBox="0 0 64 64"
+            label="Шар"
+            isPressed={isBall}
+            onClick={onBallClick}
+          />
+          <Button
+            svg={bell}
+            viewBox="0 0 64 64"
+            label="Колокол"
+            isPressed={isBell}
+            onClick={onBellClick}
+          />
+          <Button
+            svg={cone}
+            viewBox="0 0 64 64"
+            label="Шишка"
+            isPressed={isCone}
+            onClick={onConeClick}
+          />
+          <Button
+            svg={snowflake}
+            viewBox="0 0 64 64"
+            label="Снежинка"
+            isPressed={isSnowflake}
+            onClick={onSnowflakeClick}
+          />
+          <Button
+            svg={toy}
+            viewBox="0 0 400 557"
+            label="Фигурка"
+            isPressed={isToy}
+            onClick={onToyClick}
+          />
         </div>
         <span className={styles['subheader']}>Цвет</span>
         <div className={styles['filters']}>
-          <Checkbox boxColor="white" checkColor="black" onClick={onWhiteClick} />
-          <Checkbox boxColor="yellow" checkColor="black" onClick={onYellowClick} />
-          <Checkbox boxColor="red" onClick={onRedClick} />
-          <Checkbox boxColor="blue" onClick={onBlueClick} />
-          <Checkbox boxColor="green" onClick={onGreenClick} />
+          <Checkbox
+            boxColor="white"
+            checkColor="black"
+            isChecked={isWhite}
+            onClick={onWhiteClick}
+          />
+          <Checkbox
+            boxColor="yellow"
+            checkColor="black"
+            isChecked={isYellow}
+            onClick={onYellowClick}
+          />
+          <Checkbox boxColor="red" isChecked={isRed} onClick={onRedClick} />
+          <Checkbox boxColor="blue" isChecked={isBlue} onClick={onBlueClick} />
+          <Checkbox boxColor="green" isChecked={isGreen} onClick={onGreenClick} />
         </div>
         <span className={styles['subheader']}>Размер</span>
         <div className={styles['filters']}>
-          <Checkbox label="Большой" onClick={onGreatClick} />
-          <Checkbox label="Средний" onClick={onMediumClick} />
-          <Checkbox label="Маленький" onClick={onSmallClick} />
+          <Checkbox label="Большой" isChecked={isGreat} onClick={onGreatClick} />
+          <Checkbox label="Средний" isChecked={isMedium} onClick={onMediumClick} />
+          <Checkbox label="Маленький" isChecked={isSmall} onClick={onSmallClick} />
         </div>
-        <div className={styles['filters']} style={{ marginTop: 30 }}>
-          <Checkbox label="Только любимые" onClick={onFavouriteClick} />
+        <div className={styles['filters']} style={{ marginTop: 20 }}>
+          <Checkbox
+            label="Только любимые"
+            isChecked={isFavouriteState}
+            onClick={onFavouriteClick}
+          />
         </div>
         <span className={styles['header']}>Сортировка</span>
-        <div className={styles['filters']}>
-          <Select onChange={onSelectChange} />
+        <div className={styles['filters']} style={{ marginTop: 20 }}>
+          <Select value={isSelectText} onChange={onSelectChange} />
+        </div>
+        <div className={styles['filters']} style={{ marginTop: 20 }}>
+          <OvalButton name={'Сбросить'} onClick={onResetClick} />
+          <OvalButton name={'Сохранить'} onClick={onSaveClick} />
         </div>
       </div>
       <div className={styles['cards']}>
@@ -295,7 +412,7 @@ export const Toys: FC = () => {
               <Card
                 key={index.toString()}
                 name={item.name}
-                src={importToy(index + 1)}
+                src={importToy(item.num)}
                 count={item.count}
                 year={item.year}
                 shape={item.shape}

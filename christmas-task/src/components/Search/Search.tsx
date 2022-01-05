@@ -7,11 +7,11 @@ import Cross from '@/assets/cross.svg';
 import styles from './Search.scss';
 
 interface ISearch {
+  value: string;
   onChange: (value: string) => void;
 }
 
-export const Search: FC<ISearch> = ({ onChange }) => {
-  const [value, setValue] = useState<string>('');
+export const Search: FC<ISearch> = ({ value, onChange }) => {
   const [search, setSearch] = useState<HTMLInputElement | undefined>(undefined);
 
   useEffect(() => {
@@ -21,12 +21,10 @@ export const Search: FC<ISearch> = ({ onChange }) => {
   }, []);
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setValue(e.target.value);
     onChange(e.target.value);
   };
 
   const onCrossClick = (): void => {
-    setValue('');
     onChange('');
     search!.focus();
   };
