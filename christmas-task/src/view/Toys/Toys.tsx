@@ -6,10 +6,8 @@ import { Checkbox } from '@/components/Checkbox';
 import { Card } from '@/components/Card';
 import { Range } from '@/components/Range';
 import { Search } from '@/components/Search';
-import { Select, Sort } from '@/components/Select';
+import { Select } from '@/components/Select';
 import { OvalButton } from '@/components/OvalButton';
-
-import { data } from '@/data';
 
 import ball from '@/assets/svg/ball.svg';
 import bell from '@/assets/svg/bell.svg';
@@ -17,26 +15,12 @@ import cone from '@/assets/svg/cone.svg';
 import snowflake from '@/assets/svg/snowflake.svg';
 import toy from '@/assets/svg/toy.svg';
 
+import { data } from '@/data';
+
+import { Sort } from '@/types/shared';
+import type { DataItem, SortedData } from '@/types/shared';
+
 import styles from './Toys.scss';
-
-type ItemData = {
-  num: string;
-  name: string;
-  count: string;
-  year: string;
-  shape: string;
-  color: string;
-  size: string;
-  favorite: boolean;
-};
-
-type SortedData = {
-  [key: string]: ItemData[];
-};
-
-const importToy = (number: string): string => {
-  return require(`@/assets/toys/${number}.png`);
-};
 
 export const Toys: FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');
@@ -45,8 +29,8 @@ export const Toys: FC = () => {
     setSearchValue(value);
   };
 
-  const isSearch = (item: ItemData): boolean => {
-    return item.name.toLowerCase().includes(searchValue.toLowerCase());
+  const isSearch = (dataItem: DataItem): boolean => {
+    return dataItem.name.toLowerCase().includes(searchValue.toLowerCase());
   };
 
   const initMinYear = 1940;
@@ -62,8 +46,8 @@ export const Toys: FC = () => {
     setMaxYear(value);
   };
 
-  const isYear = (item: ItemData): boolean => {
-    return Number(item.year) >= Number(minYear) && Number(item.year) <= Number(maxYear);
+  const isYear = (dataItem: DataItem): boolean => {
+    return Number(dataItem.year) >= Number(minYear) && Number(dataItem.year) <= Number(maxYear);
   };
 
   const initMinCount = 1;
@@ -79,8 +63,8 @@ export const Toys: FC = () => {
     setMaxCount(value);
   };
 
-  const isCount = (item: ItemData): boolean => {
-    return Number(item.count) >= Number(minCount) && Number(item.count) <= Number(maxCount);
+  const isCount = (dataItem: DataItem): boolean => {
+    return Number(dataItem.count) >= Number(minCount) && Number(dataItem.count) <= Number(maxCount);
   };
 
   const [isBallPressed, setIsBallPressed] = useState<boolean>(false);
@@ -105,17 +89,18 @@ export const Toys: FC = () => {
     isToyPressed ? setIsToyPressed(false) : setIsToyPressed(true);
   };
 
-  const isAnyShape = (item: ItemData): boolean => {
+  const isAnyShape = (dataItem: DataItem): boolean => {
     return (
-      (isBallPressed && item.shape === 'шар') ||
-      (isBellPressed && item.shape === 'колокольчик') ||
-      (isConePressed && item.shape === 'шишка') ||
-      (isSnowflakePressed && item.shape === 'снежинка') ||
-      (isToyPressed && item.shape === 'фигурка')
+      (isBallPressed && dataItem.shape === 'шар') ||
+      (isBellPressed && dataItem.shape === 'колокольчик') ||
+      (isConePressed && dataItem.shape === 'шишка') ||
+      (isSnowflakePressed && dataItem.shape === 'снежинка') ||
+      (isToyPressed && dataItem.shape === 'фигурка')
     );
   };
 
-  const isNoShape = !isBallPressed && !isBellPressed && !isConePressed && !isSnowflakePressed && !isToyPressed;
+  const isNoShape =
+    !isBallPressed && !isBellPressed && !isConePressed && !isSnowflakePressed && !isToyPressed;
 
   const [isWhitePressed, setIsWhitePressed] = useState<boolean>(false);
   const [isYellowPressed, setIsYellowPressed] = useState<boolean>(false);
@@ -139,17 +124,18 @@ export const Toys: FC = () => {
     isGreenPressed ? setIsGreenPressed(false) : setIsGreenPressed(true);
   };
 
-  const isAnyColor = (item: ItemData): boolean => {
+  const isAnyColor = (dataItem: DataItem): boolean => {
     return (
-      (isWhitePressed && item.color === 'белый') ||
-      (isYellowPressed && item.color === 'желтый') ||
-      (isRedPressed && item.color === 'красный') ||
-      (isBluePressed && item.color === 'синий') ||
-      (isGreenPressed && item.color === 'зелёный')
+      (isWhitePressed && dataItem.color === 'белый') ||
+      (isYellowPressed && dataItem.color === 'желтый') ||
+      (isRedPressed && dataItem.color === 'красный') ||
+      (isBluePressed && dataItem.color === 'синий') ||
+      (isGreenPressed && dataItem.color === 'зелёный')
     );
   };
 
-  const isNoColor = !isWhitePressed && !isYellowPressed && !isRedPressed && !isBluePressed && !isGreenPressed;
+  const isNoColor =
+    !isWhitePressed && !isYellowPressed && !isRedPressed && !isBluePressed && !isGreenPressed;
 
   const [isGreatPressed, setIsGreatPressed] = useState<boolean>(false);
   const [isMediumPressed, setIsMediumPressed] = useState<boolean>(false);
@@ -165,11 +151,11 @@ export const Toys: FC = () => {
     isSmallPressed ? setIsSmallPressed(false) : setIsSmallPressed(true);
   };
 
-  const isAnySize = (item: ItemData): boolean => {
+  const isAnySize = (dataItem: DataItem): boolean => {
     return (
-      (isGreatPressed && item.size === 'большой') ||
-      (isMediumPressed && item.size === 'средний') ||
-      (isSmallPressed && item.size === 'малый')
+      (isGreatPressed && dataItem.size === 'большой') ||
+      (isMediumPressed && dataItem.size === 'средний') ||
+      (isSmallPressed && dataItem.size === 'малый')
     );
   };
 
@@ -181,21 +167,21 @@ export const Toys: FC = () => {
     isFavouritePressed ? setIsFavouritePressed(false) : setIsFavouritePressed(true);
   };
 
-  const isFavourite = (item: ItemData): boolean => {
-    return isFavouritePressed && item.favorite === true;
+  const isFavourite = (dataItem: DataItem): boolean => {
+    return isFavouritePressed && dataItem.favorite === true;
   };
 
   const isNoFavourite = !isFavouritePressed;
 
-  const cardIsShown = (item: ItemData): boolean => {
+  const cardIsShown = (dataItem: DataItem): boolean => {
     return (
-      isSearch(item) &&
-      isCount(item) &&
-      isYear(item) &&
-      (isAnyShape(item) || isNoShape) &&
-      (isAnyColor(item) || isNoColor) &&
-      (isAnySize(item) || isNoSize) &&
-      (isFavourite(item) || isNoFavourite)
+      isSearch(dataItem) &&
+      isCount(dataItem) &&
+      isYear(dataItem) &&
+      (isAnyShape(dataItem) || isNoShape) &&
+      (isAnyColor(dataItem) || isNoColor) &&
+      (isAnySize(dataItem) || isNoSize) &&
+      (isFavourite(dataItem) || isNoFavourite)
     );
   };
 
@@ -303,7 +289,7 @@ export const Toys: FC = () => {
 
   return (
     <div className={styles['toys']}>
-      <div className={styles['settings']}>
+      <div className={styles['filters-group']}>
         <Search value={searchValue} onChange={onSearchChange} />
         <span className={styles['header']}>Фильтры</span>
         <span className={styles['subheader']}>Год покупки</span>
@@ -408,20 +394,8 @@ export const Toys: FC = () => {
       </div>
       <div className={styles['cards']}>
         {sortedData[selectValue].map(
-          (item, index) =>
-            cardIsShown(item) && (
-              <Card
-                key={index.toString()}
-                name={item.name}
-                src={importToy(item.num)}
-                count={item.count}
-                year={item.year}
-                shape={item.shape}
-                color={item.color}
-                size={item.size}
-                favourite={item.favorite}
-              />
-            )
+          (dataItem, index) =>
+            cardIsShown(dataItem) && <Card key={index.toString()} dataItem={dataItem} />
         )}
       </div>
     </div>

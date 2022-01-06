@@ -1,33 +1,57 @@
 import { useEffect, useState } from 'react';
 import type { FC, DragEvent } from 'react';
 
-import { Sound } from '@/components/Sound';
-import { Snow } from '@/components/Snow';
+import { Button } from '@/components/Button';
 import { Tree } from '@/components/Tree';
 import { Background } from '@/components/Background';
 import { Toy } from '@/components/Toy';
 
 import { Snowfall } from './Snowfall';
 
-import { trees, backgrounds, toys } from './images';
+import music from '@/assets/svg/audio.svg';
+import snowfall from '@/assets/svg/snow.svg';
+import audio from '@/assets/audio/audio.mp3';
+
+import { trees, backgrounds } from './images';
+
+import { data } from '@/data';
+
+import { useFavouritesContext } from '@/App';
 
 import styles from './Trees.scss';
 
+const song = new Audio(audio);
+
 export const Trees: FC = () => {
-  const [snowIsFalling, setSnowIsFalling] = useState<boolean>(false);
-  const [bgImage, setBgImage] = useState<string>(backgrounds[0]);
+  const [isMusicPressed, setIsMusicPressed] = useState<boolean>(false);
+
+  const onMusicClick = (): void => {
+    if (isMusicPressed) {
+      setIsMusicPressed(false);
+      song.pause();
+      song.currentTime = 0;
+    } else {
+      setIsMusicPressed(true);
+      song.play();
+    }
+  };
+
+  const [isSnowfallPressed, setIsSnowfallPressed] = useState<boolean>(false);
+
+  const onSnowfallClick = (): void => {
+    isSnowfallPressed ? setIsSnowfallPressed(false) : setIsSnowfallPressed(true);
+  };
+
+  const [backgroundImage, setBackgroundImage] = useState<string>(backgrounds[0]);
+
+  const onSetBackgroundImage = (image: string): void => {
+    setBackgroundImage(image);
+  };
+
   const [treeImage, setTreeImage] = useState<string>(trees[0]);
 
-  const onSetBgImage = (bgImage: string): void => {
-    setBgImage(bgImage);
-  };
-
-  const onSetTreeImage = (treeImage: string): void => {
-    setTreeImage(treeImage);
-  };
-
-  const onSnowClick = (): void => {
-    snowIsFalling ? setSnowIsFalling(false) : setSnowIsFalling(true);
+  const onSetTreeImage = (image: string): void => {
+    setTreeImage(image);
   };
 
   const [tree, setTree] = useState<HTMLElement | undefined>(undefined);
@@ -41,28 +65,47 @@ export const Trees: FC = () => {
     e.preventDefault();
   };
 
+  const favouritesContext = useFavouritesContext();
+
+  const favourites = favouritesContext?.getFavourites();
+
   return (
     <div className={styles['trees']}>
       <div className={styles['settings-group']}>
         <div className={styles['buttons']}>
-          <Sound />
-          <Snow onSnowClick={onSnowClick} />
+          <Button
+            svg={music}
+            viewBox="0 0 128 128"
+            label="Музыка"
+            isPressed={isMusicPressed}
+            onClick={onMusicClick}
+          />
+          <Button
+            svg={snowfall}
+            viewBox="0 0 128 128"
+            label="Снегопад"
+            isPressed={isSnowfallPressed}
+            onClick={onSnowfallClick}
+          />
         </div>
-        <span className={styles['settings-header']}>Выберите елку</span>
+        <span className={styles['header']}>Выберите елку</span>
         <div className={styles['settings']}>
-          {trees.map((src, index) => (
-            <Tree key={index.toString()} src={src} onSetTreeImage={onSetTreeImage} />
+          {trees.map((image, index) => (
+            <Tree key={index.toString()} image={image} onSetImage={onSetTreeImage} />
           ))}
         </div>
-        <span className={styles['settings-header']}>Выберите фон</span>
+        <span className={styles['header']}>Выберите фон</span>
         <div className={styles['settings']}>
-          {backgrounds.map((src, index) => (
-            <Background key={index.toString()} src={src} onSetBgImage={onSetBgImage} />
+          {backgrounds.map((image, index) => (
+            <Background key={index.toString()} image={image} onSetImage={onSetBackgroundImage} />
           ))}
         </div>
       </div>
-      <div className={styles['background']} style={{ backgroundImage: `url('${bgImage}')` }}>
-        {snowIsFalling && <Snowfall />}
+      <div
+        className={styles['background']}
+        style={{ backgroundImage: `url('${backgroundImage}')` }}
+      >
+        {isSnowfallPressed && <Snowfall />}
         <div id="tree" className={styles['tree']}>
           <img src={treeImage} useMap="#image-map"></img>
           <map name="image-map" onDragOver={onDragOver}>
@@ -74,13 +117,19 @@ export const Trees: FC = () => {
         </div>
       </div>
       <div className={styles['settings-group']}>
-        <span className={styles['settings-header']} style={{ marginTop: '0px' }}>
+        <span className={styles['header']} style={{ marginTop: 0 }}>
           Игрушки
         </span>
         <div className={styles['settings']}>
-          {toys.map((src, index) => (
-            <Toy key={index.toString()} src={src} initialCount={index} tree={tree} />
-          ))}
+          {favourites?.length !== 0
+            ? favourites?.map((dataItem, index) => (
+                <Toy key={index.toString()} dataItem={dataItem} tree={tree} />
+              ))
+            : data
+                .slice(0, 20)
+                .map((dataItem, index) => (
+                  <Toy key={index.toString()} dataItem={dataItem} tree={tree} />
+                ))}
         </div>
       </div>
     </div>

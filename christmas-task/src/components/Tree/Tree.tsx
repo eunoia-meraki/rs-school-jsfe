@@ -3,19 +3,19 @@ import type { FC } from 'react';
 import styles from './Tree.scss';
 
 interface ITree {
-  src: string;
-  onSetTreeImage: (src: string) => void;
+  image: string;
+  onSetImage: (src: string) => void;
 }
 
-export const Tree: FC<ITree> = ({ src, onSetTreeImage }) => {
+export const Tree: FC<ITree> = ({ image, onSetImage }) => {
   const onClick = (): void => {
-    onSetTreeImage(src);
+    onSetImage(image);
   };
 
   return (
     <div
       className={styles['tree']}
-      style={{ backgroundImage: `url('${src}')` }}
+      style={{ backgroundImage: `url('${image}')` }}
       onClick={onClick}
     ></div>
   );

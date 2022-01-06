@@ -3,19 +3,19 @@ import type { FC } from 'react';
 import styles from './Background.scss';
 
 interface IBackground {
-  src: string;
-  onSetBgImage: (src: string) => void;
+  image: string;
+  onSetImage: (image: string) => void;
 }
 
-export const Background: FC<IBackground> = ({ src, onSetBgImage }) => {
+export const Background: FC<IBackground> = ({ image, onSetImage }) => {
   const onClick = (): void => {
-    onSetBgImage(src);
+    onSetImage(image);
   };
 
   return (
     <div
       className={styles['background']}
-      style={{ backgroundImage: `url('${src}')` }}
+      style={{ backgroundImage: `url('${image}')` }}
       onClick={onClick}
     ></div>
   );

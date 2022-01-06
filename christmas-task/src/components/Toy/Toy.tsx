@@ -1,21 +1,22 @@
-import { FC, useState, DragEvent, MouseEvent, useRef, createRef, useEffect } from 'react';
+import { useState } from 'react';
+import type { FC, DragEvent } from 'react';
+
+import { DataItem } from '@/types/shared';
 
 import styles from './Toy.scss';
-
-interface IToy {
-  src: string;
-  initialCount: number;
-  tree: HTMLElement | undefined;
-}
 
 interface IShift {
   x: number;
   y: number;
 }
+interface IToy {
+  dataItem: DataItem;
+  tree: HTMLElement | undefined;
+}
 
-export const Toy: FC<IToy> = ({ src, initialCount, tree }) => {
+export const Toy: FC<IToy> = ({ dataItem, tree }) => {
   const [slot, setSlot] = useState<HTMLElement | undefined>(undefined);
-  const [count, setCount] = useState<number>(initialCount);
+  const [count, setCount] = useState<number>(Number(dataItem.count));
   const [shift, setShift] = useState<IShift>({ x: 0, y: 0 });
 
   const onDragStart = (e: DragEvent): void => {
@@ -75,11 +76,11 @@ export const Toy: FC<IToy> = ({ src, initialCount, tree }) => {
     <>
       <div className={styles['slot']}>
         <div className={styles['count']}>{count}</div>
-        {[...Array(initialCount).keys()].map((_, index) => (
+        {[...Array(Number(dataItem.count)).keys()].map((_, index) => (
           <img
             key={index.toString()}
             className={styles['toy']}
-            src={src}
+            src={importToy(dataItem.num)}
             draggable={true}
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
@@ -89,4 +90,8 @@ export const Toy: FC<IToy> = ({ src, initialCount, tree }) => {
       </div>
     </>
   );
+};
+
+const importToy = (number: string): string => {
+  return require(`@/assets/toys/${number}.png`);
 };

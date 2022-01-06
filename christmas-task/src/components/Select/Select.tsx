@@ -1,16 +1,10 @@
-import { ChangeEvent, FC } from 'react';
+import type { ChangeEvent, FC } from 'react';
 
 import Arrow from '@/assets/svg/arrow-down.svg';
 
+import { Sort } from '@/types/shared';
+
 import styles from './Select.scss';
-
-export enum Sort {
-  ByNameInAscendingOrder,
-  ByNameInDescendingOrder,
-  ByCountInAscendingOrder,
-  ByCountInDescendingOrder,
-}
-
 interface ISelect {
   value: string;
   onChange: (value: string) => void;

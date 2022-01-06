@@ -3,7 +3,7 @@
   height: calc(100vh - 180px);
 }
 
-.settings {
+.filters-group {
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -11,7 +11,7 @@
   overflow: auto;
 }
 
-.settings::-webkit-scrollbar {
+.filters-group::-webkit-scrollbar {
   display: none;
 }
 
