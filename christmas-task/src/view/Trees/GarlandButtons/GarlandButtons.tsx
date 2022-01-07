@@ -33,12 +33,12 @@ export const GarlandButtons: FC<IGarlandButtons> = ({ onSetGarlandColor }) => {
 
   return (
     <div className={styles['garland-buttons']}>
-      <button className={styles['multicolor']} onClick={onMulticolorClick}></button>
-      <button className={styles['yellow']} onClick={onYellowClick}></button>
-      <button className={styles['red']} onClick={onRedClick}></button>
-      <button className={styles['blue']} onClick={onBlueClick}></button>
-      <button className={styles['green']} onClick={onGreenClick}></button>
-      <button className={styles['none']} onClick={onNoneClick}></button>
+      <button className={styles['multicolor']} onClick={onMulticolorClick} type="button" aria-label="multicolor" />
+      <button className={styles['yellow']} onClick={onYellowClick} type="button" aria-label="yellow" />
+      <button className={styles['red']} onClick={onRedClick} type="button" aria-label="red" />
+      <button className={styles['blue']} onClick={onBlueClick} type="button" aria-label="blue" />
+      <button className={styles['green']} onClick={onGreenClick} type="button" aria-label="green" />
+      <button className={styles['none']} onClick={onNoneClick} type="button" aria-label="none" />
     </div>
   );
 };

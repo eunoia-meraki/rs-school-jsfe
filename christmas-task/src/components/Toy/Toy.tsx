@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import type { FC, DragEvent } from 'react';
 
-import { DataItem } from '@/types/shared';
-
 import styles from './Toy.scss';
+
+import { toys } from '@/data';
+import { DataItem } from '@/types/shared';
 
 interface IShift {
   x: number;
   y: number;
 }
+
 interface IToy {
   dataItem: DataItem;
   tree: HTMLElement | undefined;
@@ -35,7 +37,7 @@ export const Toy: FC<IToy> = ({ dataItem, tree }) => {
   const onDragEnd = (e: DragEvent): void => {
     const toy = e.target as HTMLElement;
 
-    const dropEffect = e.dataTransfer.dropEffect;
+    const {dropEffect} = e.dataTransfer;
 
     if (dropEffect === 'copy') {
       const top =
@@ -54,13 +56,11 @@ export const Toy: FC<IToy> = ({ dataItem, tree }) => {
         tree!.append(toy);
         setCount(count - 1);
       }
-    } else {
-      if (toy.parentElement === tree) {
-        toy.style.top = '8%';
-        toy.style.left = '12%';
-        slot!.append(toy);
-        setCount(count + 1);
-      }
+    } else if (toy.parentElement === tree) {
+      toy.style.top = '8%';
+      toy.style.left = '12%';
+      slot!.append(toy);
+      setCount(count + 1);
     }
   };
 
@@ -79,17 +79,14 @@ export const Toy: FC<IToy> = ({ dataItem, tree }) => {
         <img
           key={index.toString()}
           className={styles['toy']}
-          src={importToy(dataItem.num)}
-          draggable={true}
+          src={toys[Number(dataItem.num) - 1]}
+          draggable
           onDragStart={onDragStart}
           onDragEnd={onDragEnd}
           onDragOver={onDragOver}
-        ></img>
+          alt="toy"
+        />
       ))}
     </div>
   );
-};
-
-const importToy = (number: string): string => {
-  return require(`@/assets/toys/${number}.png`);
 };

@@ -17,6 +17,10 @@ export const Tree: FC<ITree> = ({ image, onSetImage }) => {
       className={styles['tree']}
       style={{ backgroundImage: `url('${image}')` }}
       onClick={onClick}
-    ></div>
+      onKeyDown={() => undefined}
+      role="button"
+      tabIndex={0}
+      aria-label="tree"
+    />
   );
 };

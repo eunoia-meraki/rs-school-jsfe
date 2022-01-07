@@ -1,9 +1,9 @@
-import type { FC, CSSProperties } from 'react';
+import type { FC, SVGProps, CSSProperties } from 'react';
 
 import styles from './Button.scss';
 
 interface IButton {
-  svg: any;
+  svg: FC<SVGProps<SVGSVGElement>>;
   viewBox: string;
   width?: number;
   height?: number;

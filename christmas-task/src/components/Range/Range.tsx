@@ -49,7 +49,7 @@ export const Range: FC<IRange> = ({ min, max, minValue, maxValue, onMinChange, o
           type="range"
           className={styles['range']}
           onChange={onMinRangeChange}
-        ></input>
+        />
         <input
           min={min}
           max={max}
@@ -58,8 +58,8 @@ export const Range: FC<IRange> = ({ min, max, minValue, maxValue, onMinChange, o
           type="range"
           className={styles['range']}
           onChange={onMaxRangeChange}
-        ></input>
-        <div style={innerBand}></div>
+        />
+        <div style={innerBand} />
       </div>
       <div className={styles['values']}>
         <span>{minValue}</span>

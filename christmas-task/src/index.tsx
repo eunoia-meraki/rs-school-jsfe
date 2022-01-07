@@ -2,7 +2,7 @@ import './index.scss';
 
 import { CookiesProvider } from 'react-cookie';
 import { render } from 'react-dom';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 import { StrictMode } from 'react';
 

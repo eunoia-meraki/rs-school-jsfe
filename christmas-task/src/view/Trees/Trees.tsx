@@ -1,53 +1,50 @@
 import { useEffect, useState } from 'react';
 import type { FC, DragEvent } from 'react';
 
-import { Button } from '@/components/Button';
-import { Tree } from '@/components/Tree';
-import { Background } from '@/components/Background';
-import { Toy } from '@/components/Toy';
-
-import { Snowfall } from './Snowfall';
 import { Garland } from './Garland';
 import { GarlandButtons } from './GarlandButtons';
+import { Snowfall } from './Snowfall';
+import styles from './Trees.scss';
 
+import audio from '@/assets/audio/audio.mp3';
 import music from '@/assets/svg/audio.svg';
 import snowfall from '@/assets/svg/snow.svg';
-import audio from '@/assets/audio/audio.mp3';
-
-import { trees, backgrounds } from './images';
-
-import { data } from '@/data';
-
-import { useFavouritesContext } from '@/App';
-
-import styles from './Trees.scss';
+import { Background } from '@/components/Background';
+import { Button } from '@/components/Button';
+import { Toy } from '@/components/Toy';
+import { Tree } from '@/components/Tree';
+import { backgrounds, data, trees } from '@/data';
+import { DataItem } from '@/types/shared';
 
 const song = new Audio(audio);
 
-export const Trees: FC = () => {
+interface ITrees {
+  favourites: DataItem[];
+}
+
+export const Trees: FC<ITrees> = ({ favourites }) => {
   const [isMusicPressed, setIsMusicPressed] = useState<boolean>(false);
 
   const onMusicClick = (): void => {
     if (isMusicPressed) {
       setIsMusicPressed(false);
-    } else {
-      setIsMusicPressed(true);
-    }
-  };
-
-  useEffect(() => {
-    if (isMusicPressed) {
-      song.play();
-    } else {
       song.pause();
       song.currentTime = 0;
+    } else {
+      setIsMusicPressed(true);
+      // eslint-disable-next-line no-void
+      void song.play();
     }
-  }, [isMusicPressed]);
+  };
 
   const [isSnowfallPressed, setIsSnowfallPressed] = useState<boolean>(false);
 
   const onSnowfallClick = (): void => {
-    isSnowfallPressed ? setIsSnowfallPressed(false) : setIsSnowfallPressed(true);
+    if (isSnowfallPressed) {
+      setIsSnowfallPressed(false);
+    } else {
+      setIsSnowfallPressed(true);
+    }
   };
 
   const [backgroundImage, setBackgroundImage] = useState<string>(backgrounds[0]);
@@ -75,12 +72,9 @@ export const Trees: FC = () => {
   const [tree, setTree] = useState<HTMLElement | undefined>(undefined);
 
   useEffect(() => {
-    const tree = document.getElementById('tree');
-    setTree(tree!);
+    const treeElement = document.getElementById('tree');
+    setTree(treeElement!);
   }, []);
-
-  const favouritesContext = useFavouritesContext();
-  const favourites = favouritesContext?.getFavourites();
 
   return (
     <div className={styles['trees']}>
@@ -121,12 +115,15 @@ export const Trees: FC = () => {
         style={{ backgroundImage: `url('${backgroundImage}')` }}
       >
         <div id="tree" className={styles['tree']}>
-          <img src={treeImage} useMap="#image-map"></img>
+          <img src={treeImage} useMap="#image-map" alt="tree" />
           <map name="image-map" onDragOver={onDragOver}>
             <area
               coords="26,443,14,566,110,681,200,708,260,706,321,704,363,698,440,673,478,593,494,539,449,453,424,356,391,235,346,142,304,70,251,2,231,32,165,129,114,221,78,354"
               shape="poly"
-            ></area>
+              alt=""
+              aria-label=""
+              aria-labelledby=""
+            />
           </map>
           {garlandColor !== 'none' && <Garland color={garlandColor} />}
         </div>
@@ -137,15 +134,15 @@ export const Trees: FC = () => {
           Игрушки
         </span>
         <div className={styles['settings']}>
-          {favourites?.length !== 0
-            ? favourites?.map((dataItem, index) => (
-                <Toy key={index.toString()} dataItem={dataItem} tree={tree} />
-              ))
+          {favourites.length !== 0
+            ? favourites.map((dataItem, index) => (
+              <Toy key={index.toString()} dataItem={dataItem} tree={tree} />
+            ))
             : data
-                .slice(0, 20)
-                .map((dataItem, index) => (
-                  <Toy key={index.toString()} dataItem={dataItem} tree={tree} />
-                ))}
+              .slice(0, 20)
+              .map((dataItem, index) => (
+                <Toy key={index.toString()} dataItem={dataItem} tree={tree} />
+              ))}
         </div>
       </div>
     </div>

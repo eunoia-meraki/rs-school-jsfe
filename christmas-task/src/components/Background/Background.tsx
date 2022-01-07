@@ -17,6 +17,10 @@ export const Background: FC<IBackground> = ({ image, onSetImage }) => {
       className={styles['background']}
       style={{ backgroundImage: `url('${image}')` }}
       onClick={onClick}
-    ></div>
+      onKeyDown={() => undefined}
+      role="button"
+      tabIndex={0}
+      aria-label="background"
+    />
   );
 };

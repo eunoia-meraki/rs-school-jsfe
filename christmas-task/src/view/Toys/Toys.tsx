@@ -1,39 +1,39 @@
 import { useEffect, useState } from 'react';
 import type { FC } from 'react';
 
-import { Button } from '@/components/Button';
-import { Checkbox } from '@/components/Checkbox';
-import { Card } from '@/components/Card';
-import { Range } from '@/components/Range';
-import { Search } from '@/components/Search';
-import { Select } from '@/components/Select';
-import { OvalButton } from '@/components/OvalButton';
+import styles from './Toys.scss';
 
 import ball from '@/assets/svg/ball.svg';
 import bell from '@/assets/svg/bell.svg';
 import cone from '@/assets/svg/cone.svg';
 import snowflake from '@/assets/svg/snowflake.svg';
 import toy from '@/assets/svg/toy.svg';
-
+import { Button } from '@/components/Button';
+import { Card } from '@/components/Card';
+import { Checkbox } from '@/components/Checkbox';
+import { OvalButton } from '@/components/OvalButton';
+import { Range } from '@/components/Range';
+import { Search } from '@/components/Search';
+import { Select } from '@/components/Select';
 import { data } from '@/data';
-
-import { useFavouritesContext } from '@/App';
-
 import { Sort } from '@/types/shared';
 import type { DataItem, SortedData } from '@/types/shared';
 
-import styles from './Toys.scss';
+interface IToys {
+  favourites: DataItem[];
+  addDataItem: (dataItem: DataItem) => void;
+  deleteDataItem: (dataItem: DataItem) => void;
+}
 
-export const Toys: FC = () => {
+export const Toys: FC<IToys> = ({ favourites, addDataItem, deleteDataItem }) => {
   const [searchValue, setSearchValue] = useState<string>('');
 
   const onSearchChange = (value: string): void => {
     setSearchValue(value);
   };
 
-  const isSearch = (dataItem: DataItem): boolean => {
-    return dataItem.name.toLowerCase().includes(searchValue.toLowerCase());
-  };
+  const isSearch = (dataItem: DataItem): boolean =>
+    dataItem.name.toLowerCase().includes(searchValue.toLowerCase());
 
   const initMinYear = 1940;
   const initMaxYear = 2020;
@@ -48,9 +48,8 @@ export const Toys: FC = () => {
     setMaxYear(value);
   };
 
-  const isYear = (dataItem: DataItem): boolean => {
-    return Number(dataItem.year) >= Number(minYear) && Number(dataItem.year) <= Number(maxYear);
-  };
+  const isYear = (dataItem: DataItem): boolean =>
+    Number(dataItem.year) >= Number(minYear) && Number(dataItem.year) <= Number(maxYear);
 
   const initMinCount = 1;
   const initMaxCount = 12;
@@ -65,9 +64,8 @@ export const Toys: FC = () => {
     setMaxCount(value);
   };
 
-  const isCount = (dataItem: DataItem): boolean => {
-    return Number(dataItem.count) >= Number(minCount) && Number(dataItem.count) <= Number(maxCount);
-  };
+  const isCount = (dataItem: DataItem): boolean =>
+    Number(dataItem.count) >= Number(minCount) && Number(dataItem.count) <= Number(maxCount);
 
   const [isBallPressed, setIsBallPressed] = useState<boolean>(false);
   const [isBellPressed, setIsBellPressed] = useState<boolean>(false);
@@ -76,30 +74,47 @@ export const Toys: FC = () => {
   const [isToyPressed, setIsToyPressed] = useState<boolean>(false);
 
   const onBallClick = (): void => {
-    isBallPressed ? setIsBallPressed(false) : setIsBallPressed(true);
+    if (isBallPressed) {
+      setIsBallPressed(false);
+    } else {
+      setIsBallPressed(true);
+    }
   };
   const onBellClick = (): void => {
-    isBellPressed ? setIsBellPressed(false) : setIsBellPressed(true);
+    if (isBellPressed) {
+      setIsBellPressed(false);
+    } else {
+      setIsBellPressed(true);
+    }
   };
   const onConeClick = (): void => {
-    isConePressed ? setIsConePressed(false) : setIsConePressed(true);
+    if (isConePressed) {
+      setIsConePressed(false);
+    } else {
+      setIsConePressed(true);
+    }
   };
   const onSnowflakeClick = (): void => {
-    isSnowflakePressed ? setIsSnowflakePressed(false) : setIsSnowflakePressed(true);
+    if (isSnowflakePressed) {
+      setIsSnowflakePressed(false);
+    } else {
+      setIsSnowflakePressed(true);
+    }
   };
   const onToyClick = (): void => {
-    isToyPressed ? setIsToyPressed(false) : setIsToyPressed(true);
+    if (isToyPressed) {
+      setIsToyPressed(false);
+    } else {
+      setIsToyPressed(true);
+    }
   };
 
-  const isAnyShape = (dataItem: DataItem): boolean => {
-    return (
-      (isBallPressed && dataItem.shape === 'шар') ||
-      (isBellPressed && dataItem.shape === 'колокольчик') ||
-      (isConePressed && dataItem.shape === 'шишка') ||
-      (isSnowflakePressed && dataItem.shape === 'снежинка') ||
-      (isToyPressed && dataItem.shape === 'фигурка')
-    );
-  };
+  const isAnyShape = (dataItem: DataItem): boolean =>
+    (isBallPressed && dataItem.shape === 'шар') ||
+    (isBellPressed && dataItem.shape === 'колокольчик') ||
+    (isConePressed && dataItem.shape === 'шишка') ||
+    (isSnowflakePressed && dataItem.shape === 'снежинка') ||
+    (isToyPressed && dataItem.shape === 'фигурка');
 
   const isNoShape =
     !isBallPressed && !isBellPressed && !isConePressed && !isSnowflakePressed && !isToyPressed;
@@ -111,30 +126,47 @@ export const Toys: FC = () => {
   const [isGreenPressed, setIsGreenPressed] = useState<boolean>(false);
 
   const onWhiteClick = (): void => {
-    isWhitePressed ? setIsWhitePressed(false) : setIsWhitePressed(true);
+    if (isWhitePressed) {
+      setIsWhitePressed(false);
+    } else {
+      setIsWhitePressed(true);
+    }
   };
   const onYellowClick = (): void => {
-    isYellowPressed ? setIsYellowPressed(false) : setIsYellowPressed(true);
+    if (isYellowPressed) {
+      setIsYellowPressed(false);
+    } else {
+      setIsYellowPressed(true);
+    }
   };
   const onRedClick = (): void => {
-    isRedPressed ? setIsRedPressed(false) : setIsRedPressed(true);
+    if (isRedPressed) {
+      setIsRedPressed(false);
+    } else {
+      setIsRedPressed(true);
+    }
   };
   const onBlueClick = (): void => {
-    isBluePressed ? setIsBluePressed(false) : setIsBluePressed(true);
+    if (isBluePressed) {
+      setIsBluePressed(false);
+    } else {
+      setIsBluePressed(true);
+    }
   };
   const onGreenClick = (): void => {
-    isGreenPressed ? setIsGreenPressed(false) : setIsGreenPressed(true);
+    if (isGreenPressed) {
+      setIsGreenPressed(false);
+    } else {
+      setIsGreenPressed(true);
+    }
   };
 
-  const isAnyColor = (dataItem: DataItem): boolean => {
-    return (
-      (isWhitePressed && dataItem.color === 'белый') ||
-      (isYellowPressed && dataItem.color === 'желтый') ||
-      (isRedPressed && dataItem.color === 'красный') ||
-      (isBluePressed && dataItem.color === 'синий') ||
-      (isGreenPressed && dataItem.color === 'зелёный')
-    );
-  };
+  const isAnyColor = (dataItem: DataItem): boolean =>
+    (isWhitePressed && dataItem.color === 'белый') ||
+    (isYellowPressed && dataItem.color === 'желтый') ||
+    (isRedPressed && dataItem.color === 'красный') ||
+    (isBluePressed && dataItem.color === 'синий') ||
+    (isGreenPressed && dataItem.color === 'зелёный');
 
   const isNoColor =
     !isWhitePressed && !isYellowPressed && !isRedPressed && !isBluePressed && !isGreenPressed;
@@ -144,48 +176,56 @@ export const Toys: FC = () => {
   const [isSmallPressed, setIsSmallPressed] = useState<boolean>(false);
 
   const onGreatClick = (): void => {
-    isGreatPressed ? setIsGreatPressed(false) : setIsGreatPressed(true);
+    if (isGreatPressed) {
+      setIsGreatPressed(false);
+    } else {
+      setIsGreatPressed(true);
+    }
   };
   const onMediumClick = (): void => {
-    isMediumPressed ? setIsMediumPressed(false) : setIsMediumPressed(true);
+    if (isMediumPressed) {
+      setIsMediumPressed(false);
+    } else {
+      setIsMediumPressed(true);
+    }
   };
   const onSmallClick = (): void => {
-    isSmallPressed ? setIsSmallPressed(false) : setIsSmallPressed(true);
+    if (isSmallPressed) {
+      setIsSmallPressed(false);
+    } else {
+      setIsSmallPressed(true);
+    }
   };
 
-  const isAnySize = (dataItem: DataItem): boolean => {
-    return (
-      (isGreatPressed && dataItem.size === 'большой') ||
-      (isMediumPressed && dataItem.size === 'средний') ||
-      (isSmallPressed && dataItem.size === 'малый')
-    );
-  };
+  const isAnySize = (dataItem: DataItem): boolean =>
+    (isGreatPressed && dataItem.size === 'большой') ||
+    (isMediumPressed && dataItem.size === 'средний') ||
+    (isSmallPressed && dataItem.size === 'малый');
 
   const isNoSize = !isGreatPressed && !isMediumPressed && !isSmallPressed;
 
   const [isFavouritePressed, setIsFavouritePressed] = useState<boolean>(false);
 
   const onFavouriteClick = (): void => {
-    isFavouritePressed ? setIsFavouritePressed(false) : setIsFavouritePressed(true);
+    if (isFavouritePressed) {
+      setIsFavouritePressed(false);
+    } else {
+      setIsFavouritePressed(true);
+    }
   };
 
-  const isFavourite = (dataItem: DataItem): boolean => {
-    return isFavouritePressed && dataItem.favorite === true;
-  };
+  const isFavourite = (dataItem: DataItem): boolean => isFavouritePressed && dataItem.favorite;
 
   const isNoFavourite = !isFavouritePressed;
 
-  const cardIsShown = (dataItem: DataItem): boolean => {
-    return (
-      isSearch(dataItem) &&
-      isCount(dataItem) &&
-      isYear(dataItem) &&
-      (isAnyShape(dataItem) || isNoShape) &&
-      (isAnyColor(dataItem) || isNoColor) &&
-      (isAnySize(dataItem) || isNoSize) &&
-      (isFavourite(dataItem) || isNoFavourite)
-    );
-  };
+  const cardIsShown = (dataItem: DataItem): boolean =>
+    isSearch(dataItem) &&
+    isCount(dataItem) &&
+    isYear(dataItem) &&
+    (isAnyShape(dataItem) || isNoShape) &&
+    (isAnyColor(dataItem) || isNoColor) &&
+    (isAnySize(dataItem) || isNoSize) &&
+    (isFavourite(dataItem) || isNoFavourite);
 
   const [selectValue, setSelectValue] = useState<string>(`${Sort.ByNameInAscendingOrder}`);
 
@@ -205,13 +245,13 @@ export const Toys: FC = () => {
     return 0;
   });
 
-  const dataSortedByCountInAscendingOrder = Array.from(data).sort((a, b) => {
-    return Number(a.count) - Number(b.count);
-  });
+  const dataSortedByCountInAscendingOrder = Array.from(data).sort(
+    (a, b) => Number(a.count) - Number(b.count)
+  );
 
-  const dataSortedByCountInDescendingOrder = Array.from(data).sort((a, b) => {
-    return Number(b.count) - Number(a.count);
-  });
+  const dataSortedByCountInDescendingOrder = Array.from(data).sort(
+    (a, b) => Number(b.count) - Number(a.count)
+  );
 
   const sortedData: SortedData = {
     [`${Sort.ByNameInAscendingOrder}`]: dataSortedByNameInAscendingOrder,
@@ -288,9 +328,6 @@ export const Toys: FC = () => {
     setIsFavouritePressed(localStorage.getItem('is_favourite_pressed') === 'true');
     setSelectValue(localStorage.getItem('select_value') ?? `${Sort.ByNameInAscendingOrder}`);
   }, []);
-
-  const favouritesContext = useFavouritesContext();
-  const favourites = favouritesContext?.getFavourites();
 
   return (
     <div className={styles['toys']}>
@@ -393,14 +430,22 @@ export const Toys: FC = () => {
           <Select value={selectValue} onChange={onSelectChange} />
         </div>
         <div className={styles['filters']} style={{ marginTop: 20 }}>
-          <OvalButton name={'Сбросить'} onClick={onResetClick} />
-          <OvalButton name={'Сохранить'} onClick={onSaveClick} />
+          <OvalButton name="Сбросить" onClick={onResetClick} />
+          <OvalButton name="Сохранить" onClick={onSaveClick} />
         </div>
       </div>
       <div className={styles['cards']}>
         {sortedData[selectValue].map(
           (dataItem, index) =>
-            cardIsShown(dataItem) && <Card key={index.toString()} dataItem={dataItem} />
+            cardIsShown(dataItem) && (
+              <Card
+                key={index.toString()}
+                dataItem={dataItem}
+                favourites={favourites}
+                addDataItem={addDataItem}
+                deleteDataItem={deleteDataItem}
+              />
+            )
         )}
       </div>
     </div>

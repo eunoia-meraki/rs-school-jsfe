@@ -1,10 +1,10 @@
 import type { ChangeEvent, FC } from 'react';
 
-import Arrow from '@/assets/svg/arrow-down.svg';
+import styles from './Select.scss';
 
+import Arrow from '@/assets/svg/arrow-down.svg';
 import { Sort } from '@/types/shared';
 
-import styles from './Select.scss';
 interface ISelect {
   value: string;
   onChange: (value: string) => void;

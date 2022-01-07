@@ -1,37 +1,34 @@
 import { useEffect, useState } from 'react';
 import type { CSSProperties, FC } from 'react';
 
-import { useFavouritesContext } from '@/App';
-
-import { DataItem } from '@/types/shared';
-
 import styles from './Card.scss';
+
+import { toys } from '@/data';
+import { DataItem } from '@/types/shared';
 
 interface ICard {
   dataItem: DataItem;
+  favourites: DataItem[];
+  addDataItem: (dataItem: DataItem) => void;
+  deleteDataItem: (dataItem: DataItem) => void;
 }
 
-export const Card: FC<ICard> = ({ dataItem }) => {
+export const Card: FC<ICard> = ({ dataItem, favourites, addDataItem, deleteDataItem }) => {
   const [isAddedToFavourites, setIsAddedToFavourites] = useState<boolean>(false);
 
-  const favouritesContext = useFavouritesContext();
-
   useEffect(() => {
-    const favourites = favouritesContext?.getFavourites();
-    if (favourites?.find(item => item.num === dataItem.num)) {
+    if (favourites.find(item => item.num === dataItem.num)) {
       setIsAddedToFavourites(true);
     } else {
       setIsAddedToFavourites(false);
     }
-  }, []);
+  }, [favourites, dataItem]);
 
   const onClick = (): void => {
     if (isAddedToFavourites) {
-      favouritesContext?.deleteDataItem(dataItem);
-      setIsAddedToFavourites(false);
+      deleteDataItem(dataItem);
     } else {
-      favouritesContext?.addDataItem(dataItem);
-      setIsAddedToFavourites(true);
+      addDataItem(dataItem);
     }
   };
 
@@ -40,9 +37,16 @@ export const Card: FC<ICard> = ({ dataItem }) => {
   };
 
   return (
-    <div className={styles['card']} onClick={onClick} style={cardStyle}>
+    <div
+      className={styles['card']}
+      onClick={onClick}
+      onKeyDown={() => undefined}
+      style={cardStyle}
+      role="button"
+      tabIndex={0}
+    >
       <h1>{dataItem.name}</h1>
-      <img className={styles['image']} src={importToy(dataItem.num)}></img>
+      <img className={styles['image']} src={toys[Number(dataItem.num) - 1]} alt="toy" />
       <span>Количество: {dataItem.count}</span>
       <span>Год покупки: {dataItem.year}</span>
       <span>Форма: {dataItem.shape}</span>
@@ -51,8 +55,4 @@ export const Card: FC<ICard> = ({ dataItem }) => {
       <span>Любимая: {dataItem.favorite ? 'да' : 'нет'}</span>
     </div>
   );
-};
-
-const importToy = (number: string): string => {
-  return require(`@/assets/toys/${number}.png`);
 };

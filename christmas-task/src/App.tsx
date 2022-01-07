@@ -1,26 +1,20 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { NavLink, Route, Routes } from 'react-router-dom';
+
+import React, { useState } from 'react';
 import type { FC } from 'react';
 
-import { NavLink } from 'react-router-dom';
-import { Route, Routes } from 'react-router-dom';
+import styles from './App.scss';
 
+import type { DataItem } from './types/shared';
+
+import bg from '@/assets/bg.jpg';
+import Rss from '@/assets/svg/rss.svg';
 import { Home } from '@/view/Home';
 import { Toys } from '@/view/Toys';
 import { Trees } from '@/view/Trees';
 
-import bg from '@/assets/bg.jpg';
-import Rss from '@/assets/svg/rss.svg';
-
-import type { DataItem } from './types/shared';
-
-import styles from './App.scss';
-
 export const App: FC = () => {
   const [favourites, setFavourites] = useState<DataItem[]>([]);
-
-  const getFavourites = (): DataItem[] => {
-    return favourites;
-  };
 
   const addDataItem = (dataItem: DataItem): void => {
     setFavourites(prev => {
@@ -32,19 +26,11 @@ export const App: FC = () => {
   };
 
   const deleteDataItem = (dataItem: DataItem): void => {
-    setFavourites(prev => {
-      return prev.filter(item => item.num !== dataItem.num);
-    });
-  };
-
-  const value: IFavouritesContext = {
-    getFavourites,
-    addDataItem,
-    deleteDataItem,
+    setFavourites(prev => prev.filter(item => item.num !== dataItem.num));
   };
 
   return (
-    <>
+    <React.Fragment>
       <header className={styles['header']}>
         <nav className={styles['nav']}>
           <NavLink
@@ -75,27 +61,24 @@ export const App: FC = () => {
             Елки
           </NavLink>
         </nav>
-        <span className={styles['toys-count']} style={{ marginRight: 30 }}>Выбрано игрушек: {favourites?.length}</span>
+        <span className={styles['toys-count']} style={{ marginRight: 30 }}>
+          Выбрано игрушек: {favourites?.length}
+        </span>
       </header>
       <main className={styles['main']} style={{ backgroundImage: `url('${bg}')` }}>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<Home />} />
           <Route
             path="/toys"
             element={
-              <FavouritesContext.Provider value={value}>
-                <Toys />
-              </FavouritesContext.Provider>
+              <Toys
+                favourites={favourites}
+                addDataItem={addDataItem}
+                deleteDataItem={deleteDataItem}
+              />
             }
-          ></Route>
-          <Route
-            path="/trees"
-            element={
-              <FavouritesContext.Provider value={value}>
-                <Trees />
-              </FavouritesContext.Provider>
-            }
-          ></Route>
+          />
+          <Route path="/trees" element={<Trees favourites={favourites} />} />
         </Routes>
       </main>
       <footer className={styles['footer']}>
@@ -103,19 +86,6 @@ export const App: FC = () => {
         <span>2021</span>
         <a href="https://rs.school/">Курс</a>
       </footer>
-    </>
+    </React.Fragment>
   );
-};
-
-interface IFavouritesContext {
-  getFavourites: () => DataItem[];
-  addDataItem: (dataItem: DataItem) => void;
-  deleteDataItem: (dataItem: DataItem) => void;
-}
-
-const FavouritesContext = createContext<IFavouritesContext | undefined>(undefined);
-
-export const useFavouritesContext = (): IFavouritesContext | undefined => {
-  const favouritesContext = useContext(FavouritesContext);
-  return favouritesContext;
 };
