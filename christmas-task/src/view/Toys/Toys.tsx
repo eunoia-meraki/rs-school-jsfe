@@ -17,6 +17,8 @@ import toy from '@/assets/svg/toy.svg';
 
 import { data } from '@/data';
 
+import { useFavouritesContext } from '@/App';
+
 import { Sort } from '@/types/shared';
 import type { DataItem, SortedData } from '@/types/shared';
 
@@ -286,6 +288,9 @@ export const Toys: FC = () => {
     setIsFavouritePressed(localStorage.getItem('is_favourite_pressed') === 'true');
     setSelectValue(localStorage.getItem('select_value') ?? `${Sort.ByNameInAscendingOrder}`);
   }, []);
+
+  const favouritesContext = useFavouritesContext();
+  const favourites = favouritesContext?.getFavourites();
 
   return (
     <div className={styles['toys']}>

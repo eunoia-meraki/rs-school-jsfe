@@ -20,6 +20,8 @@ export const Card: FC<ICard> = ({ dataItem }) => {
     const favourites = favouritesContext?.getFavourites();
     if (favourites?.find(item => item.num === dataItem.num)) {
       setIsAddedToFavourites(true);
+    } else {
+      setIsAddedToFavourites(false);
     }
   }, []);
 

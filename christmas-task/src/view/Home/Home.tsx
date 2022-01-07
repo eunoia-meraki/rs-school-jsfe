@@ -14,7 +14,9 @@ export const Home: FC = () => {
       <div className={styles['ball2']} style={{ backgroundImage: `url('${ball2}')` }}></div>
       <div className={styles['container']}>
         <div className={styles['title']}>Новогодняя игра "Наряди елку"</div>
-        <NavLink to="/toys" className={styles['button']}>Начать</NavLink>
+        <NavLink to="/toys" className={styles['button']}>
+          Начать
+        </NavLink>
       </div>
     </div>
   );

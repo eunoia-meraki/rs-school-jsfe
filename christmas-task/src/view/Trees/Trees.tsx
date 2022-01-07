@@ -7,6 +7,8 @@ import { Background } from '@/components/Background';
 import { Toy } from '@/components/Toy';
 
 import { Snowfall } from './Snowfall';
+import { Garland } from './Garland';
+import { GarlandButtons } from './GarlandButtons';
 
 import music from '@/assets/svg/audio.svg';
 import snowfall from '@/assets/svg/snow.svg';
@@ -28,13 +30,19 @@ export const Trees: FC = () => {
   const onMusicClick = (): void => {
     if (isMusicPressed) {
       setIsMusicPressed(false);
-      song.pause();
-      song.currentTime = 0;
     } else {
       setIsMusicPressed(true);
-      song.play();
     }
   };
+
+  useEffect(() => {
+    if (isMusicPressed) {
+      song.play();
+    } else {
+      song.pause();
+      song.currentTime = 0;
+    }
+  }, [isMusicPressed]);
 
   const [isSnowfallPressed, setIsSnowfallPressed] = useState<boolean>(false);
 
@@ -54,6 +62,16 @@ export const Trees: FC = () => {
     setTreeImage(image);
   };
 
+  const [garlandColor, setGarlandColor] = useState<string>('none');
+
+  const onSetGarlandColor = (color: string): void => {
+    setGarlandColor(color);
+  };
+
+  const onDragOver = (e: DragEvent): void => {
+    e.preventDefault();
+  };
+
   const [tree, setTree] = useState<HTMLElement | undefined>(undefined);
 
   useEffect(() => {
@@ -61,12 +79,7 @@ export const Trees: FC = () => {
     setTree(tree!);
   }, []);
 
-  const onDragOver = (e: DragEvent): void => {
-    e.preventDefault();
-  };
-
   const favouritesContext = useFavouritesContext();
-
   const favourites = favouritesContext?.getFavourites();
 
   return (
@@ -100,12 +113,13 @@ export const Trees: FC = () => {
             <Background key={index.toString()} image={image} onSetImage={onSetBackgroundImage} />
           ))}
         </div>
+        <span className={styles['header']}>Гирлянда</span>
+        <GarlandButtons onSetGarlandColor={onSetGarlandColor} />
       </div>
       <div
         className={styles['background']}
         style={{ backgroundImage: `url('${backgroundImage}')` }}
       >
-        {isSnowfallPressed && <Snowfall />}
         <div id="tree" className={styles['tree']}>
           <img src={treeImage} useMap="#image-map"></img>
           <map name="image-map" onDragOver={onDragOver}>
@@ -114,7 +128,9 @@ export const Trees: FC = () => {
               shape="poly"
             ></area>
           </map>
+          {garlandColor !== 'none' && <Garland color={garlandColor} />}
         </div>
+        {isSnowfallPressed && <Snowfall />}
       </div>
       <div className={styles['settings-group']}>
         <span className={styles['header']} style={{ marginTop: 0 }}>

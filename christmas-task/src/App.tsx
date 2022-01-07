@@ -37,7 +37,11 @@ export const App: FC = () => {
     });
   };
 
-  const value: IFavouritesContext = { getFavourites, addDataItem, deleteDataItem };
+  const value: IFavouritesContext = {
+    getFavourites,
+    addDataItem,
+    deleteDataItem,
+  };
 
   return (
     <>
@@ -71,6 +75,7 @@ export const App: FC = () => {
             Елки
           </NavLink>
         </nav>
+        <span className={styles['toys-count']} style={{ marginRight: 30 }}>Выбрано игрушек: {favourites?.length}</span>
       </header>
       <main className={styles['main']} style={{ backgroundImage: `url('${bg}')` }}>
         <Routes>

@@ -73,22 +73,20 @@ export const Toy: FC<IToy> = ({ dataItem, tree }) => {
   };
 
   return (
-    <>
-      <div className={styles['slot']}>
-        <div className={styles['count']}>{count}</div>
-        {[...Array(Number(dataItem.count)).keys()].map((_, index) => (
-          <img
-            key={index.toString()}
-            className={styles['toy']}
-            src={importToy(dataItem.num)}
-            draggable={true}
-            onDragStart={onDragStart}
-            onDragEnd={onDragEnd}
-            onDragOver={onDragOver}
-          ></img>
-        ))}
-      </div>
-    </>
+    <div className={styles['slot']}>
+      <div className={styles['count']}>{count}</div>
+      {[...Array(Number(dataItem.count)).keys()].map((_, index) => (
+        <img
+          key={index.toString()}
+          className={styles['toy']}
+          src={importToy(dataItem.num)}
+          draggable={true}
+          onDragStart={onDragStart}
+          onDragEnd={onDragEnd}
+          onDragOver={onDragOver}
+        ></img>
+      ))}
+    </div>
   );
 };
 
