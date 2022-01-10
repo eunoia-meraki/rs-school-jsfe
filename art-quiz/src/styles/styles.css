@@ -24,7 +24,24 @@ body {
   overflow: hidden;
 }
 
-.transition {
+.slider {
+  display: flex;
+  width: 200%;
+  height: 100%;
+  transition: 500ms;
+  margin-left: 0;
+}
+
+.slide {
+  height: 100%;
+  width: 50%;
+}
+
+.moved {
+  margin-left: -100%;
+}
+
+.fade-transition {
   position: fixed;
   top: 0;
   right: 0;
@@ -37,7 +54,7 @@ body {
   pointer-events: none;
 }
 
-.transition.active {
+.fade-transition.active {
   pointer-events: all;
   opacity: 1;
 }

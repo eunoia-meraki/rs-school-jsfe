@@ -2,6 +2,7 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
@@ -23,24 +24,50 @@ module.exports = {
       template: './src/index.html',
     }),
     new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      chunkFilename: '[id].css',
+      filename: '[name].css',
+    }),
   ],
   module: {
     rules: [
       {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        test: /\.(png|svg|jpe?g|gif)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/images/[contenthash].[ext]',
+        },
       },
       {
-        test: /\.(png|svg|jpe?g|gif|ttf)$/i,
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: 'static/fonts/[contenthash].[ext]',
+        },
       },
       {
         test: /\.html$/i,
         use: 'html-loader',
       },
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/resource',
+        test: /\.(css)$/,
+        ['include']: /src\/styles|node_modules/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(css)$/,
+        ['exclude']: /src\/styles|node_modules/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[local]-[hash:base64:5]',
+              },
+            },
+          },
+        ],
       },
     ],
   },

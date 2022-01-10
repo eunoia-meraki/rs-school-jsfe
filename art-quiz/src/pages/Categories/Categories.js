@@ -1,17 +1,42 @@
-import './Categories.css';
+import styles from './Categories.css';
+import shared from '@/styles/styles.css';
 
 import { Category } from '@/components/Category';
 import { AppLogo } from '@/components/AppLogo';
 import { Footer } from '@/components/Footer';
+import { IconButton } from '@/components/IconButton';
 
 import { Home } from '@/pages/Home';
 import { Settings } from '@/pages/Settings';
 import { Questions } from '@/pages/Questions';
 
+import settings from '@/assets/svg/settings.svg';
+
 export class Categories {
   constructor(groupNumber) {
     this.groupNumber = groupNumber;
-    this.names = [
+
+    const onAppLogoClick = () => {
+      const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
+      transitionElement.classList.toggle(`${shared['active']}`);
+      setTimeout(async () => {
+        const bodyElement = document.querySelector('body');
+        const home = new Home();
+        bodyElement.innerHTML = await home.render();
+        await home.afterRender();
+      }, 500);
+    };
+
+    this.appLogo = new AppLogo(onAppLogoClick);
+
+    const onSettingsButtonClick = () => {
+      const sliderElement = document.querySelector(`.${shared['slider']}`);
+      sliderElement.classList.toggle(`${shared['moved']}`);
+    };
+
+    this.settingsButton = new IconButton(settings, '', onSettingsButtonClick);
+
+    const labels = [
       'Портрет',
       'Пейзаж',
       'Натюрморт',
@@ -25,92 +50,71 @@ export class Categories {
       'Интерьер',
       'Нудизм',
     ];
+
+    this.categories = [];
+
+    labels.forEach((label, index) => {
+      const imageNumber = 120 * this.groupNumber + 10 * index;
+
+      const onCategoryClick = () => {
+        const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
+        transitionElement.classList.toggle(`${shared['active']}`);
+        setTimeout(async () => {
+          const bodyElement = document.querySelector('body');
+          const questionNumber = 120 * this.groupNumber + 10 * index;
+          const questions = new Questions(questionNumber);
+          bodyElement.innerHTML = await questions.render();
+          await questions.after_render();
+        }, 500);
+      };
+
+      this.categories.push(new Category(label, imageNumber, onCategoryClick));
+    });
+
+    this.footer = new Footer();
+    this.settings = new Settings();
   }
 
   async render() {
-    const appLogo = new AppLogo();
-    const appLogoHtml = await appLogo.render();
-
-    const footer = new Footer();
-    const footerHtml = await footer.render();
-
-    let categoriesHtml = '';
-
-    for (let i = 0; i < 12; i++) {
-      const imageNumber = 120 * this.groupNumber + 10 * i;
-      const category = new Category(this.names[i], imageNumber);
-      const categoryHtml = await category.render();
-      await category.after_render();
-      categoriesHtml += categoryHtml;
-    }
-
     return `
-      <div class="transition active"></div>
-      <div class="slider">
-        <div class="categories slide">
-          <header class="categories-header">
-            <div class="navigation">
-              ${appLogoHtml}
-              <span class="page-header">Категории</span>
+      <div class="${shared['fade-transition']} ${shared['active']}"></div>
+      <div class="${shared['slider']}">
+        <div class="${shared['slide']}">
+          <header class="${styles['header']}">
+            <div class="${styles['navigation']}">
+              ${await this.appLogo.render()}
+              <span class="${styles['page-header']}">Категории</span>
             </div>
-            <a class="settings-button" href="/"></a>
+            ${await this.settingsButton.render()}
           </header>
-          <main class="categories-main">
-            ${categoriesHtml}
+          <main class="${styles['main']}">
+            ${await this.categories.reduce(
+              async (prev, cur) => (await cur.render()) + (await prev),
+              ''
+            )}
           </main>
-          ${footerHtml}
+          ${await this.footer.render()}
+        </div>
+        <div class="${shared['slide']}">
+          ${await this.settings.render()}
         </div>
       </div>
     `;
   }
 
-  async after_render() {
-    const sliderEl = document.querySelector('.slider');
-    const slideEl = document.createElement('div');
-    slideEl.className = 'settings';
-    slideEl.classList.toggle('slide');
-    sliderEl.append(slideEl);
-    const settings = new Settings();
-    slideEl.innerHTML = await settings.render();
-    await settings.after_render();
+  async afterRender() {
+    await this.appLogo.afterRender();
+    await this.footer.afterRender();
+    await this.settings.afterRender();
+    await this.settingsButton.afterRender();
 
-    const settingsButtonEl = document.querySelector('.settings-button');
-    settingsButtonEl.addEventListener('click', e => {
-      e.preventDefault();
-      sliderEl.classList.toggle('moved');
-    });
-
-    const transitionEl = document.querySelector('.transition');
-
-    const appLogoEl = document.querySelector('.app-logo');
-
-    appLogoEl.addEventListener('click', () => {
-      transitionEl.classList.toggle('active');
-      setTimeout(async () => {
-        const bodyEl = document.querySelector('body');
-        const home = new Home();
-        bodyEl.innerHTML = await home.render();
-        await home.after_render();
-      }, 500);
-    });
-
-    const categoryEls = document.querySelectorAll('.category');
-
-    categoryEls.forEach((categoryEl, index) => {
-      categoryEl.addEventListener('click', () => {
-        transitionEl.classList.toggle('active');
-        setTimeout(async () => {
-          const bodyEl = document.querySelector('body');
-          const questionNumber = 120 * this.groupNumber + 10 * index;
-          const questions = new Questions(questionNumber);
-          bodyEl.innerHTML = await questions.render();
-          await questions.after_render();
-        }, 500);
-      });
+    this.categories.forEach(async category => {
+      await category.afterRender();
     });
 
     setTimeout(() => {
-      transitionEl.classList.toggle('active');
+      const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
+      transitionElement.classList.toggle(`${shared['active']}`);
     }, 500);
   }
 }

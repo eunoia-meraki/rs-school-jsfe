@@ -1,0 +1,19 @@
+.volume {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 500px;
+  height: 8px;
+  border-radius: 100px;
+  background-color: white;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 8px;
+  height: 8px;
+  background-color: #ffbca2;
+  box-shadow: -500px 0 0 500px #ffbca2;
+}

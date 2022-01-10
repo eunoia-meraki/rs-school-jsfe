@@ -1,78 +1,78 @@
-import './Home.css';
+import styles from './Home.css';
+import shared from '@/styles/styles.css';
+
 import { Footer } from '@/components/Footer';
-import { Settings } from '@/pages/Settings';
 import { Categories } from '@/pages/Categories';
+import { OvalButton } from '@/components/OvalButton';
+import { Settings } from '@/pages/Settings';
+import { BigAppLogo } from '@/components/BigAppLogo';
+import { IconButton } from '@/components/IconButton';
+
+import settings from '@/assets/svg/settings.svg';
 
 export class Home {
-  constructor() {}
+  constructor() {
+    const onSettingsButtonClick = () => {
+      const sliderElement = document.querySelector(`.${shared['slider']}`);
+      sliderElement.classList.toggle(`${shared['moved']}`);
+    };
+
+    this.settingsButton = new IconButton(settings, '', onSettingsButtonClick);
+
+    const onStartButtonClick = () => {
+      const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
+      transitionElement.classList.toggle(`${shared['active']}`);
+      setTimeout(async () => {
+        const bodyEl = document.querySelector('body');
+        const categories = new Categories(1);
+        bodyEl.innerHTML = await categories.render();
+        await categories.afterRender();
+      }, 500);
+    };
+
+    this.startButton1 = new OvalButton('Художники', onStartButtonClick);
+    this.startButton2 = new OvalButton('Артисты', onStartButtonClick);
+
+    this.bigAppLogo = new BigAppLogo();
+    this.footer = new Footer();
+    this.settings = new Settings();
+  }
 
   async render() {
-    const footer = new Footer();
-    const footerHtml = await footer.render();
-
     return `
-      <div class="transition active"></div>
-      <div class="slider">
-        <div class="home slide">
-          <header class="home-header">
-            <a class="settings-button" href="/"></a>
+      <div class="${shared['fade-transition']} ${shared['active']}"></div>
+      <div class="${shared['slider']}">
+        <div class="${shared['slide']}">
+          <header class="${styles['header']}">
+            ${await this.settingsButton.render()}
           </header>
-          <main class="home-main">
-            <div class="big-app-logo">
-              <div class="icon">
-                <div></div>
-                <div></div>
-              </div>
-              <div class="text">
-                <span>Art</span>
-                <span>Quiz</span>
-              </div>
-            </div>
-            <div class="start-buttons-container">
-              <div class="start-button">Художники</div>
-              <div class="start-button">Картины</div>
+          <main class="${styles['main']}">
+            ${await this.bigAppLogo.render()}
+            <div class="${styles['start-buttons-container']}">
+              ${await this.startButton1.render()}
+              ${await this.startButton2.render()}
             </div>
           </main>
-          ${footerHtml}
+          ${await this.footer.render()}
+        </div>
+        <div class="${shared['slide']}">
+          ${await this.settings.render()}
         </div>
       </div>
     `;
   }
 
-  async after_render() {
-    const sliderEl = document.querySelector('.slider');
-    const slideEl = document.createElement('div');
-    slideEl.className = 'settings';
-    slideEl.classList.toggle('slide');
-    sliderEl.append(slideEl);
-    const settings = new Settings();
-    slideEl.innerHTML = await settings.render();
-    await settings.after_render();
-
-    const settingsButtonEl = document.querySelector('.settings-button');
-    settingsButtonEl.addEventListener('click', e => {
-      e.preventDefault();
-      sliderEl.classList.toggle('moved');
-    });
-
-    const transitionEl = document.querySelector('.transition');
-
-    const startButtonEls = document.querySelectorAll('.start-button');
-
-    startButtonEls.forEach((startButtonEl, index) => {
-      startButtonEl.addEventListener('click', () => {
-        transitionEl.classList.toggle('active');
-        setTimeout(async () => {
-          const bodyEl = document.querySelector('body');
-          const categories = new Categories(index);
-          bodyEl.innerHTML = await categories.render();
-          await categories.after_render();
-        }, 500);
-      });
-    });
+  async afterRender() {
+    await this.startButton1.afterRender();
+    await this.startButton2.afterRender();
+    await this.footer.afterRender();
+    await this.settings.afterRender();
+    await this.bigAppLogo.afterRender();
+    await this.settingsButton.afterRender();
 
     setTimeout(() => {
-      transitionEl.classList.toggle('active');
+      const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
+      transitionElement.classList.toggle(`${shared['active']}`);
     }, 500);
   }
 }

@@ -1,28 +1,30 @@
 .category {
   display: flex;
   flex-direction: column;
-  margin: 20px 40px;
+  gap: 10px;
+  width: fit-content;
+  height: fit-content;
 }
 
-.category .header {
+.header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
 }
 
-.category .score {
+.score {
   color: #ffbca2;
 }
 
-.category .image {
+.image {
   width: 230px;
   height: 230px;
-  border-radius: 20px;
+  background-size: 100% 100%;
   background-position: center center;
-  background-size: 230px 230px;
+  border-radius: 20px;
+ 
 }
 
-.category .image:hover {
+.image:hover {
   cursor: pointer;
   box-shadow: inset 0 0 0 1000px rgba(0, 255, 0, .4);
 }

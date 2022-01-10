@@ -1,0 +1,38 @@
+.counter {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.plus,
+.minus {
+  width: 24px;
+  height: 24px;
+  background-size: 100% 100%;
+  background-position: center center;
+  background-color: white;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.value {
+  display: flex;
+  justify-content: center;
+}
+
+.plus {
+  background-image: url('@/assets/img/plus.png');
+}
+
+.minus {
+  background-image: url('@/assets/img/minus.png');
+}
+
+.plus:active,
+.minus:active {
+  transform: scale(1.2);
+}
+
+.value {
+  width: 30px;
+}

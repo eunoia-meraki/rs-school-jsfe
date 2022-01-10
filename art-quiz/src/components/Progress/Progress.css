@@ -1,0 +1,32 @@
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.progress input {
+  -webkit-appearance: none;
+  appearance: none;
+  overflow: hidden;
+  width: 660px;
+  height: 5px;
+  border-radius: 20px;
+  background-color: white;
+  pointer-events: none;
+}
+
+.progress input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 0;
+  height: 5px;
+  box-shadow: -500px 0 0 500px #ffbca2;
+}
+
+.progress span {
+  display: flex;
+  justify-content: center;
+  width: 30px;
+  font-size: 24px;
+  font-family: 'Gilroy-Bold';
+}

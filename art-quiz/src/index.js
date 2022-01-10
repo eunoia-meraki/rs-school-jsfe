@@ -26,7 +26,7 @@ const router = async () => {
 
   if (parsedUrl === '/') {
     body.innerHTML = await home.render();
-    await home.after_render();
+    await home.afterRender();
   } else {
     body.innerHTML = await error404.render();
     await error404.after_render();

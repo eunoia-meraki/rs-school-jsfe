@@ -1,144 +1,69 @@
-import './Questions.css';
-import { images } from '@/data/images';
+import styles from './Questions.css';
+import shared from '@/styles/styles.css';
+
+import { Progress } from '@/components/Progress';
+import { Question } from '@/components/Question';
+import { Answer } from '@/components/Answer';
 import { Footer } from '@/components/Footer';
 
 export class Questions {
-  constructor(currentQuestionNumber) {
-    this.currentQuestionNumber = currentQuestionNumber - 1;
-    this.rightAnswerNumber = -1;
-  }
+  constructor(questionNumber) {
+    this.questionNumber = questionNumber;
 
-  updateProgress() {
-    const questionProgressEl = document.querySelector('.progress');
-    questionProgressEl.value++;
+    const setAnswer = async isRightAnswer => {
+      await this.answer.setAnswer(this.questionNumber, isRightAnswer);
 
-    const leftProgressNumberEl = document.querySelector(
-      '.left-progress-number',
-    );
-    leftProgressNumberEl.textContent = questionProgressEl.value;
-  }
+      await this.progress.stepUp();
 
-  setQuestion() {
-    this.currentQuestionNumber++;
-
-    const image = new Image();
-    image.src = require(`@/data/full/${this.currentQuestionNumber}full.jpg`);
-    image.onload = () => {
-      const imageEl = document.querySelector('.question .image');
-      imageEl.style.backgroundImage = `url('${image.src}')`;
+      const sliderElement = document.querySelector(`.${styles['slider']}`);
+      sliderElement.classList.toggle(`${styles['moved']}`);
     };
 
-    this.rightAnswerNumber = Math.floor(Math.random() * 4);
+    this.question = new Question(this.questionNumber, setAnswer);
 
-    const answerButtonEls = document.querySelectorAll('.variant-button');
-    answerButtonEls.forEach((answerButtonEl, index) => {
-      if (index === this.rightAnswerNumber) {
-        answerButtonEl.textContent = images[this.currentQuestionNumber].author;
-      } else {
-        let randomNumber = this.currentQuestionNumber;
-        while (randomNumber === this.currentQuestionNumber) {
-          randomNumber = Math.floor(Math.random() * 120);
-        }
-        answerButtonEl.textContent = images[randomNumber].author;
-      }
-    });
-  }
+    const setQuestion = async () => {
+      this.questionNumber++
+      await this.question.setQuestion(this.questionNumber);
 
-  setAnswer(answerNumber) {
-    const image = new Image();
-    image.src = require(`@/data/full/${this.currentQuestionNumber}full.jpg`);
-    image.onload = () => {
-      const imageEl = document.querySelector('.answer .image');
-      imageEl.style.backgroundImage = `url('${image.src}')`;
+      const sliderElement = document.querySelector(`.${styles['slider']}`);
+      sliderElement.classList.toggle(`${styles['moved']}`);
     };
 
-    const indicator = new Image();
-    if (answerNumber === this.rightAnswerNumber) {
-      indicator.src = require('@/assets/svg/check.svg');
-    } else {
-      indicator.src = require('@/assets/svg/cross.svg');
-    }
-    indicator.onload = () => {
-      const indicatorEl = document.querySelector('.answer .indicator');
-      indicatorEl.style.backgroundImage = `url('${indicator.src}')`;
-    };
+    this.answer = new Answer(this.questionNumber, setQuestion);
 
-    const nameEl = document.querySelector('.answer .name');
-    nameEl.textContent = images[this.currentQuestionNumber].name;
+    this.progress = new Progress();
 
-    const authorEl = document.querySelector('.answer .author');
-    authorEl.textContent = `${images[this.currentQuestionNumber].author},
-     ${images[this.currentQuestionNumber].year}`;
+    this.footer = new Footer();
   }
 
   async render() {
-    const footer = new Footer();
-    const footerHtml = await footer.render();
-
     return `
-      <div class="transition active"></div>
-        <header class="questions-header">
-          <span class="left-progress-number">0</span>
-          <input type="range" min="0" max="10" value="0" step="1" class="progress">
-          <span class="right-progress-number">10</span>
-        </header>
-      <main class="questions-main">
-        <div class="questions-slider">
-          <div class="slide">
-            <div class="question">
-              <span class="text">Кто автор этой картины?</span>
-              <div class="image"></div>
-              <div class="answer-buttons-container">
-                <div class="variant-button"></div>
-                <div class="variant-button"></div>
-                <div class="variant-button"></div>
-                <div class="variant-button"></div>
-              </div>
-            </div>
-          </div>  
-        <div class="slide">
-          <div class="answer">
-            <div class="image">
-              <div class="indicator"></div>
-            </div>
-              <div class="text-container">
-                <span class="name"></span>
-                <span class="author"></span>
-              </div>
-            <div class="next-button">Далее</div>
-          </div>
+      <div class="${shared['fade-transition']} ${shared['active']}"></div>
+      <header class="${styles['header']}">
+        ${await this.progress.render()}
+      </header>
+      <main class="${styles['main']}">
+        <div class="${styles['slider']}">
+        <div class="${styles['slide']}">
+          ${await this.question.render()}
+        </div>  
+        <div class="${styles['slide']}">
+          ${await this.answer.render()}
         </div>
       </main>
-      ${footerHtml}
+      ${await this.footer.render()}
     `;
   }
 
   async after_render() {
-    this.setQuestion();
-    this.setAnswer();
+    this.progress.afterRender();
+    this.question.afterRender();
+    this.answer.afterRender();
+    this.footer.afterRender();
 
-    const questionSliderEl = document.querySelector('.questions-slider');
-
-    const variantButtonEls = document.querySelectorAll('.variant-button');
-    variantButtonEls.forEach((variantButtonEl, index) => {
-      variantButtonEl.addEventListener('click', () => {
-        this.setAnswer(index);
-        this.updateProgress();
-        questionSliderEl.classList.toggle('moved');
-        setTimeout(() => {
-          this.setQuestion();
-        }, 500);
-      });
-    });
-
-    const nextButtonEl = document.querySelector('.next-button');
-    nextButtonEl.addEventListener('click', () => {
-      questionSliderEl.classList.toggle('moved');
-    });
-
-    const transitionEl = document.querySelector('.transition');
     setTimeout(() => {
-      transitionEl.classList.toggle('active');
+      const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
+      transitionElement.classList.toggle(`${shared['active']}`);
     }, 500);
   }
 }

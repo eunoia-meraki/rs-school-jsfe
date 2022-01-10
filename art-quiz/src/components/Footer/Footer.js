@@ -1,17 +1,17 @@
-import './Footer.css';
+import styles from './Footer.css';
 
 export class Footer {
   constructor() {}
 
   async render() {
     return `
-      <footer class="footer">
-        <div class="school-logo"></div>
-        <span class="release-year">2021</span>
-        <a class="school-reference" href="https://rs.school/js">Курс</a>
+      <footer class="${styles['footer']}">
+        <div class="${styles['logo']}"></div>
+        <span>2021</span>
+        <a href="https://rs.school/js">Курс</a>
       </footer>
     `;
   }
 
-  async after_render() {}
+  async afterRender() {}
 }
