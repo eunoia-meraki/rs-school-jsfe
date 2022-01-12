@@ -1,53 +1,67 @@
-import styles from './Question.css';
+import styles from './AuthorsQuestion.css';
 
 import { OvalButton } from '@/components/OvalButton';
 
 import { images } from '@/data/images';
 
-export class Question {
+export class AuthorsQuestion {
   static index = 0;
 
   constructor(questionNumber, onAnyAnswerButtonClick) {
     this._questionNumber = questionNumber;
     this.rightAnswerNumber = rightAnswerNumber();
+    this.onAnyAnswerButtonClick = onAnyAnswerButtonClick;
 
     this.answerButtons = [];
 
     for (let i = 0; i < 4; i++) {
       const onAnswerButtonClick = async () => {
-        await onAnyAnswerButtonClick(this.rightAnswerNumber === i);
+        await this.onAnyAnswerButtonClick(this.rightAnswerNumber === i);
       };
 
-      this.answerButtons.push(new OvalButton('', onAnswerButtonClick));
+      let answerButtonLabel = '';
+
+      if (i === this.rightAnswerNumber) {
+        answerButtonLabel = images[this._questionNumber].author;
+      } else {
+        answerButtonLabel = images[randomQuestionNumber()].author;
+      }
+
+      this.answerButtons.push(new OvalButton(answerButtonLabel, onAnswerButtonClick));
     }
 
-    Question.index++;
-    this.id = `question-${Question.index}`;
+    AuthorsQuestion.index++;
+    this.id = `authors-question-${AuthorsQuestion.index}`;
   }
 
   set questionNumber(questionNumber) {
     this._questionNumber = questionNumber;
     this.rightAnswerNumber = rightAnswerNumber();
-  }
 
-  async render() {
-    this.answerButtons.forEach(async (answerButton, index) => {
+    this.answerButtons.forEach((answerButton, index) => {
+      const onAnswerButtonClick = async () => {
+        await this.onAnyAnswerButtonClick(this.rightAnswerNumber === index);
+      };
+
+      answerButton.onClick = onAnswerButtonClick;
+
       if (index === this.rightAnswerNumber) {
         answerButton.label = images[this._questionNumber].author;
       } else {
         answerButton.label = images[randomQuestionNumber()].author;
       }
     });
+  }
 
+  async render() {
     return `
-      <div id="${this.id}" class="${styles['question']}">
+      <div id="${this.id}" class="${styles['authors-question']}">
         <h1>Кто автор данной картины?</h1>
         <img src="" alt="Картина">
         <div class="${styles['answer-buttons-container']}">
-          ${await this.answerButtons.reduce(
-            async (prev, cur) => (await cur.render()) + (await prev),
-            ''
-          )}
+          ${await this.answerButtons
+            .reverse()
+            .reduce(async (prev, cur) => (await cur.render()) + (await prev), '')}
         </div>
       </div>
     `;
@@ -58,19 +72,19 @@ export class Question {
       await answerButton.afterRender();
     });
 
-    const questionElement = document.getElementById(this.id);
+    const authorsQuestionElement = document.getElementById(this.id);
 
     const image = new Image();
     image.src = require(`@/data/full/${this._questionNumber}full.jpg`);
     image.onload = () => {
-      const imageElement = questionElement.querySelector('img');
+      const imageElement = authorsQuestionElement.querySelector('img');
       imageElement.src = image.src;
     };
   }
 
   async rerender() {
-    const questionElement = document.getElementById(this.id);
-    questionElement.outerHTML = await this.render();
+    const authorsQuestionElement = document.getElementById(this.id);
+    authorsQuestionElement.outerHTML = await this.render();
     await this.afterRender();
   }
 }
@@ -80,5 +94,5 @@ const rightAnswerNumber = () => {
 };
 
 const randomQuestionNumber = () => {
-  return Math.floor(Math.random() * 120);
+  return Math.floor(Math.random() * 240);
 };

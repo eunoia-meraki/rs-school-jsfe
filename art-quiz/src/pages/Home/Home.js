@@ -19,19 +19,28 @@ export class Home {
 
     this.settingsButton = new IconButton(settings, '', onSettingsButtonClick);
 
-    const onStartButtonClick = () => {
-      const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
-      transitionElement.classList.toggle(`${shared['active']}`);
-      setTimeout(async () => {
-        const bodyEl = document.querySelector('body');
-        const categories = new Categories(1);
-        bodyEl.innerHTML = await categories.render();
-        await categories.afterRender();
-      }, 500);
-    };
+    const labels = [
+      'Художники',
+      'Артисты',
+    ];
 
-    this.startButton1 = new OvalButton('Художники', onStartButtonClick);
-    this.startButton2 = new OvalButton('Артисты', onStartButtonClick);
+    this.startButtons = [];
+
+    labels.forEach((label, index) => {
+      const onStartButtonClick = () => {
+        const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
+        transitionElement.classList.toggle(`${shared['active']}`);
+
+        setTimeout(async () => {
+          const bodyEl = document.querySelector('body');
+          const categories = new Categories(index);
+          bodyEl.innerHTML = await categories.render();
+          await categories.afterRender();
+        }, 500);
+      };
+
+      this.startButtons.push(new OvalButton(label, onStartButtonClick));
+    });
 
     this.bigAppLogo = new BigAppLogo();
     this.footer = new Footer();
@@ -49,8 +58,10 @@ export class Home {
           <main class="${styles['main']}">
             ${await this.bigAppLogo.render()}
             <div class="${styles['start-buttons-container']}">
-              ${await this.startButton1.render()}
-              ${await this.startButton2.render()}
+              ${await this.startButtons.reverse().reduce(
+                async (prev, cur) => (await cur.render()) + (await prev),
+                ''
+              )}
             </div>
           </main>
           ${await this.footer.render()}
@@ -63,12 +74,14 @@ export class Home {
   }
 
   async afterRender() {
-    await this.startButton1.afterRender();
-    await this.startButton2.afterRender();
     await this.footer.afterRender();
     await this.settings.afterRender();
     await this.bigAppLogo.afterRender();
     await this.settingsButton.afterRender();
+
+    this.startButtons.forEach(async startButton => {
+      await startButton.afterRender();
+    });
 
     setTimeout(() => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);

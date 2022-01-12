@@ -19,6 +19,7 @@ export class Categories {
     const onAppLogoClick = () => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
       transitionElement.classList.toggle(`${shared['active']}`);
+
       setTimeout(async () => {
         const bodyElement = document.querySelector('body');
         const home = new Home();
@@ -59,6 +60,7 @@ export class Categories {
       const onCategoryClick = () => {
         const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
         transitionElement.classList.toggle(`${shared['active']}`);
+        
         setTimeout(async () => {
           const bodyElement = document.querySelector('body');
           const questionNumber = 120 * this.groupNumber + 10 * index;
@@ -81,14 +83,14 @@ export class Categories {
       <div class="${shared['slider']}">
         <div class="${shared['slide']}">
           <header class="${styles['header']}">
-            <div class="${styles['navigation']}">
+            <nav class="${styles['navigation']}">
               ${await this.appLogo.render()}
               <span class="${styles['page-header']}">Категории</span>
-            </div>
+            </nav>
             ${await this.settingsButton.render()}
           </header>
           <main class="${styles['main']}">
-            ${await this.categories.reduce(
+            ${await this.categories.reverse().reduce(
               async (prev, cur) => (await cur.render()) + (await prev),
               ''
             )}

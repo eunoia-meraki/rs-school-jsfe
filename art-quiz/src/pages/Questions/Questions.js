@@ -2,7 +2,8 @@ import styles from './Questions.css';
 import shared from '@/styles/styles.css';
 
 import { Progress } from '@/components/Progress';
-import { Question } from '@/components/Question';
+import { AuthorsQuestion } from '@/components/AuthorsQuestion';
+import { PicturesQuestion } from '@/components/PicturesQuestion';
 import { Answer } from '@/components/Answer';
 import { Footer } from '@/components/Footer';
 import { Timer } from '@/components/Timer';
@@ -24,7 +25,13 @@ export class Questions {
       sliderElement.classList.toggle(`${styles['moved']}`);
     };
 
-    this.question = new Question(this.questionNumber, onAnyAnswerButtonClick);
+    this.question = {};
+
+    if (Math.floor(this.questionNumber / 120) === 0) {
+      this.question = new AuthorsQuestion(this.questionNumber, onAnyAnswerButtonClick);
+    } else {
+      this.question = new PicturesQuestion(this.questionNumber, onAnyAnswerButtonClick);
+    }
 
     const onNextButtonClick = async () => {
       this.timer.reset();

@@ -64,7 +64,7 @@ export class Answer {
     };
 
     const indicator = new Image();
-    if (this.isRightAnswer) {
+    if (this._isRightAnswer) {
       indicator.src = check;
     } else {
       indicator.src = cross;

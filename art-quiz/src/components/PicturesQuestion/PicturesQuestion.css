@@ -1,0 +1,17 @@
+.pictures-question {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 480px;
+}
+
+.pictures-question h1 {
+  font-size: 24px;
+}
+
+.answer-buttons-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}

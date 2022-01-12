@@ -5,7 +5,7 @@ export class OvalButton {
 
   constructor(label, onClick) {
     this._label = label;
-    this.onClick = onClick;
+    this._onClick = onClick;
 
     OvalButton.index++;
     this.id = `oval-button-${OvalButton.index}`;
@@ -13,6 +13,10 @@ export class OvalButton {
 
   set label(label) {
     this._label = label;
+  }
+
+  set onClick(onClick) {
+    this._onClick = onClick;
   }
 
   async render() {
@@ -23,6 +27,6 @@ export class OvalButton {
 
   async afterRender() {
     const ovalButtonElement = document.getElementById(this.id);
-    ovalButtonElement.addEventListener('click', this.onClick);
+    ovalButtonElement.addEventListener('click', this._onClick);
   }
 }
