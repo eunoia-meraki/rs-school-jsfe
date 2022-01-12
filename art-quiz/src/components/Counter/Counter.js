@@ -12,7 +12,7 @@ export class Counter {
     return `
       <div id="${this.id}" class="${styles['counter']}">
         <div class="${styles['plus']}"></div>
-        <div class="${styles['value']}">20</div>
+        <div class="${styles['value']}"></div>
         <div class="${styles['minus']}"></div>
       </div>
     `;
@@ -27,12 +27,16 @@ export class Counter {
     valueElement.textContent = localStorage.getItem('seconds') ?? 20;
 
     plusElement.addEventListener('mouseup', () => {
-      valueElement.textContent = +valueElement.textContent + 1;
+      if (+valueElement.textContent < 99) {
+        valueElement.textContent = +valueElement.textContent + 1;
+      }
       localStorage.setItem('seconds', valueElement.textContent);
     });
 
     minusElement.addEventListener('mouseup', () => {
-      valueElement.textContent = +valueElement.textContent - 1;
+      if (+valueElement.textContent > 0) {
+        valueElement.textContent = +valueElement.textContent - 1;
+      }
       localStorage.setItem('seconds', valueElement.textContent);
     });
   }

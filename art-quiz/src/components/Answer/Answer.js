@@ -10,13 +10,11 @@ import cross from '@/assets/svg/cross.svg';
 export class Answer {
   static index = 0;
 
-  constructor(questionNumber, setAnswer) {
-    this.questionNumber = questionNumber;
-    this.isRightAnswer = false;
-
-    const onNextButtonClick = async () => {
-      await setAnswer();
-    };
+  constructor(questionNumber, onNextButtonClick) {
+    this._questionNumber = questionNumber;
+    this._isRightAnswer = false;
+    this.name = '';
+    this.description = '';
 
     this.nextButton = new OvalButton('Далее', onNextButtonClick);
 
@@ -24,15 +22,29 @@ export class Answer {
     this.id = `answer-${Answer.index}`;
   }
 
+  set questionNumber(questionNumber) {
+    this._questionNumber = questionNumber;
+  }
+
+  set isRightAnswer(isRightAnswer) {
+    this._isRightAnswer = isRightAnswer;
+  }
+
   async render() {
+    this.name = images[this._questionNumber].name;
+    this.description = `
+    ${images[this._questionNumber].author},
+    ${images[this._questionNumber].year}
+  `
+
     return `
       <div id="${this.id}" class="${styles['answer']}">
         <div class="${styles['image']}">
           <div class="${styles['indicator']}"></div>
         </div>
         <div class="${styles['text-container']}">
-          <span class="${styles['name']}"></span>
-          <span class="${styles['author']}"></span>
+          <span class="${styles['name']}">${this.name}</span>
+          <span class="${styles['description']}">${this.description}</span>
         </div>
         ${await this.nextButton.render()}
       </div>
@@ -45,7 +57,7 @@ export class Answer {
     const answerElement = document.getElementById(this.id);
 
     const image = new Image();
-    image.src = require(`@/data/full/${this.questionNumber}full.jpg`);
+    image.src = require(`@/data/full/${this._questionNumber}full.jpg`);
     image.onload = () => {
       const imageElement = answerElement.querySelector(`.${styles['image']}`);
       imageElement.style.backgroundImage = `url('${image.src}')`;
@@ -61,21 +73,6 @@ export class Answer {
       const indicatorElement = answerElement.querySelector(`.${styles['indicator']}`);
       indicatorElement.style.backgroundImage = `url('${indicator.src}')`;
     };
-
-    const nameElement = answerElement.querySelector(`.${styles['name']}`);
-    nameElement.textContent = images[this.questionNumber].name;
-
-    const authorElement = answerElement.querySelector(`.${styles['author']}`);
-    authorElement.textContent = `
-      ${images[this.questionNumber].author},
-      ${images[this.questionNumber].year}
-    `;
-  }
-
-  async setAnswer(questionNumber, isRightAnswer) {
-    this.questionNumber = questionNumber;
-    this.isRightAnswer = isRightAnswer;
-    await this.rerender();
   }
 
   async rerender() {

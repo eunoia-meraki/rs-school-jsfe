@@ -5,13 +5,18 @@ import { Progress } from '@/components/Progress';
 import { Question } from '@/components/Question';
 import { Answer } from '@/components/Answer';
 import { Footer } from '@/components/Footer';
+import { Timer } from '@/components/Timer';
 
 export class Questions {
   constructor(questionNumber) {
     this.questionNumber = questionNumber;
 
-    const setAnswer = async isRightAnswer => {
-      await this.answer.setAnswer(this.questionNumber, isRightAnswer);
+    const onAnyAnswerButtonClick = async isRightAnswer => {
+      this.timer.stop();
+
+      this.answer.questionNumber = this.questionNumber;
+      this.answer.isRightAnswer = isRightAnswer;
+      await this.answer.rerender();
 
       await this.progress.stepUp();
 
@@ -19,19 +24,28 @@ export class Questions {
       sliderElement.classList.toggle(`${styles['moved']}`);
     };
 
-    this.question = new Question(this.questionNumber, setAnswer);
+    this.question = new Question(this.questionNumber, onAnyAnswerButtonClick);
 
-    const setQuestion = async () => {
-      this.questionNumber++
-      await this.question.setQuestion(this.questionNumber);
+    const onNextButtonClick = async () => {
+      this.timer.reset();
+      this.timer.run();
+
+      this.questionNumber++;
+      this.question.questionNumber = this.questionNumber;
+      await this.question.rerender();
 
       const sliderElement = document.querySelector(`.${styles['slider']}`);
       sliderElement.classList.toggle(`${styles['moved']}`);
     };
 
-    this.answer = new Answer(this.questionNumber, setQuestion);
+    this.answer = new Answer(this.questionNumber, onNextButtonClick);
 
     this.progress = new Progress();
+
+    this.isTimer = localStorage.getItem('isTimer') === 'true';
+
+    const seconds = localStorage.getItem('seconds') ?? 20;
+    this.timer = new Timer(seconds);
 
     this.footer = new Footer();
   }
@@ -43,6 +57,13 @@ export class Questions {
         ${await this.progress.render()}
       </header>
       <main class="${styles['main']}">
+        ${
+          this.isTimer
+            ? `<div class="${styles['timer-container']}">
+              ${await this.timer.render()}
+            </div>`
+            : ''
+        }
         <div class="${styles['slider']}">
         <div class="${styles['slide']}">
           ${await this.question.render()}
@@ -60,6 +81,8 @@ export class Questions {
     this.question.afterRender();
     this.answer.afterRender();
     this.footer.afterRender();
+
+    if (this.isTimer) this.timer.afterRender();
 
     setTimeout(() => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);

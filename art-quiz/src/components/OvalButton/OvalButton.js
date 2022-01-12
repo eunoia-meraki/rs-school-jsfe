@@ -4,37 +4,25 @@ export class OvalButton {
   static index = 0;
 
   constructor(label, onClick) {
-    this.label = label;
+    this._label = label;
     this.onClick = onClick;
 
     OvalButton.index++;
     this.id = `oval-button-${OvalButton.index}`;
   }
 
-  async setLabel(label) {
-    this.label = label;
-    await this.rerender();
-  }
-
-  async setOnClick(onClick) {
-    this.onClick = onClick;
-    await this.rerender();
+  set label(label) {
+    this._label = label;
   }
 
   async render() {
     return `
-      <div id="${this.id}" class="${styles['oval-button']}">${this.label}</div>
+      <div id="${this.id}" class="${styles['oval-button']}">${this._label}</div>
     `;
   }
 
   async afterRender() {
     const ovalButtonElement = document.getElementById(this.id);
     ovalButtonElement.addEventListener('click', this.onClick);
-  }
-
-  async rerender() {
-    const ovalButtonElement = document.getElementById(this.id);
-    ovalButtonElement.outerHTML = await this.render();
-    await this.afterRender();
   }
 }
