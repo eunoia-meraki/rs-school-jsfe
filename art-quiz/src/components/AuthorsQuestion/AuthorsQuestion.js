@@ -7,57 +7,29 @@ import { images } from '@/data/images';
 export class AuthorsQuestion {
   static index = 0;
 
-  constructor(questionNumber, onAnyAnswerButtonClick) {
-    this._questionNumber = questionNumber;
-    this.rightAnswerNumber = rightAnswerNumber();
+  constructor(imageNumber, onAnyAnswerButtonClick) {
+    this._imageNumber = imageNumber;
     this.onAnyAnswerButtonClick = onAnyAnswerButtonClick;
 
     this.answerButtons = [];
 
     for (let i = 0; i < 4; i++) {
-      const onAnswerButtonClick = async () => {
-        await this.onAnyAnswerButtonClick(this.rightAnswerNumber === i);
-      };
-
-      let answerButtonLabel = '';
-
-      if (i === this.rightAnswerNumber) {
-        answerButtonLabel = images[this._questionNumber].author;
-      } else {
-        answerButtonLabel = images[randomQuestionNumber()].author;
-      }
-
-      this.answerButtons.push(new OvalButton(answerButtonLabel, onAnswerButtonClick));
+      this.answerButtons.push(new OvalButton('', undefined, 240));
     }
 
     AuthorsQuestion.index++;
     this.id = `authors-question-${AuthorsQuestion.index}`;
   }
 
-  set questionNumber(questionNumber) {
-    this._questionNumber = questionNumber;
-    this.rightAnswerNumber = rightAnswerNumber();
-
-    this.answerButtons.forEach((answerButton, index) => {
-      const onAnswerButtonClick = async () => {
-        await this.onAnyAnswerButtonClick(this.rightAnswerNumber === index);
-      };
-
-      answerButton.onClick = onAnswerButtonClick;
-
-      if (index === this.rightAnswerNumber) {
-        answerButton.label = images[this._questionNumber].author;
-      } else {
-        answerButton.label = images[randomQuestionNumber()].author;
-      }
-    });
+  set imageNumber(imageNumber) {
+    this._imageNumber = imageNumber;
   }
 
   async render() {
     return `
       <div id="${this.id}" class="${styles['authors-question']}">
-        <h1>Кто автор данной картины?</h1>
-        <img src="" alt="Картина">
+        <span class="${styles['question']}">Кто автор данной картины?</span>
+        <div class="${styles['picture']}"></div>
         <div class="${styles['answer-buttons-container']}">
           ${await this.answerButtons
             .reverse()
@@ -68,18 +40,33 @@ export class AuthorsQuestion {
   }
 
   async afterRender() {
-    this.answerButtons.forEach(async answerButton => {
-      await answerButton.afterRender();
-    });
-
     const authorsQuestionElement = document.getElementById(this.id);
 
     const image = new Image();
-    image.src = require(`@/data/full/${this._questionNumber}full.jpg`);
+    image.src = require(`@/data/full/${this._imageNumber}full.jpg`);
     image.onload = () => {
-      const imageElement = authorsQuestionElement.querySelector('img');
-      imageElement.src = image.src;
+      const pictureElement = authorsQuestionElement.querySelector(`.${styles['picture']}`);
+      pictureElement.style.backgroundImage = `url('${image.src}')`;
     };
+
+    const rightAnswerNumber = Math.floor(Math.random() * 4);
+
+    this.answerButtons.forEach(async (answerButton, index) => {
+      if (index === rightAnswerNumber) {
+        answerButton.label = images[this._imageNumber].author;
+      } else {
+        const randomImageNumber = Math.floor(Math.random() * 240);
+        answerButton.label = images[randomImageNumber].author;
+      }
+
+      const onAnswerButtonClick = async () => {
+        await this.onAnyAnswerButtonClick(rightAnswerNumber === index);
+      };
+
+      answerButton.onClick = onAnswerButtonClick;
+
+      await answerButton.afterRender();
+    });
   }
 
   async rerender() {
@@ -88,11 +75,3 @@ export class AuthorsQuestion {
     await this.afterRender();
   }
 }
-
-const rightAnswerNumber = () => {
-  return Math.floor(Math.random() * 4);
-};
-
-const randomQuestionNumber = () => {
-  return Math.floor(Math.random() * 240);
-};

@@ -5,13 +5,18 @@
   width: 480px;
 }
 
-.pictures-question h1 {
+.question-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.question {
   font-size: 24px;
+  font-family: 'Gilroy-Bold';
 }
 
 .answer-buttons-container {
   display: flex;
-  justify-content: flex-start;
   flex-wrap: wrap;
   gap: 20px;
 }

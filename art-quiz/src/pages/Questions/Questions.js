@@ -7,45 +7,62 @@ import { PicturesQuestion } from '@/components/PicturesQuestion';
 import { Answer } from '@/components/Answer';
 import { Footer } from '@/components/Footer';
 import { Timer } from '@/components/Timer';
+import { Result } from '@/components/Result';
 
 export class Questions {
-  constructor(questionNumber) {
-    this.questionNumber = questionNumber;
+  constructor(groupNumber, imageNumber) {
+    this.imageNumber = imageNumber;
+    this.questionNumber = 0;
+    this.score = 0;
 
     const onAnyAnswerButtonClick = async isRightAnswer => {
       this.timer.stop();
 
-      this.answer.questionNumber = this.questionNumber;
+      this.answer.imageNumber = this.imageNumber;
       this.answer.isRightAnswer = isRightAnswer;
       await this.answer.rerender();
 
-      await this.progress.stepUp();
+      if (isRightAnswer) {
+        this.score++;
+      }
 
       const sliderElement = document.querySelector(`.${styles['slider']}`);
       sliderElement.classList.toggle(`${styles['moved']}`);
     };
 
-    this.question = {};
-
-    if (Math.floor(this.questionNumber / 120) === 0) {
-      this.question = new AuthorsQuestion(this.questionNumber, onAnyAnswerButtonClick);
+    if (groupNumber === 0) {
+      this.question = new AuthorsQuestion(this.imageNumber, onAnyAnswerButtonClick);
     } else {
-      this.question = new PicturesQuestion(this.questionNumber, onAnyAnswerButtonClick);
+      this.question = new PicturesQuestion(this.imageNumber, onAnyAnswerButtonClick);
     }
 
     const onNextButtonClick = async () => {
-      this.timer.reset();
-      this.timer.run();
-
+      this.imageNumber++;
       this.questionNumber++;
-      this.question.questionNumber = this.questionNumber;
-      await this.question.rerender();
+
+      await this.progress.stepUp();
+
+      if (this.questionNumber < 10) {
+        this.timer.reset();
+        this.timer.run();
+
+        this.question.imageNumber = this.imageNumber;
+        await this.question.rerender();
+      } else {
+        const firstSlideElement = document.querySelector(`.${styles['slide']}`);
+        const questionElement = firstSlideElement.firstElementChild;
+        questionElement.remove();
+
+        const result = new Result(this.score, imageNumber);
+        firstSlideElement.innerHTML = await result.render();
+        result.afterRender();
+      }
 
       const sliderElement = document.querySelector(`.${styles['slider']}`);
       sliderElement.classList.toggle(`${styles['moved']}`);
     };
 
-    this.answer = new Answer(this.questionNumber, onNextButtonClick);
+    this.answer = new Answer(this.imageNumber, onNextButtonClick);
 
     this.progress = new Progress();
 
@@ -67,23 +84,24 @@ export class Questions {
         ${
           this.isTimer
             ? `<div class="${styles['timer-container']}">
-              ${await this.timer.render()}
-            </div>`
+                ${await this.timer.render()}
+              </div>`
             : ''
         }
         <div class="${styles['slider']}">
-        <div class="${styles['slide']}">
-          ${await this.question.render()}
-        </div>  
-        <div class="${styles['slide']}">
-          ${await this.answer.render()}
+          <div class="${styles['slide']}">
+            ${await this.question.render()}
+          </div>  
+          <div class="${styles['slide']}">
+            ${await this.answer.render()}
+          </div>
         </div>
       </main>
       ${await this.footer.render()}
     `;
   }
 
-  async after_render() {
+  async afterRender() {
     this.progress.afterRender();
     this.question.afterRender();
     this.answer.afterRender();

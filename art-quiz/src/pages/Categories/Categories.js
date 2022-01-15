@@ -60,17 +60,17 @@ export class Categories {
       const onCategoryClick = () => {
         const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
         transitionElement.classList.toggle(`${shared['active']}`);
-        
+
         setTimeout(async () => {
           const bodyElement = document.querySelector('body');
-          const questionNumber = 120 * this.groupNumber + 10 * index;
-          const questions = new Questions(questionNumber);
+          const questions = new Questions(this.groupNumber, imageNumber);
           bodyElement.innerHTML = await questions.render();
-          await questions.after_render();
+          await questions.afterRender();
         }, 500);
       };
 
-      this.categories.push(new Category(label, imageNumber, onCategoryClick));
+      const category = new Category(label, imageNumber, onCategoryClick);
+      this.categories.push(category);
     });
 
     this.footer = new Footer();
@@ -90,10 +90,9 @@ export class Categories {
             ${await this.settingsButton.render()}
           </header>
           <main class="${styles['main']}">
-            ${await this.categories.reverse().reduce(
-              async (prev, cur) => (await cur.render()) + (await prev),
-              ''
-            )}
+            ${await this.categories
+              .reverse()
+              .reduce(async (prev, cur) => (await cur.render()) + (await prev), '')}
           </main>
           ${await this.footer.render()}
         </div>

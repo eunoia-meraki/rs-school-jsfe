@@ -19,10 +19,7 @@ export class Home {
 
     this.settingsButton = new IconButton(settings, '', onSettingsButtonClick);
 
-    const labels = [
-      'Художники',
-      'Артисты',
-    ];
+    const labels = ['Художники', 'Артисты'];
 
     this.startButtons = [];
 
@@ -32,14 +29,15 @@ export class Home {
         transitionElement.classList.toggle(`${shared['active']}`);
 
         setTimeout(async () => {
-          const bodyEl = document.querySelector('body');
+          const bodyElement = document.querySelector('body');
           const categories = new Categories(index);
-          bodyEl.innerHTML = await categories.render();
+          bodyElement.innerHTML = await categories.render();
           await categories.afterRender();
         }, 500);
       };
 
-      this.startButtons.push(new OvalButton(label, onStartButtonClick));
+      const startButton = new OvalButton(label, onStartButtonClick);
+      this.startButtons.push(startButton);
     });
 
     this.bigAppLogo = new BigAppLogo();
@@ -58,10 +56,9 @@ export class Home {
           <main class="${styles['main']}">
             ${await this.bigAppLogo.render()}
             <div class="${styles['start-buttons-container']}">
-              ${await this.startButtons.reverse().reduce(
-                async (prev, cur) => (await cur.render()) + (await prev),
-                ''
-              )}
+              ${await this.startButtons
+                .reverse()
+                .reduce(async (prev, cur) => (await cur.render()) + (await prev), '')}
             </div>
           </main>
           ${await this.footer.render()}

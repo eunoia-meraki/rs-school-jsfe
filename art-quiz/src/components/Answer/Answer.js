@@ -10,11 +10,9 @@ import cross from '@/assets/svg/cross.svg';
 export class Answer {
   static index = 0;
 
-  constructor(questionNumber, onNextButtonClick) {
-    this._questionNumber = questionNumber;
+  constructor(imageNumber, onNextButtonClick) {
+    this._imageNumber = imageNumber;
     this._isRightAnswer = false;
-    this.name = '';
-    this.description = '';
 
     this.nextButton = new OvalButton('Далее', onNextButtonClick);
 
@@ -22,8 +20,8 @@ export class Answer {
     this.id = `answer-${Answer.index}`;
   }
 
-  set questionNumber(questionNumber) {
-    this._questionNumber = questionNumber;
+  set imageNumber(imageNumber) {
+    this._imageNumber = imageNumber;
   }
 
   set isRightAnswer(isRightAnswer) {
@@ -31,20 +29,14 @@ export class Answer {
   }
 
   async render() {
-    this.name = images[this._questionNumber].name;
-    this.description = `
-    ${images[this._questionNumber].author},
-    ${images[this._questionNumber].year}
-  `
-
     return `
       <div id="${this.id}" class="${styles['answer']}">
-        <div class="${styles['image']}">
+        <div class="${styles['picture']}">
           <div class="${styles['indicator']}"></div>
         </div>
         <div class="${styles['text-container']}">
-          <span class="${styles['name']}">${this.name}</span>
-          <span class="${styles['description']}">${this.description}</span>
+          <span class="${styles['name']}"></span>
+          <span class="${styles['author-year']}"></span>
         </div>
         ${await this.nextButton.render()}
       </div>
@@ -57,10 +49,10 @@ export class Answer {
     const answerElement = document.getElementById(this.id);
 
     const image = new Image();
-    image.src = require(`@/data/full/${this._questionNumber}full.jpg`);
+    image.src = require(`@/data/full/${this._imageNumber}full.jpg`);
     image.onload = () => {
-      const imageElement = answerElement.querySelector(`.${styles['image']}`);
-      imageElement.style.backgroundImage = `url('${image.src}')`;
+      const pictureElement = answerElement.querySelector(`.${styles['picture']}`);
+      pictureElement.style.backgroundImage = `url('${image.src}')`;
     };
 
     const indicator = new Image();
@@ -73,6 +65,12 @@ export class Answer {
       const indicatorElement = answerElement.querySelector(`.${styles['indicator']}`);
       indicatorElement.style.backgroundImage = `url('${indicator.src}')`;
     };
+
+    const nameElement = answerElement.querySelector(`.${styles['name']}`);
+    nameElement.textContent = images[this._imageNumber].name;
+
+    const descriptionElement = answerElement.querySelector(`.${styles['author-year']}`);
+    descriptionElement.textContent = `${images[this._imageNumber].author}, ${images[this._imageNumber].year}`;
   }
 
   async rerender() {
