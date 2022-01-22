@@ -3,11 +3,12 @@ import styles from './Timer.css';
 export class Timer {
   static index = 0;
 
-  constructor(seconds) {
+  constructor(seconds, onTimeExpired) {
     this.seconds = seconds;
     this.s = this.seconds % 60;
     this.m = Math.floor(this.seconds / 60);
     this.isStopped = false;
+    this.onTimeExpired = onTimeExpired;
 
     Timer.index++;
     this.id = `time-${Timer.index}`;
@@ -42,6 +43,9 @@ export class Timer {
           if (this.m !== 0) {
             this.m--;
             this.s = 59;
+          } else {
+            this.onTimeExpired();
+            return;
           }
         } else {
           this.s--;

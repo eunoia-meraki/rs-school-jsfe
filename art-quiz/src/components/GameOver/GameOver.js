@@ -1,20 +1,18 @@
-import styles from './Result.css';
+import styles from './GameOver.css';
 import shared from '@/styles/styles.css';
 
 import { OvalButton } from '@/components/OvalButton';
 import { Home } from '@/pages/Home';
 import { Questions } from '@/pages/Questions';
 
-import goblet from '@/assets/svg/goblet1.svg';
+import goblet from '@/assets/svg/goblet2.svg';
 
-export class Result {
+export class GameOver {
   static index = 0;
 
-  constructor(score, imageNumber, groupNumber) {
-    this.score = score;
-
-    Result.index++;
-    this.id = `result-${Result.index}`;
+  constructor(imageNumber, groupNumber) {
+    GameOver.index++;
+    this.id = `game-over-${GameOver.index}`;
 
     const onHomeButtonClick = () => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
@@ -28,34 +26,35 @@ export class Result {
       }, 500);
     };
 
-    const onNextQuizButtonClick = () => {
+    const onRestartQuizButtonClick = () => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
       transitionElement.classList.toggle(`${shared['active']}`);
 
       setTimeout(async () => {
         const bodyElement = document.querySelector('body');
-        const questions = new Questions(groupNumber, imageNumber + 10);
+        const questions = new Questions(groupNumber, imageNumber);
         bodyElement.innerHTML = await questions.render();
+        
         await questions.afterRender();
       }, 500);
     };
 
     this.homeButton = new OvalButton('Главная страница', onHomeButtonClick, 190, 60);
-    this.nextQuizButton = new OvalButton('Следующий квиз', onNextQuizButtonClick, 190, 60);
+    this.restartQuizButton = new OvalButton('Переиграть квиз', onRestartQuizButtonClick, 190, 60);
   }
 
   async render() {
     return `
       <div id="${this.id}" class="${styles['result']}">
         <div class="${styles['goblet']}"></div>
-        <span class="${styles['message']}">Квиз завершен!</span>
+        <span class="${styles['message']}">Время истекло!</span>
         <div class="${styles['score-container']}">
           <span class="${styles['label']}">Ваш результат:</span>
-          <span class="${styles['score']}"></span>
+          <span class="${styles['score']}">0</span>
         </div>
         <div class="${styles['buttons-container']}">
           ${await this.homeButton.render()}
-          ${await this.nextQuizButton.render()}
+          ${await this.restartQuizButton.render()}
         </div>
       </div>
     `;
@@ -63,18 +62,15 @@ export class Result {
 
   async afterRender() {
     this.homeButton.afterRender();
-    this.nextQuizButton.afterRender();
+    this.restartQuizButton.afterRender();
 
-    const resultElement = document.getElementById(this.id);
+    const gameOverElement = document.getElementById(this.id);
 
     const image = new Image();
     image.src = goblet;
     image.onload = () => {
-      const gobletElement = resultElement.querySelector(`.${styles['goblet']}`);
+      const gobletElement = gameOverElement.querySelector(`.${styles['goblet']}`);
       gobletElement.style.backgroundImage = `url('${image.src}')`;
     };
-
-    const scoreElement = resultElement.querySelector(`.${styles['score']}`);
-    scoreElement.textContent = `${this.score}/10`;
   }
 }

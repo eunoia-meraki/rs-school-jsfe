@@ -8,6 +8,7 @@ import { Answer } from '@/components/Answer';
 import { Footer } from '@/components/Footer';
 import { Timer } from '@/components/Timer';
 import { Result } from '@/components/Result';
+import { GameOver } from '@/components/GameOver';
 
 export class Questions {
   constructor(groupNumber, imageNumber) {
@@ -53,7 +54,7 @@ export class Questions {
         const questionElement = firstSlideElement.firstElementChild;
         questionElement.remove();
 
-        const result = new Result(this.score, imageNumber);
+        const result = new Result(this.score, imageNumber, groupNumber);
         firstSlideElement.innerHTML = await result.render();
         result.afterRender();
       }
@@ -68,8 +69,21 @@ export class Questions {
 
     this.isTimer = localStorage.getItem('isTimer') === 'true';
 
+    const onTimeExpired = async () => {
+      const secondSlideElement = document.querySelectorAll(`.${styles['slide']}`)[1];
+      const answerElement = secondSlideElement.firstElementChild;
+      answerElement.remove();
+
+      const gameOver = new GameOver(imageNumber, groupNumber);
+      secondSlideElement.innerHTML = await gameOver.render();
+      gameOver.afterRender();
+
+      const sliderElement = document.querySelector(`.${styles['slider']}`);
+      sliderElement.classList.toggle(`${styles['moved']}`);
+    };
+
     const seconds = localStorage.getItem('seconds') ?? 20;
-    this.timer = new Timer(seconds);
+    this.timer = new Timer(seconds, onTimeExpired);
 
     this.footer = new Footer();
   }

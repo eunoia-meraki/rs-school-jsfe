@@ -1,0 +1,48 @@
+.result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  width: 480px;
+  padding: 40px;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.goblet {
+  width: 200px;
+  height: 200px;
+  background-size: 100% 100%;
+  background-position: center center;
+}
+
+.message {
+  font-family: 'Gilroy-Bold';
+  font-size: 36px;
+  color: black;
+}
+
+.score-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label {
+  font-size: 24px;
+  color: black;
+}
+
+.score {
+  font-family: 'Gilroy-Bold';
+  font-size: 72px;
+  color: black;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 20px;
+}
+
+

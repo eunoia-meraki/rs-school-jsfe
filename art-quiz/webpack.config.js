@@ -6,22 +6,22 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: path.resolve(__dirname, '/src/index.js'),
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '/dist'),
   },
   devServer: {
     port: 9000,
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@': path.resolve(__dirname, '/src'),
     },
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: path.resolve(__dirname, '/src/index.html'),
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
@@ -51,12 +51,18 @@ module.exports = {
       },
       {
         test: /\.(css)$/,
-        ['include']: /src\/styles|node_modules/,
+        include: [
+          path.resolve(__dirname, '/src/styles'),
+          path.resolve(__dirname, '/node_modules'),
+        ],
         use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(css)$/,
-        ['exclude']: /src\/styles|node_modules/,
+        exclude: [
+          path.resolve(__dirname, '/src/styles'),
+          path.resolve(__dirname, '/node_modules'),
+        ],
         use: [
           'style-loader',
           {
