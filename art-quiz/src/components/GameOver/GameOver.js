@@ -41,6 +41,8 @@ export class GameOver {
 
     this.homeButton = new OvalButton('Главная страница', onHomeButtonClick, 190, 60);
     this.restartQuizButton = new OvalButton('Переиграть квиз', onRestartQuizButtonClick, 190, 60);
+
+    localStorage.setItem(`category_${groupNumber}_${imageNumber}`, 0);
   }
 
   async render() {

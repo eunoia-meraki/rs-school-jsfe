@@ -3,9 +3,10 @@ import styles from './ImageButton.css';
 export class ImageButton {
   static index = 0;
 
-  constructor(imageNumber, onClick) {
+  constructor(imageNumber, onClick, someButton) {
     this._imageNumber = imageNumber;
     this._onClick = onClick;
+    this.someButton = someButton;
 
     ImageButton.index++;
     this.id = `image-button-${ImageButton.index}`;
@@ -21,7 +22,15 @@ export class ImageButton {
 
   async render() {
     return `
-      <div id="${this.id}" class="${styles['image-button']}"></div>
+      <div id="${this.id}" class="${styles['image-button']}">
+        ${
+          this.someButton
+            ?
+              `<div class="${styles['some-button']}">Играть снова</div>`
+            :
+              ''
+        }
+      </div>
     `;
   }
 

@@ -42,6 +42,8 @@ export class Result {
 
     this.homeButton = new OvalButton('Главная страница', onHomeButtonClick, 190, 60);
     this.nextQuizButton = new OvalButton('Следующий квиз', onNextQuizButtonClick, 190, 60);
+
+    localStorage.setItem(`category_${groupNumber}_${imageNumber}`, score);
   }
 
   async render() {

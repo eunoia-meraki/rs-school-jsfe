@@ -1,12 +1,14 @@
 import styles from './Category.css';
 
-import { ImageButton } from '@/components/ImageButton';
+import reset from '@/assets/img/reset.png'
 export class Category {
   static index = 0;
 
-  constructor(label, imageNumber, onClick) {
+  constructor(label, groupNumber, imageNumber, onClick) {
     this.label = label;
-    this.imageButton = new ImageButton(imageNumber, onClick);
+    this.score = localStorage.getItem(`category_${groupNumber}_${imageNumber}`) ?? '';;
+    this.imageNumber = imageNumber;
+    this.onClick = onClick;
 
     Category.index++;
     this.id = `category-${Category.index}`;
@@ -17,19 +19,38 @@ export class Category {
       <div id="${this.id}" class="${styles['category']}">
         <div class="${styles['header-container']}">
           <span class="header"></span>
-          <span class="${styles['score']}">10/10</span>
+          <span class="${styles['score']}"></span>
+          ${this.score && `<span class="${styles['score']}">${this.score}/10</span>`}
         </div>
-        ${await this.imageButton.render()}
+        <div class="${styles['image']}">
+          ${
+            this.score
+              ?
+                `<div class="${styles['rectangle']}">
+                  <div class="${styles['icon']}"></div>
+                  <span class="${styles['text']}">Играть снова</span>
+                </div>`
+              : ''
+           }
+      </div>
       </div>
     `;
   }
 
   async afterRender() {
-    await this.imageButton.afterRender();
-
     const categoryElement = document.getElementById(this.id);
 
     const headerElement = categoryElement.querySelector('.header');
     headerElement.textContent = this.label;
+
+    const imageElement = categoryElement.querySelector(`.${styles['image']}`);
+
+    const image = new Image();
+    image.src = require(`@/data/img/${this.imageNumber}.jpg`);
+    image.onload = () => {
+      imageElement.style.backgroundImage = `url('${image.src}')`;
+    };
+
+    imageElement.addEventListener('click', this.onClick);
   }
 }

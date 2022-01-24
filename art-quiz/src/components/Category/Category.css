@@ -12,3 +12,46 @@
 .score {
   color: #ffbca2;
 }
+
+.image {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  background-size: 100% 100%;
+  background-position: center center;
+  border-radius: 20px;
+}
+
+.image:hover {
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1000px rgba(0, 255, 0, .4);
+}
+
+.rectangle {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 25%;
+  padding: 0px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+  background-color: #ffbca2;
+  border-radius: 0px 0px 20px 20px;
+  cursor: pointer;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  background-size: 100% 100%;
+  background-position: center center;
+  background-image: url('@/assets/img/reset.png');
+}
+
+.text{
+  color: black;
+}
+
+

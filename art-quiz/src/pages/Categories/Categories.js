@@ -14,8 +14,6 @@ import settings from '@/assets/svg/settings.svg';
 
 export class Categories {
   constructor(groupNumber) {
-    this.groupNumber = groupNumber;
-
     const onAppLogoClick = () => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
       transitionElement.classList.toggle(`${shared['active']}`);
@@ -55,7 +53,7 @@ export class Categories {
     this.categories = [];
 
     labels.forEach((label, index) => {
-      const imageNumber = 120 * this.groupNumber + 10 * index;
+      const imageNumber = 120 * groupNumber + 10 * index;
 
       const onCategoryClick = () => {
         const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
@@ -63,13 +61,13 @@ export class Categories {
 
         setTimeout(async () => {
           const bodyElement = document.querySelector('body');
-          const questions = new Questions(this.groupNumber, imageNumber);
+          const questions = new Questions(groupNumber, imageNumber);
           bodyElement.innerHTML = await questions.render();
           await questions.afterRender();
         }, 500);
       };
 
-      const category = new Category(label, imageNumber, onCategoryClick);
+      const category = new Category(label, groupNumber, imageNumber, onCategoryClick);
       this.categories.push(category);
     });
 
