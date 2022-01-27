@@ -9,6 +9,10 @@ import { Footer } from '@/components/Footer';
 import { Timer } from '@/components/Timer';
 import { Result } from '@/components/Result';
 import { GameOver } from '@/components/GameOver';
+import { Exit } from '@/components/Exit';
+import { IconButton } from '@/components/IconButton';
+
+import exit from '@/assets/img/exit.png';
 
 export class Questions {
   constructor(groupNumber, imageNumber) {
@@ -85,14 +89,28 @@ export class Questions {
     const seconds = localStorage.getItem('seconds') ?? 20;
     this.timer = new Timer(seconds, onTimeExpired);
 
+    this.exit = new Exit(imageNumber, groupNumber);
+
+    const onExitButtonClick = () => {
+      this.exit.show();
+    };
+
+    this.exitButton = new IconButton(exit, '', onExitButtonClick);
+
     this.footer = new Footer();
   }
 
   async render() {
     return `
       <div class="${shared['fade-transition']} ${shared['active']}"></div>
+      ${await this.exit.render()}
       <header class="${styles['header']}">
-        ${await this.progress.render()}
+        <div class="${styles['progress']}">
+          ${await this.progress.render()}
+        </div>
+        <div class="${styles['exit-button']}">
+          ${await this.exitButton.render()}
+        </div>
       </header>
       <main class="${styles['main']}">
         ${
@@ -116,6 +134,8 @@ export class Questions {
   }
 
   async afterRender() {
+    this.exit.afterRender();
+    this.exitButton.afterRender();
     this.progress.afterRender();
     this.question.afterRender();
     this.answer.afterRender();
