@@ -6,7 +6,7 @@ import { Home } from '@/pages/Home';
 export class Exit {
   static index = 0;
 
-  constructor(imageNumber, groupNumber) {
+  constructor() {
     Exit.index++;
     this.id = `exit-${Exit.index}`;
 

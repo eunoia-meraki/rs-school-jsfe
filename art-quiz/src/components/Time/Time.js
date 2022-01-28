@@ -1,22 +1,22 @@
-import styles from './Timer.css';
+import styles from './Time.css';
 
-export class Timer {
+export class Time {
   static index = 0;
 
-  constructor(seconds, onTimeExpired) {
-    this.seconds = seconds;
+  constructor(onTimeExpired) {
+    this.seconds = localStorage.getItem('seconds') ?? 20;
     this.s = this.seconds % 60;
     this.m = Math.floor(this.seconds / 60);
     this.isStopped = false;
     this.onTimeExpired = onTimeExpired;
 
-    Timer.index++;
-    this.id = `time-${Timer.index}`;
+    Time.index++;
+    this.id = `time-${Time.index}`;
   }
 
   async render() {
     return `
-      <div id="${this.id}" class="${styles['timer']}"></div>
+      <div id="${this.id}" class="${styles['time']}"></div>
     `;
   }
 
@@ -34,28 +34,28 @@ export class Timer {
   }
 
   async afterRender() {
-    const timerElement = document.getElementById(this.id);
+    const timeElement = document.getElementById(this.id);
 
-    const timer = () => {
+    const time = () => {
       if (!this.isStopped) {
-        timerElement.textContent = this.m + ':' + (this.s > 9 ? this.s : '0' + this.s);
+        timeElement.textContent = this.m + ':' + (this.s > 9 ? this.s : '0' + this.s);
         if (this.s === 0) {
-          if (this.m !== 0) {
+          if (this.m === 0) {
+            this.onTimeExpired();
+            this.stop();
+          } else {
             this.m--;
             this.s = 59;
-          } else {
-            this.onTimeExpired();
-            return;
           }
         } else {
           this.s--;
         }
-        setTimeout(timer, 1000);
+        setTimeout(time, 1000);
       } else {
-        setTimeout(timer, 1);
+        setTimeout(time, 1);
       }
     };
 
-    timer();
+    time();
   }
 }

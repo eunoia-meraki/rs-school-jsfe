@@ -1,12 +1,10 @@
 import styles from './Category.css';
-
-import reset from '@/assets/img/reset.png'
 export class Category {
   static index = 0;
 
   constructor(label, groupNumber, imageNumber, onClick) {
     this.label = label;
-    this.score = localStorage.getItem(`category_${groupNumber}_${imageNumber}`) ?? '';;
+    this.score = localStorage.getItem(`category_${groupNumber}_${imageNumber}`);
     this.imageNumber = imageNumber;
     this.onClick = onClick;
 
@@ -19,20 +17,18 @@ export class Category {
       <div id="${this.id}" class="${styles['category']}">
         <div class="${styles['header-container']}">
           <span class="header"></span>
-          <span class="${styles['score']}"></span>
-          ${this.score && `<span class="${styles['score']}">${this.score}/10</span>`}
+          ${this.score ? `<span class="${styles['score']}">${this.score}/10</span>` : ''}
         </div>
         <div class="${styles['image']}">
           ${
             this.score
-              ?
-                `<div class="${styles['rectangle']}">
+              ? `<div class="${styles['rectangle']}">
                   <div class="${styles['icon']}"></div>
-                  <span class="${styles['text']}">Играть снова</span>
+                  <span class="${styles['text']}">Переиграть</span>
                 </div>`
               : ''
-           }
-      </div>
+          }
+        </div>
       </div>
     `;
   }

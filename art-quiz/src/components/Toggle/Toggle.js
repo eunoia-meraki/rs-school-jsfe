@@ -23,15 +23,14 @@ export class Toggle {
   async afterRender() {
     const toggleElement = document.getElementById(this.id);
     const toggleInputElement = toggleElement.querySelector('input');
-    const toggleValueElement = document.querySelector(`.${styles['value']}`);
+    const toggleValueElement = toggleElement.querySelector(`.${styles['value']}`);
 
-    toggleInputElement.checked = localStorage.getItem('isTimer') === 'true';
-    
+    toggleInputElement.checked = localStorage.getItem('time') === 'true';
     toggleValueElement.textContent =  toggleInputElement.checked ? 'Вкл' : 'Выкл';
 
     toggleElement.addEventListener('mouseup', () => {
-      toggleValueElement.textContent = toggleInputElement.checked ? 'Выкл' : 'Вкл';
-      localStorage.setItem('isTimer', !toggleInputElement.checked);
+      toggleValueElement.textContent = !toggleInputElement.checked ? 'Вкл' : 'Выкл';
+      localStorage.setItem('time', !toggleInputElement.checked);
     });
   }
 }

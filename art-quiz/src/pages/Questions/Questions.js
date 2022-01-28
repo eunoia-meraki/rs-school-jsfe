@@ -6,7 +6,7 @@ import { AuthorsQuestion } from '@/components/AuthorsQuestion';
 import { PicturesQuestion } from '@/components/PicturesQuestion';
 import { Answer } from '@/components/Answer';
 import { Footer } from '@/components/Footer';
-import { Timer } from '@/components/Timer';
+import { Time } from '@/components/Time';
 import { Result } from '@/components/Result';
 import { GameOver } from '@/components/GameOver';
 import { Exit } from '@/components/Exit';
@@ -21,7 +21,7 @@ export class Questions {
     this.score = 0;
 
     const onAnyAnswerButtonClick = async isRightAnswer => {
-      this.timer.stop();
+      this.time.stop();
 
       this.answer.imageNumber = this.imageNumber;
       this.answer.isRightAnswer = isRightAnswer;
@@ -48,8 +48,8 @@ export class Questions {
       await this.progress.stepUp();
 
       if (this.questionNumber < 10) {
-        this.timer.reset();
-        this.timer.run();
+        this.time.reset();
+        this.time.run();
 
         this.question.imageNumber = this.imageNumber;
         await this.question.rerender();
@@ -71,25 +71,24 @@ export class Questions {
 
     this.progress = new Progress();
 
-    this.isTimer = localStorage.getItem('isTimer') === 'true';
+    if (localStorage.getItem('time') === 'true') {
+      const onTimeExpired = async () => {
+        const secondSlideElement = document.querySelectorAll(`.${styles['slide']}`)[1];
+        const answerElement = secondSlideElement.firstElementChild;
+        answerElement.remove();
+  
+        const gameOver = new GameOver(imageNumber, groupNumber);
+        secondSlideElement.innerHTML = await gameOver.render();
+        await gameOver.afterRender();
+  
+        const sliderElement = document.querySelector(`.${styles['slider']}`);
+        sliderElement.classList.toggle(`${styles['moved']}`);
+      };
 
-    const onTimeExpired = async () => {
-      const secondSlideElement = document.querySelectorAll(`.${styles['slide']}`)[1];
-      const answerElement = secondSlideElement.firstElementChild;
-      answerElement.remove();
+      this.time = new Time(onTimeExpired);
+    }
 
-      const gameOver = new GameOver(imageNumber, groupNumber);
-      secondSlideElement.innerHTML = await gameOver.render();
-      gameOver.afterRender();
-
-      const sliderElement = document.querySelector(`.${styles['slider']}`);
-      sliderElement.classList.toggle(`${styles['moved']}`);
-    };
-
-    const seconds = localStorage.getItem('seconds') ?? 20;
-    this.timer = new Timer(seconds, onTimeExpired);
-
-    this.exit = new Exit(imageNumber, groupNumber);
+    this.exit = new Exit();
 
     const onExitButtonClick = () => {
       this.exit.show();
@@ -114,9 +113,9 @@ export class Questions {
       </header>
       <main class="${styles['main']}">
         ${
-          this.isTimer
-            ? `<div class="${styles['timer-container']}">
-                ${await this.timer.render()}
+          this.time
+            ? `<div class="${styles['time-container']}">
+                ${await this.time.render()}
               </div>`
             : ''
         }
@@ -141,7 +140,7 @@ export class Questions {
     this.answer.afterRender();
     this.footer.afterRender();
 
-    if (this.isTimer) this.timer.afterRender();
+    if (this.time) this.time.afterRender();
 
     setTimeout(() => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);

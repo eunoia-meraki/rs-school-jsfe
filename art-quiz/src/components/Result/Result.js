@@ -34,7 +34,11 @@ export class Result {
 
       setTimeout(async () => {
         const bodyElement = document.querySelector('body');
-        const questions = new Questions(groupNumber, imageNumber + 10);
+
+        const nextImageNumber = imageNumber !== 230 ? imageNumber + 10 : 0;
+        const nextGroupNumber = imageNumber !== 230 ? groupNumber : 0;
+
+        const questions = new Questions(nextGroupNumber, nextImageNumber);
         bodyElement.innerHTML = await questions.render();
         await questions.afterRender();
       }, 500);
