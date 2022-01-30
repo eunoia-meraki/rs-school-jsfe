@@ -17,9 +17,13 @@
   color: white;
 }
 
-body {
-  background-color: black;
+html, body {
   overflow: hidden;
+}
+
+body {
+  position: relative;
+  background-color: black;
 }
 
 .slider {
