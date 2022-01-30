@@ -41,5 +41,45 @@
 
 .buttons-container {
   display: flex;
+  align-self: stretch;
+  justify-content: space-between;
   gap: 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .result {
+    width: 420px;
+    gap: 30px;
+    padding: 30px;
+  }
+
+  .goblet {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .result {
+    width: 340px;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .message {
+    font-size: 30px;
+  }
+
+  .score {
+    font-size: 64px;
+  }
+
+  .label {
+    font-size: 20px;
+  }
+
+  .goblet {
+    width: 160px;
+    height: 160px;
+  }
 }

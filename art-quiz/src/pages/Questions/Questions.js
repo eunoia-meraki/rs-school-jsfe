@@ -21,7 +21,7 @@ export class Questions {
     this.score = 0;
 
     const onAnyAnswerButtonClick = async isRightAnswer => {
-      this.time.stop();
+      if (this.time) this.time.stop();
 
       this.answer.imageNumber = this.imageNumber;
       this.answer.isRightAnswer = isRightAnswer;
@@ -48,8 +48,8 @@ export class Questions {
       await this.progress.stepUp();
 
       if (this.questionNumber < 10) {
-        this.time.reset();
-        this.time.run();
+        if (this.time) this.time.reset();
+        if (this.time) this.time.run();
 
         this.question.imageNumber = this.imageNumber;
         await this.question.rerender();
@@ -76,11 +76,11 @@ export class Questions {
         const secondSlideElement = document.querySelectorAll(`.${styles['slide']}`)[1];
         const answerElement = secondSlideElement.firstElementChild;
         answerElement.remove();
-  
+
         const gameOver = new GameOver(imageNumber, groupNumber);
         secondSlideElement.innerHTML = await gameOver.render();
         await gameOver.afterRender();
-  
+
         const sliderElement = document.querySelector(`.${styles['slider']}`);
         sliderElement.classList.toggle(`${styles['moved']}`);
       };

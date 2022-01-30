@@ -44,8 +44,8 @@ export class Result {
       }, 500);
     };
 
-    this.homeButton = new OvalButton('Главная страница', onHomeButtonClick, 190, 60);
-    this.nextQuizButton = new OvalButton('Следующий квиз', onNextQuizButtonClick, 190, 60);
+    this.homeButton = new OvalButton('Главная страница', onHomeButtonClick);
+    this.nextQuizButton = new OvalButton('Следующий квиз', onNextQuizButtonClick);
 
     localStorage.setItem(`category_${groupNumber}_${imageNumber}`, score);
   }

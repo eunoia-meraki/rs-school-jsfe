@@ -20,3 +20,27 @@
   flex-wrap: wrap;
   gap: 20px;
 }
+
+
+
+@media screen and (max-width: 768px) {
+  .pictures-question {
+    width: 420px;
+    gap: 30px;
+  }
+
+  .answer-buttons-container {
+    gap: 15px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .pictures-question {
+    width: 340px;
+    gap: 20px;
+  }
+
+  .answer-buttons-container {
+    gap: 10px;
+  }
+}

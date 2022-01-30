@@ -39,15 +39,15 @@ export class GameOver {
       }, 500);
     };
 
-    this.homeButton = new OvalButton('Главная страница', onHomeButtonClick, 190, 60);
-    this.restartQuizButton = new OvalButton('Переиграть квиз', onRestartQuizButtonClick, 190, 60);
+    this.homeButton = new OvalButton('Главная страница', onHomeButtonClick);
+    this.restartQuizButton = new OvalButton('Переиграть квиз', onRestartQuizButtonClick);
 
     localStorage.setItem(`category_${groupNumber}_${imageNumber}`, 0);
   }
 
   async render() {
     return `
-      <div id="${this.id}" class="${styles['result']}">
+      <div id="${this.id}" class="${styles['game-over']}">
         <div class="${styles['goblet']}"></div>
         <span class="${styles['message']}">Время истекло!</span>
         <div class="${styles['score-container']}">

@@ -16,7 +16,7 @@ export class Category {
     return `
       <div id="${this.id}" class="${styles['category']}">
         <div class="${styles['header-container']}">
-          <span class="header"></span>
+          <span class="${styles['header']}"></span>
           ${this.score ? `<span class="${styles['score']}">${this.score}/10</span>` : ''}
         </div>
         <div class="${styles['image']}">
@@ -36,7 +36,7 @@ export class Category {
   async afterRender() {
     const categoryElement = document.getElementById(this.id);
 
-    const headerElement = categoryElement.querySelector('.header');
+    const headerElement = categoryElement.querySelector(`.${styles['header']}`);
     headerElement.textContent = this.label;
 
     const imageElement = categoryElement.querySelector(`.${styles['image']}`);

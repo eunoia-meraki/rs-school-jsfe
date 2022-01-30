@@ -26,3 +26,17 @@
   border-radius: 0px 0px 20px 20px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .image-button {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .image-button {
+    width: 160px;
+    height: 160px;
+  }
+}

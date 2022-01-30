@@ -3,11 +3,9 @@ import styles from './OvalButton.css';
 export class OvalButton {
   static index = 0;
 
-  constructor(label, onClick, width, height) {
+  constructor(label, onClick) {
     this._label = label;
     this._onClick = onClick;
-    this.width = width;
-    this.height = height;
 
     OvalButton.index++;
     this.id = `oval-button-${OvalButton.index}`;
@@ -33,8 +31,5 @@ export class OvalButton {
     ovalButtonElement.textContent = this._label;
 
     ovalButtonElement.addEventListener('click', this._onClick);
-
-    ovalButtonElement.style.width = `${this.width}px`;
-    ovalButtonElement.style.height = `${this.height}px`;
   }
 }

@@ -4,22 +4,28 @@
   justify-content: space-between;
   width: 100%;
   height: 15vh;
-  min-height: 100px;
   padding: 0 70px;
 }
 
-.page-header {
+.page-header-1 {
   position: relative;
   top: 20px;
   font-size: 24px;
   font-family: 'Gilroy-Bold';
-  margin-left: 100px;
+  color: #ffbca2;
+}
+
+.page-header-2 {
+  display: none;
+  padding: 0 70px;
+  font-size: 24px;
+  font-family: 'Gilroy-Bold';
   color: #ffbca2;
 }
 
 .navigation {
   display: flex;
-  align-items: flex-start;
+  gap: 100px;
 }
 
 .main {
@@ -30,6 +36,41 @@
   gap: 60px;
   width: 100%;
   height: 70vh;
-  min-height: 700px;
   padding: 0 70px;
+  overflow: auto;
+}
+
+.main::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .page-header-1 {
+    display: none;
+  }
+
+  .page-header-2 {
+    display: block;
+    height: 8vh;
+  }
+
+  .main {
+    gap: 40px;
+    height: 62vh;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .header {
+    padding: 0 30px;
+  }
+
+  .main {
+    gap: 20px;
+    padding: 0 30px;
+  }
+
+  .page-header-2 {
+    padding: 0 30px;
+  }
 }

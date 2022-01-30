@@ -83,10 +83,11 @@ export class Categories {
           <header class="${styles['header']}">
             <nav class="${styles['navigation']}">
               ${await this.appLogo.render()}
-              <span class="${styles['page-header']}">Категории</span>
+              <span class="${styles['page-header-1']}">Категории</span>
             </nav>
             ${await this.settingsButton.render()}
           </header>
+          <span class="${styles['page-header-2']}">Категории</span>
           <main class="${styles['main']}">
             ${await this.categories
               .reverse()

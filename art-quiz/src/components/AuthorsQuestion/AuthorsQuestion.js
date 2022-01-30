@@ -14,7 +14,7 @@ export class AuthorsQuestion {
     this.answerButtons = [];
 
     for (let i = 0; i < 4; i++) {
-      this.answerButtons.push(new OvalButton('', undefined, 240));
+      this.answerButtons.push(new OvalButton('', undefined));
     }
 
     AuthorsQuestion.index++;
@@ -31,9 +31,14 @@ export class AuthorsQuestion {
         <span class="${styles['question']}">Кто автор данной картины?</span>
         <div class="${styles['picture']}"></div>
         <div class="${styles['answer-buttons-container']}">
-          ${await this.answerButtons
-            .reverse()
-            .reduce(async (prev, cur) => (await cur.render()) + (await prev), '')}
+          ${await this.answerButtons.reverse().reduce(async (prev, cur) => {
+            return (
+              `
+                <div class="${styles['answer-button-wrapper']}">
+                  ${await cur.render()}
+                </div>` + (await prev)
+            );
+          }, '')}
         </div>
       </div>
     `;

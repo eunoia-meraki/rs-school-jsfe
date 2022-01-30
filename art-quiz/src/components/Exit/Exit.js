@@ -25,8 +25,8 @@ export class Exit {
       exitElement.style.visibility = 'hidden';
     };
 
-    this.yesButton = new OvalButton('Да', onYesButtonClick, 190, 60);
-    this.noButton = new OvalButton('Нет', onNoButtonClick, 190, 60);
+    this.yesButton = new OvalButton('Да', onYesButtonClick);
+    this.noButton = new OvalButton('Нет', onNoButtonClick);
   }
 
   show() {
@@ -38,7 +38,7 @@ export class Exit {
     return `
       <div id="${this.id}" class="${styles['exit']}">
         <div class="${styles['popup']}">
-          <span class="${styles['message']}">Вы уверены, что хотите прервать игру?</span>
+          <span class="${styles['message']}">Вы уверены, что хотите выйти из игры?</span>
           <div class="${styles['buttons-container']}">
             ${await this.yesButton.render()}
             ${await this.noButton.render()}

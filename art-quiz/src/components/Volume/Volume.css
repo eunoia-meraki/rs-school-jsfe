@@ -17,3 +17,9 @@
   background-color: #ffbca2;
   box-shadow: -500px 0 0 500px #ffbca2;
 }
+
+@media screen and (max-width: 768px) {
+  .volume {
+    width: 300px;
+  }
+}
