@@ -17,7 +17,8 @@
   color: white;
 }
 
-html, body {
+html,
+body {
   overflow: hidden;
 }
 
@@ -58,4 +59,3 @@ body {
   pointer-events: all;
   opacity: 1;
 }
-

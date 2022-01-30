@@ -13,12 +13,12 @@ export class Result {
   constructor(score, imageNumber, groupNumber) {
     this.score = score;
 
-    Result.index++;
+    Result.index += 1;
     this.id = `result-${Result.index}`;
 
     const onHomeButtonClick = () => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
-      transitionElement.classList.toggle(`${shared['active']}`);
+      transitionElement.classList.toggle(`${shared.active}`);
 
       setTimeout(async () => {
         const bodyElement = document.querySelector('body');
@@ -30,7 +30,7 @@ export class Result {
 
     const onNextQuizButtonClick = () => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
-      transitionElement.classList.toggle(`${shared['active']}`);
+      transitionElement.classList.toggle(`${shared.active}`);
 
       setTimeout(async () => {
         const bodyElement = document.querySelector('body');
@@ -52,12 +52,12 @@ export class Result {
 
   async render() {
     return `
-      <div id="${this.id}" class="${styles['result']}">
-        <div class="${styles['goblet']}"></div>
-        <span class="${styles['message']}">Квиз завершен!</span>
+      <div id="${this.id}" class="${styles.result}">
+        <div class="${styles.goblet}"></div>
+        <span class="${styles.message}">Квиз завершен!</span>
         <div class="${styles['score-container']}">
-          <span class="${styles['label']}">Ваш результат:</span>
-          <span class="${styles['score']}"></span>
+          <span class="${styles.label}">Ваш результат:</span>
+          <span class="${styles.score}"></span>
         </div>
         <div class="${styles['buttons-container']}">
           ${await this.homeButton.render()}
@@ -76,11 +76,11 @@ export class Result {
     const image = new Image();
     image.src = goblet;
     image.onload = () => {
-      const gobletElement = resultElement.querySelector(`.${styles['goblet']}`);
+      const gobletElement = resultElement.querySelector(`.${styles.goblet}`);
       gobletElement.style.backgroundImage = `url('${image.src}')`;
     };
 
-    const scoreElement = resultElement.querySelector(`.${styles['score']}`);
+    const scoreElement = resultElement.querySelector(`.${styles.score}`);
     scoreElement.textContent = `${this.score}/10`;
   }
 }

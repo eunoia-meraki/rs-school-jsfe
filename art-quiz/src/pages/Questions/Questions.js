@@ -28,11 +28,11 @@ export class Questions {
       await this.answer.rerender();
 
       if (isRightAnswer) {
-        this.score++;
+        this.score += 1;
       }
 
-      const sliderElement = document.querySelector(`.${styles['slider']}`);
-      sliderElement.classList.toggle(`${styles['moved']}`);
+      const sliderElement = document.querySelector(`.${styles.slider}`);
+      sliderElement.classList.toggle(`${styles.moved}`);
     };
 
     if (groupNumber === 0) {
@@ -42,8 +42,8 @@ export class Questions {
     }
 
     const onNextButtonClick = async () => {
-      this.imageNumber++;
-      this.questionNumber++;
+      this.imageNumber += 1;
+      this.questionNumber += 1;
 
       await this.progress.stepUp();
 
@@ -54,7 +54,7 @@ export class Questions {
         this.question.imageNumber = this.imageNumber;
         await this.question.rerender();
       } else {
-        const firstSlideElement = document.querySelector(`.${styles['slide']}`);
+        const firstSlideElement = document.querySelector(`.${styles.slide}`);
         const questionElement = firstSlideElement.firstElementChild;
         questionElement.remove();
 
@@ -63,8 +63,8 @@ export class Questions {
         result.afterRender();
       }
 
-      const sliderElement = document.querySelector(`.${styles['slider']}`);
-      sliderElement.classList.toggle(`${styles['moved']}`);
+      const sliderElement = document.querySelector(`.${styles.slider}`);
+      sliderElement.classList.toggle(`${styles.moved}`);
     };
 
     this.answer = new Answer(this.imageNumber, onNextButtonClick);
@@ -73,7 +73,7 @@ export class Questions {
 
     if (localStorage.getItem('time') === 'true') {
       const onTimeExpired = async () => {
-        const secondSlideElement = document.querySelectorAll(`.${styles['slide']}`)[1];
+        const secondSlideElement = document.querySelectorAll(`.${styles.slide}`)[1];
         const answerElement = secondSlideElement.firstElementChild;
         answerElement.remove();
 
@@ -81,8 +81,8 @@ export class Questions {
         secondSlideElement.innerHTML = await gameOver.render();
         await gameOver.afterRender();
 
-        const sliderElement = document.querySelector(`.${styles['slider']}`);
-        sliderElement.classList.toggle(`${styles['moved']}`);
+        const sliderElement = document.querySelector(`.${styles.slider}`);
+        sliderElement.classList.toggle(`${styles.moved}`);
       };
 
       this.time = new Time(onTimeExpired);
@@ -101,29 +101,23 @@ export class Questions {
 
   async render() {
     return `
-      <div class="${shared['fade-transition']} ${shared['active']}"></div>
+      <div class="${shared['fade-transition']} ${shared.active}"></div>
       ${await this.exit.render()}
-      <header class="${styles['header']}">
-        <div class="${styles['progress']}">
+      <header class="${styles.header}">
+        <div class="${styles.progress}">
           ${await this.progress.render()}
         </div>
         <div class="${styles['exit-button']}">
           ${await this.exitButton.render()}
         </div>
       </header>
-      <main class="${styles['main']}">
-        ${
-          this.time
-            ? `<div class="${styles['time-container']}">
-                ${await this.time.render()}
-              </div>`
-            : ''
-        }
-        <div class="${styles['slider']}">
-          <div class="${styles['slide']}">
+      <main class="${styles.main}">
+        ${this.time ? `<div class="${styles['time-container']}">${await this.time.render()}</div>` : ''}
+        <div class="${styles.slider}">
+          <div class="${styles.slide}">
             ${await this.question.render()}
           </div>  
-          <div class="${styles['slide']}">
+          <div class="${styles.slide}">
             ${await this.answer.render()}
           </div>
         </div>
@@ -135,16 +129,14 @@ export class Questions {
   async afterRender() {
     this.exit.afterRender();
     this.exitButton.afterRender();
-    this.progress.afterRender();
     this.question.afterRender();
     this.answer.afterRender();
-    this.footer.afterRender();
 
     if (this.time) this.time.afterRender();
 
     setTimeout(() => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
-      transitionElement.classList.toggle(`${shared['active']}`);
+      transitionElement.classList.toggle(`${shared.active}`);
     }, 500);
   }
 }

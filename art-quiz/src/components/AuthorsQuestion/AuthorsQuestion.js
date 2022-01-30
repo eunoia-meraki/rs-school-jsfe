@@ -8,37 +8,30 @@ export class AuthorsQuestion {
   static index = 0;
 
   constructor(imageNumber, onAnyAnswerButtonClick) {
-    this._imageNumber = imageNumber;
+    this.m_imageNumber = imageNumber;
     this.onAnyAnswerButtonClick = onAnyAnswerButtonClick;
 
     this.answerButtons = [];
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i += 1) {
       this.answerButtons.push(new OvalButton('', undefined));
     }
 
-    AuthorsQuestion.index++;
+    AuthorsQuestion.index += 1;
     this.id = `authors-question-${AuthorsQuestion.index}`;
   }
 
   set imageNumber(imageNumber) {
-    this._imageNumber = imageNumber;
+    this.m_imageNumber = imageNumber;
   }
 
   async render() {
     return `
       <div id="${this.id}" class="${styles['authors-question']}">
-        <span class="${styles['question']}">Кто автор данной картины?</span>
-        <div class="${styles['picture']}"></div>
+        <span class="${styles.question}">Кто автор данной картины?</span>
+        <div class="${styles.picture}"></div>
         <div class="${styles['answer-buttons-container']}">
-          ${await this.answerButtons.reverse().reduce(async (prev, cur) => {
-            return (
-              `
-                <div class="${styles['answer-button-wrapper']}">
-                  ${await cur.render()}
-                </div>` + (await prev)
-            );
-          }, '')}
+          ${await this.answerButtons.reverse().reduce(async (prev, cur) => `<div class="${styles['answer-button-wrapper']}">${await cur.render()}</div>` + (await prev), '')}
         </div>
       </div>
     `;
@@ -48,17 +41,19 @@ export class AuthorsQuestion {
     const authorsQuestionElement = document.getElementById(this.id);
 
     const image = new Image();
-    image.src = require(`@/data/full/${this._imageNumber}full.jpg`);
+    image.src = require(`@/data/full/${this.m_imageNumber}full.jpg`);
     image.onload = () => {
-      const pictureElement = authorsQuestionElement.querySelector(`.${styles['picture']}`);
+      const pictureElement = authorsQuestionElement.querySelector(`.${styles.picture}`);
       pictureElement.style.backgroundImage = `url('${image.src}')`;
     };
 
     const rightAnswerNumber = Math.floor(Math.random() * 4);
 
-    this.answerButtons.forEach(async (answerButton, index) => {
+    this.answerButtons.forEach(async (item, index) => {
+      const answerButton = item;
+
       if (index === rightAnswerNumber) {
-        answerButton.label = images[this._imageNumber].author;
+        answerButton.label = images[this.m_imageNumber].author;
       } else {
         const randomImageNumber = Math.floor(Math.random() * 240);
         answerButton.label = images[randomImageNumber].author;

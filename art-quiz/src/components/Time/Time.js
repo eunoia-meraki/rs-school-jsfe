@@ -10,13 +10,13 @@ export class Time {
     this.isStopped = false;
     this.onTimeExpired = onTimeExpired;
 
-    Time.index++;
+    Time.index += 1;
     this.id = `time-${Time.index}`;
   }
 
   async render() {
     return `
-      <div id="${this.id}" class="${styles['time']}"></div>
+      <div id="${this.id}" class="${styles.time}"></div>
     `;
   }
 
@@ -44,11 +44,11 @@ export class Time {
             this.onTimeExpired();
             this.stop();
           } else {
-            this.m--;
+            this.m -= 1;
             this.s = 59;
           }
         } else {
-          this.s--;
+          this.s -= 1;
         }
         setTimeout(time, 1000);
       } else {

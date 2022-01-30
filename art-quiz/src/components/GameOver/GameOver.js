@@ -11,12 +11,12 @@ export class GameOver {
   static index = 0;
 
   constructor(imageNumber, groupNumber) {
-    GameOver.index++;
+    GameOver.index += 1;
     this.id = `game-over-${GameOver.index}`;
 
     const onHomeButtonClick = () => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
-      transitionElement.classList.toggle(`${shared['active']}`);
+      transitionElement.classList.toggle(`${shared.active}`);
 
       setTimeout(async () => {
         const bodyElement = document.querySelector('body');
@@ -28,13 +28,13 @@ export class GameOver {
 
     const onRestartQuizButtonClick = () => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
-      transitionElement.classList.toggle(`${shared['active']}`);
+      transitionElement.classList.toggle(`${shared.active}`);
 
       setTimeout(async () => {
         const bodyElement = document.querySelector('body');
         const questions = new Questions(groupNumber, imageNumber);
         bodyElement.innerHTML = await questions.render();
-        
+
         await questions.afterRender();
       }, 500);
     };
@@ -48,11 +48,11 @@ export class GameOver {
   async render() {
     return `
       <div id="${this.id}" class="${styles['game-over']}">
-        <div class="${styles['goblet']}"></div>
-        <span class="${styles['message']}">Время истекло!</span>
+        <div class="${styles.goblet}"></div>
+        <span class="${styles.message}">Время истекло!</span>
         <div class="${styles['score-container']}">
-          <span class="${styles['label']}">Ваш результат:</span>
-          <span class="${styles['score']}">0</span>
+          <span class="${styles.label}">Ваш результат:</span>
+          <span class="${styles.score}">0</span>
         </div>
         <div class="${styles['buttons-container']}">
           ${await this.homeButton.render()}
@@ -71,7 +71,7 @@ export class GameOver {
     const image = new Image();
     image.src = goblet;
     image.onload = () => {
-      const gobletElement = gameOverElement.querySelector(`.${styles['goblet']}`);
+      const gobletElement = gameOverElement.querySelector(`.${styles.goblet}`);
       gobletElement.style.backgroundImage = `url('${image.src}')`;
     };
   }

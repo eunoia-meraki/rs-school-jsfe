@@ -16,7 +16,7 @@ export class Categories {
   constructor(groupNumber) {
     const onAppLogoClick = () => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
-      transitionElement.classList.toggle(`${shared['active']}`);
+      transitionElement.classList.toggle(`${shared.active}`);
 
       setTimeout(async () => {
         const bodyElement = document.querySelector('body');
@@ -29,8 +29,8 @@ export class Categories {
     this.appLogo = new AppLogo(onAppLogoClick);
 
     const onSettingsButtonClick = () => {
-      const sliderElement = document.querySelector(`.${shared['slider']}`);
-      sliderElement.classList.toggle(`${shared['moved']}`);
+      const sliderElement = document.querySelector(`.${shared.slider}`);
+      sliderElement.classList.toggle(`${shared.moved}`);
     };
 
     this.settingsButton = new IconButton(settings, '', onSettingsButtonClick);
@@ -47,7 +47,7 @@ export class Categories {
       'Китч',
       'Минимализм',
       'Интерьер',
-      'Нудизм',
+      'Нудизм'
     ];
 
     this.categories = [];
@@ -57,7 +57,7 @@ export class Categories {
 
       const onCategoryClick = () => {
         const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
-        transitionElement.classList.toggle(`${shared['active']}`);
+        transitionElement.classList.toggle(`${shared.active}`);
 
         setTimeout(async () => {
           const bodyElement = document.querySelector('body');
@@ -77,25 +77,23 @@ export class Categories {
 
   async render() {
     return `
-      <div class="${shared['fade-transition']} ${shared['active']}"></div>
-      <div class="${shared['slider']}">
-        <div class="${shared['slide']}">
-          <header class="${styles['header']}">
-            <nav class="${styles['navigation']}">
+      <div class="${shared['fade-transition']} ${shared.active}"></div>
+      <div class="${shared.slider}">
+        <div class="${shared.slide}">
+          <header class="${styles.header}">
+            <nav class="${styles.navigation}">
               ${await this.appLogo.render()}
               <span class="${styles['page-header-1']}">Категории</span>
             </nav>
             ${await this.settingsButton.render()}
           </header>
           <span class="${styles['page-header-2']}">Категории</span>
-          <main class="${styles['main']}">
-            ${await this.categories
-              .reverse()
-              .reduce(async (prev, cur) => (await cur.render()) + (await prev), '')}
+          <main class="${styles.main}">
+            ${await this.categories.reverse().reduce(async (prev, cur) => (await cur.render()) + (await prev), '')}
           </main>
           ${await this.footer.render()}
         </div>
-        <div class="${shared['slide']}">
+        <div class="${shared.slide}">
           ${await this.settings.render()}
         </div>
       </div>
@@ -104,7 +102,6 @@ export class Categories {
 
   async afterRender() {
     await this.appLogo.afterRender();
-    await this.footer.afterRender();
     await this.settings.afterRender();
     await this.settingsButton.afterRender();
 
@@ -114,7 +111,7 @@ export class Categories {
 
     setTimeout(() => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
-      transitionElement.classList.toggle(`${shared['active']}`);
+      transitionElement.classList.toggle(`${shared.active}`);
     }, 500);
   }
 }

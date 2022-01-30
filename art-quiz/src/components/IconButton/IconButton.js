@@ -6,16 +6,16 @@ export class IconButton {
   constructor(icon, label, onClick) {
     this.icon = icon;
     this.label = label;
-    this.onClick = onClick
+    this.onClick = onClick;
 
-    IconButton.index++;
+    IconButton.index += 1;
     this.id = `icon-button-${IconButton.index}`;
   }
 
   async render() {
     return `
       <div id="${this.id}" class="${styles['icon-button']}">
-        <div class="${styles['icon']}"></div>
+        <div class="${styles.icon}"></div>
         ${this.label && `<span>${this.label}</span>`}
       </div>
     `;

@@ -13,8 +13,8 @@ import settings from '@/assets/svg/settings.svg';
 export class Home {
   constructor() {
     const onSettingsButtonClick = () => {
-      const sliderElement = document.querySelector(`.${shared['slider']}`);
-      sliderElement.classList.toggle(`${shared['moved']}`);
+      const sliderElement = document.querySelector(`.${shared.slider}`);
+      sliderElement.classList.toggle(`${shared.moved}`);
     };
 
     this.settingsButton = new IconButton(settings, '', onSettingsButtonClick);
@@ -26,7 +26,7 @@ export class Home {
     labels.forEach((label, index) => {
       const onStartButtonClick = () => {
         const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
-        transitionElement.classList.toggle(`${shared['active']}`);
+        transitionElement.classList.toggle(`${shared.active}`);
 
         setTimeout(async () => {
           const bodyElement = document.querySelector('body');
@@ -47,23 +47,21 @@ export class Home {
 
   async render() {
     return `
-      <div class="${shared['fade-transition']} ${shared['active']}"></div>
-      <div class="${shared['slider']}">
-        <div class="${shared['slide']}">
-          <header class="${styles['header']}">
+      <div class="${shared['fade-transition']} ${shared.active}"></div>
+      <div class="${shared.slider}">
+        <div class="${shared.slide}">
+          <header class="${styles.header}">
             ${await this.settingsButton.render()}
           </header>
-          <main class="${styles['main']}">
+          <main class="${styles.main}">
             ${await this.bigAppLogo.render()}
             <div class="${styles['start-buttons-container']}">
-              ${await this.startButtons
-                .reverse()
-                .reduce(async (prev, cur) => (await cur.render()) + (await prev), '')}
+              ${await this.startButtons.reverse().reduce(async (prev, cur) => (await cur.render()) + (await prev), '')}
             </div>
           </main>
           ${await this.footer.render()}
         </div>
-        <div class="${shared['slide']}">
+        <div class="${shared.slide}">
           ${await this.settings.render()}
         </div>
       </div>
@@ -71,9 +69,7 @@ export class Home {
   }
 
   async afterRender() {
-    await this.footer.afterRender();
     await this.settings.afterRender();
-    await this.bigAppLogo.afterRender();
     await this.settingsButton.afterRender();
 
     this.startButtons.forEach(async startButton => {
@@ -82,7 +78,7 @@ export class Home {
 
     setTimeout(() => {
       const transitionElement = document.querySelector(`.${shared['fade-transition']}`);
-      transitionElement.classList.toggle(`${shared['active']}`);
+      transitionElement.classList.toggle(`${shared.active}`);
     }, 500);
   }
 }

@@ -7,7 +7,7 @@ export class Exit {
   static index = 0;
 
   constructor() {
-    Exit.index++;
+    Exit.index += 1;
     this.id = `exit-${Exit.index}`;
 
     const onYesButtonClick = async () => {
@@ -36,9 +36,9 @@ export class Exit {
 
   async render() {
     return `
-      <div id="${this.id}" class="${styles['exit']}">
-        <div class="${styles['popup']}">
-          <span class="${styles['message']}">Вы уверены, что хотите выйти из игры?</span>
+      <div id="${this.id}" class="${styles.exit}">
+        <div class="${styles.popup}">
+          <span class="${styles.message}">Вы уверены, что хотите выйти из игры?</span>
           <div class="${styles['buttons-container']}">
             ${await this.yesButton.render()}
             ${await this.noButton.render()}

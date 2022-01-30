@@ -4,19 +4,19 @@ export class OvalButton {
   static index = 0;
 
   constructor(label, onClick) {
-    this._label = label;
-    this._onClick = onClick;
+    this.m_label = label;
+    this.m_onClick = onClick;
 
-    OvalButton.index++;
+    OvalButton.index += 1;
     this.id = `oval-button-${OvalButton.index}`;
   }
 
   set label(label) {
-    this._label = label;
+    this.m_label = label;
   }
 
   set onClick(onClick) {
-    this._onClick = onClick;
+    this.m_onClick = onClick;
   }
 
   async render() {
@@ -28,8 +28,8 @@ export class OvalButton {
   async afterRender() {
     const ovalButtonElement = document.getElementById(this.id);
 
-    ovalButtonElement.textContent = this._label;
+    ovalButtonElement.textContent = this.m_label;
 
-    ovalButtonElement.addEventListener('click', this._onClick);
+    ovalButtonElement.addEventListener('click', this.m_onClick);
   }
 }

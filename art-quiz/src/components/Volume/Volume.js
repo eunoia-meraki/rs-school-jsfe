@@ -4,13 +4,13 @@ export class Volume {
   static index = 0;
 
   constructor() {
-    Volume.index++;
+    Volume.index += 1;
     this.id = `volume-${Volume.index}`;
   }
 
   async render() {
     return `
-      <input id="${this.id}" type="range" min="0" max="100" value="50" step="1" class="${styles['volume']}">
+      <input id="${this.id}" type="range" min="0" max="100" value="50" step="1" class="${styles.volume}">
     `;
   }
 

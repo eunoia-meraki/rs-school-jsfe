@@ -1,5 +1,3 @@
-'use strict';
-
 import './styles/styles.css';
 
 import { Home } from './pages/Home';

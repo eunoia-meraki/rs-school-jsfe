@@ -12,8 +12,8 @@ import arrowBack from '@/assets/img/arrow-back.png';
 export class Settings {
   constructor() {
     const onBackButtonClick = () => {
-      const sliderElement = document.querySelector(`.${shared['slider']}`);
-      sliderElement.classList.toggle(`${shared['moved']}`);
+      const sliderElement = document.querySelector(`.${shared.slider}`);
+      sliderElement.classList.toggle(`${shared.moved}`);
     };
     this.backButton = new IconButton(arrowBack, 'Настройки', onBackButtonClick);
 
@@ -25,19 +25,19 @@ export class Settings {
 
   async render() {
     return `
-      <header class="${styles['header']}">
+      <header class="${styles.header}">
         ${await this.backButton.render()}
       </header>
-      <main class="${styles['main']}">
-        <div class="${styles['setting']}">
+      <main class="${styles.main}">
+        <div class="${styles.setting}">
           <span class="${styles['settings-header']}">Звук</span>
           ${await this.volume.render()}
         </div>
-        <div class="${styles['setting']}">
+        <div class="${styles.setting}">
           <span class="${styles['settings-header']}">Игра на время</span>
           ${await this.toggle.render()}
         </div>
-        <div class="${styles['setting']}">
+        <div class="${styles.setting}">
           <span class="${styles['settings-header']}">Секунды</span>
           ${await this.counter.render()}
         </div>
@@ -51,6 +51,5 @@ export class Settings {
     await this.volume.afterRender();
     await this.toggle.afterRender();
     await this.counter.afterRender();
-    await this.footer.afterRender();
   }
 }
