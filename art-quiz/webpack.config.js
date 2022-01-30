@@ -53,6 +53,13 @@ module.exports = {
         use: 'html-loader'
       },
       {
+        test: /\.mp3$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'static/audio/[contenthash].[ext]'
+        }
+      },
+      {
         test: /\.(css)$/,
         include: [
           path.resolve(__dirname, '/src/styles'),

@@ -14,6 +14,11 @@ import { IconButton } from '@/components/IconButton';
 
 import exit from '@/assets/img/exit.png';
 
+import rightSound from '@/assets/sounds/right.mp3';
+import wrongSound from '@/assets/sounds/wrong.mp3';
+import gameOverSound from '@/assets/sounds/game-over.mp3';
+import resultSound from '@/assets/sounds/result.mp3';
+
 export class Questions {
   constructor(groupNumber, imageNumber) {
     this.imageNumber = imageNumber;
@@ -23,12 +28,18 @@ export class Questions {
     const onAnyAnswerButtonClick = async isRightAnswer => {
       if (this.time) this.time.stop();
 
+      if (isRightAnswer) {
+        this.score += 1;
+      }
+
       this.answer.imageNumber = this.imageNumber;
       this.answer.isRightAnswer = isRightAnswer;
       await this.answer.rerender();
 
       if (isRightAnswer) {
-        this.score += 1;
+        this.rightSound.play();
+      } else {
+        this.wrongSound.play();
       }
 
       const sliderElement = document.querySelector(`.${styles.slider}`);
@@ -61,6 +72,8 @@ export class Questions {
         const result = new Result(this.score, imageNumber, groupNumber);
         firstSlideElement.innerHTML = await result.render();
         result.afterRender();
+
+        this.resultSound.play();
       }
 
       const sliderElement = document.querySelector(`.${styles.slider}`);
@@ -81,6 +94,8 @@ export class Questions {
         secondSlideElement.innerHTML = await gameOver.render();
         await gameOver.afterRender();
 
+        this.gameOverSound.play();
+
         const sliderElement = document.querySelector(`.${styles.slider}`);
         sliderElement.classList.toggle(`${styles.moved}`);
       };
@@ -95,6 +110,15 @@ export class Questions {
     };
 
     this.exitButton = new IconButton(exit, '', onExitButtonClick);
+
+    this.rightSound = new Audio(rightSound);
+    this.wrongSound = new Audio(wrongSound);
+    this.gameOverSound = new Audio(gameOverSound);
+    this.resultSound = new Audio(resultSound);
+    this.rightSound.volume = Number(localStorage.getItem('volume') ?? 50) / 100;
+    this.wrongSound.volume = Number(localStorage.getItem('volume') ?? 50) / 100;
+    this.gameOverSound.volume = Number(localStorage.getItem('volume') ?? 50) / 100;
+    this.resultSound.volume = Number(localStorage.getItem('volume') ?? 50) / 100;
 
     this.footer = new Footer();
   }
